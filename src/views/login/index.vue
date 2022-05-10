@@ -1,81 +1,96 @@
 <template>
   <div class="login-container">
-    <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" auto-complete="on" label-position="left">
+    <div class="login-left">
+      <img src="@/assets/images/login-backgroundMap-left.png" alt="">
+    </div>
+    <div class="login-right">
+      <div class="login-rightForm">
+        <div class="title-logo">
+          <img src="@/assets/images/achLogo.png" alt="">
+        </div>
+        <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" auto-complete="on" label-position="left">
 
-      <div class="title-container">
-        <h3 class="title">Login Form</h3>
+          <div class="title-container">
+            <h3 class="title">Sign In</h3>
+          </div>
+
+          <el-form-item prop="username">
+            <span class="svg-container">
+              <svg-icon icon-class="user" />
+            </span>
+            <el-input
+              ref="username"
+              v-model="loginForm.username"
+              placeholder="Username"
+              name="username"
+              type="text"
+              tabindex="1"
+              auto-complete="on"
+            />
+          </el-form-item>
+
+          <el-form-item prop="password">
+            <span class="svg-container">
+              <svg-icon icon-class="password" />
+            </span>
+            <el-input
+              :key="passwordType"
+              ref="password"
+              v-model="loginForm.password"
+              :type="passwordType"
+              placeholder="Password"
+              name="password"
+              tabindex="2"
+              auto-complete="on"
+              @keyup.enter.native="handleLogin"
+            />
+            <span class="show-pwd" @click="showPwd">
+              <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
+            </span>
+          </el-form-item>
+
+          <el-button :loading="loading" type="primary" class="loginButton" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">Sign In</el-button>
+
+          <div class="tips">
+            <span style="margin-right:20px;">username: admin</span>
+            <span> password: any</span>
+          </div>
+
+        </el-form>
+
       </div>
-
-      <el-form-item prop="username">
-        <span class="svg-container">
-          <svg-icon icon-class="user" />
-        </span>
-        <el-input
-          ref="username"
-          v-model="loginForm.username"
-          placeholder="Username"
-          name="username"
-          type="text"
-          tabindex="1"
-          auto-complete="on"
-        />
-      </el-form-item>
-
-      <el-form-item prop="password">
-        <span class="svg-container">
-          <svg-icon icon-class="password" />
-        </span>
-        <el-input
-          :key="passwordType"
-          ref="password"
-          v-model="loginForm.password"
-          :type="passwordType"
-          placeholder="Password"
-          name="password"
-          tabindex="2"
-          auto-complete="on"
-          @keyup.enter.native="handleLogin"
-        />
-        <span class="show-pwd" @click="showPwd">
-          <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
-        </span>
-      </el-form-item>
-
-      <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">Login</el-button>
-
-      <div class="tips">
-        <span style="margin-right:20px;">username: admin</span>
-        <span> password: any</span>
+      <div class="subscription-container">
+        <p>IF you don’t have account,you can contract</p>
+        <p>support@alchemytech.io</p>
       </div>
+    </div>
 
-    </el-form>
   </div>
 </template>
 
 <script>
-import { validUsername } from '@/utils/validate'
-
+// import { login } from '../../api/u?ser'
 export default {
   name: 'Login',
   data() {
     const validateUsername = (rule, value, callback) => {
-      if (!validUsername(value)) {
-        callback(new Error('Please enter the correct user name'))
+      if (value === '') {
+        callback(new Error('Merchant is required'))
       } else {
         callback()
       }
     }
     const validatePassword = (rule, value, callback) => {
-      if (value.length < 6) {
-        callback(new Error('The password can not be less than 6 digits'))
+      if (value === '') {
+        callback(new Error('Password is required'))
       } else {
         callback()
       }
     }
     return {
       loginForm: {
-        username: 'admin',
-        password: '111111'
+        username: '',
+        password: ''
       },
       loginRules: {
         username: [{ required: true, trigger: 'blur', validator: validateUsername }],
@@ -130,8 +145,8 @@ export default {
 /* Detail see https://github.com/PanJiaChen/vue-element-admin/pull/927 */
 
 $bg:#283443;
-$light_gray:#fff;
-$cursor: #fff;
+$light_gray:#000;
+$cursor: #999;
 
 @supports (-webkit-mask: none) and (not (cater-color: $cursor)) {
   .login-container .el-input input {
@@ -141,39 +156,114 @@ $cursor: #fff;
 
 /* reset element-ui css */
 .login-container {
+  width: 100%;
+  display: flex;
+  height: 100%;
+  min-height: 100%;
+  background: linear-gradient(315deg, #3F53E8 0%, #4552E7 26%, #4F6BE3 60%, #4B7ADC 100%);
+  overflow: hidden;
+  .login-left{
+    width: 50%;
+    margin: 8% 0;
+    z-index: 9;
+     img{
+      width: 115%;
+      height: 100%;
+      margin-left: 18%;
+    }
+  }
+  .login-right{
+    position: relative;
+    width: 60%;
+    margin-left: auto;
+    height: 100%;
+    background: url('../../assets/images/login-backgroundMap-right.png') no-repeat;
+    background-size: 100% 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+  .login-rightForm{
+    position: absolute;
+      top: 12%;
+      left: 40%;
+      //max-width: 350px !important;
+      overflow: hidden;
+    .title-logo{
+      width: 300px;
+      img{
+        width: 100%;
+        height: 100%;
+      }
+    }
+    .title-font{
+      font-size: 35px;
+      font-weight: bold;
+      font-family: Roboto-Bold, Roboto;
+      width: 300px;
+      padding-top: 40px;
+      color: #666666;
+    }
+  }
+  .subscription-container{
+      //width: 100%;
+      position: absolute;
+      bottom: 5%;
+      left: 42%;
+      font-size: 12px;
+      font-family: Roboto-Regular, Roboto;
+      font-weight: 400;
+      text-align: center;
+      line-height: 10px;
+      p:nth-of-type(1){
+        color: #999999;
+      }
+      p:nth-of-type(2){
+        color: #1164FF;
+      }
+    }
   .el-input {
     display: inline-block;
-    height: 47px;
     width: 85%;
-
     input {
       background: transparent;
-      border: 0px;
+      border: 0;
       -webkit-appearance: none;
-      border-radius: 0px;
+      border-radius: 0;
       padding: 12px 5px 12px 15px;
       color: $light_gray;
-      height: 47px;
+      height: 35px;
       caret-color: $cursor;
-
       &:-webkit-autofill {
-        box-shadow: 0 0 0px 1000px $bg inset !important;
-        -webkit-text-fill-color: $cursor !important;
+        box-shadow: 0 0 0 1000px #fff inset !important;
+        -webkit-text-fill-color: $light_gray !important;
       }
     }
   }
 
-  .el-form-item {
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    background: rgba(0, 0, 0, 0.1);
-    border-radius: 5px;
+   .el-form-item {
+    width: 90%;
+    background: white;
     color: #454545;
+    border-bottom: 1px solid #EAEAEA;
+    margin-top: 15%;
+  }
+  .loginButton{
+    width:90%;
+    height: 50px;
+    background: #1164FF;
+    margin-bottom:30px;
+    //margin-top: 50px;
+    margin-top: 20%;
+    border-radius: 14px;
+    border: none;
   }
 }
 </style>
 
 <style lang="scss" scoped>
-$bg:#2d3a4b;
+$bg:#1164FF;
 $dark_gray:#889aa4;
 $light_gray:#eee;
 
@@ -185,9 +275,9 @@ $light_gray:#eee;
 
   .login-form {
     position: relative;
-    width: 520px;
+    width: 300px;
     max-width: 100%;
-    padding: 160px 35px 0;
+    padding: 60px 0px 0;
     margin: 0 auto;
     overflow: hidden;
   }
@@ -206,7 +296,7 @@ $light_gray:#eee;
 
   .svg-container {
     padding: 6px 5px 6px 15px;
-    color: $dark_gray;
+    color: #4B7ADC;
     vertical-align: middle;
     width: 30px;
     display: inline-block;
@@ -214,12 +304,11 @@ $light_gray:#eee;
 
   .title-container {
     position: relative;
-
     .title {
       font-size: 26px;
-      color: $light_gray;
+      color: #666666;
       margin: 0px auto 40px auto;
-      text-align: center;
+      text-align: left;
       font-weight: bold;
     }
   }

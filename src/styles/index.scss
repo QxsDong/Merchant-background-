@@ -11,7 +11,10 @@ body {
   text-rendering: optimizeLegibility;
   font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, Arial, sans-serif;
 }
-
+@font-face{
+  font-family: Roboto-Regular;
+  src:url('../assets/custom-theme/fonts/element-icons.ttf')
+}
 label {
   font-weight: 700;
 }

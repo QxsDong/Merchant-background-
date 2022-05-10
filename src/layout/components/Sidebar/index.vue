@@ -2,10 +2,17 @@
   <div :class="{'has-logo':showLogo}">
     <logo v-if="showLogo" :collapse="isCollapse" />
     <el-scrollbar wrap-class="scrollbar-wrapper">
+      <div v-if="isCollapse" class="logo1">
+        <img src="@/assets/logos/solo.png" alt="">
+      </div>
+      <div v-else class="logo">
+        <img src="@/assets/logos/solo.png" alt="">
+        <img src="@/assets/logos/solo1.png" alt="">
+      </div>
       <el-menu
+        class="scrollbar-item"
         :default-active="activeMenu"
         :collapse="isCollapse"
-        :background-color="variables.menuBg"
         :text-color="variables.menuText"
         :unique-opened="false"
         :active-text-color="variables.menuActiveText"
@@ -54,3 +61,34 @@ export default {
   }
 }
 </script>
+<style lang="scss" scoped>
+.scrollbar-wrapper{
+  .logo{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 30px 0 50px 0;
+    img:first-child{
+      width: 45px;
+      height: 45px;
+    }
+    img:last-child{
+      width: 130px;
+      height: 30px;
+    }
+  }
+  .logo1{
+    margin: 30px 5px 50px ;
+    img{
+      width: 45px;
+    }
+  }
+  .scrollbar-item{
+   background-color:transparent;
+  }
+ .el-menu-item-group .el-menu-item.demo:hover{
+    background: #000 !important;
+    color: #fff !important;
+    }
+}
+</style>
