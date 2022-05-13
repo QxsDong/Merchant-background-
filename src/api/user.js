@@ -2,23 +2,56 @@ import request from '@/utils/request'
 
 export function login(data) {
   return request({
-    url: '/vue-admin-template/user/login',
+    url: '/login',
+    method: 'post',
+    data
+  })
+}
+export function searchOrder(data) {
+  return request({
+    url: '/order/query',
+    method: 'post',
+    data
+  })
+}
+export function getMerchant(data) {
+  return request({
+    url: '/merchant/crypto/list',
+    method: 'post',
+    data
+  })
+}
+export function setMerchantState(data) {
+  return request({
+    url: '/merchant/crypto/updateState',
     method: 'post',
     data
   })
 }
 
-export function getInfo(token) {
+export function getpayWatList() {
   return request({
-    url: '/vue-admin-template/user/info',
-    method: 'get',
-    params: { token }
+    url: '/merchant/payWay/list',
+    method: 'get'
   })
 }
-
+// export function getInfo(token) {
+//   return request({
+//     url: '/vue-admin-template/user/info',
+//     method: 'get',
+//     params: { token }
+//   })
+// }
+// export function getMerchant(token) {
+//   return request({
+//     url: '/vue-admin-template/user/info',
+//     method: 'get',
+//     params: { token }
+//   })
+// }
 export function logout() {
   return request({
-    url: '/vue-admin-template/user/logout',
-    method: 'post'
+    url: '/logout',
+    method: 'get'
   })
 }

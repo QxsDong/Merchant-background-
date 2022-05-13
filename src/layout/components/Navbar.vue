@@ -7,7 +7,10 @@
     <div class="right-menu">
       <el-dropdown class="avatar-container" trigger="click">
         <div class="avatar-wrapper">
-          <img :src="avatar+'?imageView2/1/w/80/h/80'" class="user-avatar">
+          <div class="avatar-wrapper-content">
+            <p>ACH官方平台</p>
+            <!-- <p>{{ name.merchantName }}</p> -->
+          </div>
           <i class="el-icon-caret-bottom" />
         </div>
         <el-dropdown-menu slot="dropdown" class="user-dropdown">
@@ -38,7 +41,7 @@ export default {
   computed: {
     ...mapGetters([
       'sidebar',
-      'avatar'
+      'name'
     ])
   },
   methods: {
@@ -46,8 +49,23 @@ export default {
       this.$store.dispatch('app/toggleSideBar')
     },
     async logout() {
-      await this.$store.dispatch('user/logout')
-      this.$router.push(`/login?redirect=${this.$route.fullPath}`)
+      this.$confirm('Are you sure you want to quit?', 'prompt', {
+        confirmButtonText: 'determine',
+        cancelButtonText: 'cancel',
+        type: 'warning'
+      }).then(async() => {
+        await this.$store.dispatch('user/logout')
+        this.$router.push(`/login?redirect=${this.$route.fullPath}`)
+        this.$message({
+          type: 'success',
+          message: 'Exit the success!'
+        })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: 'To cancel exit'
+        })
+      })
     }
   }
 }
@@ -60,7 +78,16 @@ export default {
   position: relative;
   background: #fff;
   box-shadow: 0 1px 4px rgba(0,21,41,.08);
+.avatar-wrapper-content{
 
+  display: flex;
+  p{
+    margin: 0;
+  padding: 0;
+  margin-right: 10px;
+  }
+
+}
   .hamburger-container {
     line-height: 46px;
     height: 100%;
@@ -111,6 +138,9 @@ export default {
       .avatar-wrapper {
         margin-top: 5px;
         position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
 
         .user-avatar {
           cursor: pointer;
@@ -122,8 +152,8 @@ export default {
         .el-icon-caret-bottom {
           cursor: pointer;
           position: absolute;
-          right: -20px;
-          top: 25px;
+          right: -10px;
+          top: 20px;
           font-size: 12px;
         }
       }

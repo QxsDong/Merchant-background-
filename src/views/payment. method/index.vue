@@ -3,24 +3,25 @@
     <div class="payment-content">
       <el-table
         ref="table"
+        :height="tableHeight"
         :data="paymentData"
         border
         :lazy="true"
       >
         <el-table-column
-          prop="OrderID"
+          prop="payWayName"
           label="Payment method"
           align="center"
           width="190"
         />
         <el-table-column
-          prop="Transcationtime"
+          prop="currency"
           label="fiat"
           align="center"
           width="190"
         />
         <el-table-column
-          prop="Address"
+          prop="country"
           label="Country"
           align="center"
           width="190"
@@ -30,14 +31,17 @@
           align="center"
         >
           <template slot-scope="scope">
-            {{ scope.row.currencyAmount }} {{ scope.row.currencyCode }}
+            {{ (scope.row.currencySymbol+scope.row.fixedFee) }} + {{ (scope.row.feeRate*100)+'%' }}
           </template>
         </el-table-column>
         <el-table-column
-          prop="Crypto"
           label="Amount"
           align="center"
-        />
+        >
+          <template slot-scope="scope">
+            {{ scope.row.payMin }} - {{ scope.row.payMax }}
+          </template>
+        </el-table-column>
 
       </el-table>
     </div>
@@ -45,9 +49,11 @@
 </template>
 
 <script>
+import { getpayWatList } from '../../api/user'
 export default {
   data() {
     return {
+      tableHeight: 46,
       formInline: {
         payStatus: 1,
         keywords: '',
@@ -57,19 +63,21 @@ export default {
         pageNum: 1,
         pageSize: 20
       },
-      paymentData: [
-        { OrderID: 1, Transcationtime: 123, Address: 123, Fiat: { realCount: 1, currencyCode: 'USDT' }, Fee: { realCount: 1, digitalCurrencyCode: 2 }, Crypto: 2, Network: 3, email: 4 }
-      ]
+      paymentData: []
     }
   },
+  mounted() {
+    setTimeout(() => {
+      this.tableHeight = window.innerHeight - 150
+    }, 100)
+    this.getPaymentData()
+  },
   methods: {
-    onSubmit() {
-      this.$message('submit!')
-    },
-    onCancel() {
-      this.$message({
-        message: 'cancel!',
-        type: 'warning'
+    getPaymentData() {
+      getpayWatList().then(res => {
+        if (res && res.data) {
+          this.paymentData = res.data
+        }
       })
     }
   }
@@ -78,16 +86,24 @@ export default {
 
 <style lang="scss" scoped>
 .payment-container{
-  padding: 30px;
+  width: 95%;
+  height: 94%;
+  background: #FFFFFF;
+  box-shadow: 0px 0px 20px rgb(177 202 239 / 50%);
+   border-radius: 10px;
+  padding: 30px  40px 30px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%,-50%);
+  // padding: 30px;
   .payment-content{
     .el-table{
   font-size: 10px;
-  font-family: Roboto-Regular, Roboto;
   font-weight: 400;
   color: #333333;
   & ::v-deep thead{
     font-size: 12px;
-    font-family: Roboto-Regular, Roboto;
     font-weight: 400;
     color: #333333;
   }

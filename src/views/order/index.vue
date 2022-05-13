@@ -12,83 +12,72 @@
         />
       </div>
       <div>
-        <p>email : </p>
-        <el-input v-model="formInline.keywords" style="border-" placeholder="Please enter email " /></div>
+        <p style="color: #666666;font-w">email : </p>
+        <el-input v-model="formInline.email" style="border-" placeholder="Please enter email " />
+        <el-button slot="append" class="searchButton" @click="searchData">search</el-button></div>
     </div>
     <div class="order-content">
       <el-table
         ref="table"
+        :height="tableHeight"
         :data="paymentData"
         border
         :lazy="true"
       >
         <el-table-column
-          prop="OrderID"
+          prop="orderId"
           label="Order ID"
           align="center"
           width="190"
         />
         <el-table-column
-          prop="Transcationtime"
+          prop="transactionTime"
           label="Transcation time"
           align="center"
           width="190"
         />
         <el-table-column
-          prop="Address"
+          prop="address"
           label="Address"
           align="center"
           width="190"
         />
         <el-table-column
+          prop="fiat"
           label="Fiat"
           align="center"
-        >
-          <template slot-scope="scope">
-            {{ scope.row.currencyAmount }} {{ scope.row.currencyCode }}
-          </template>
-        </el-table-column>
+        />
         <el-table-column
+          prop="fee"
           label="Fee"
           align="center"
-        >
-          <template slot-scope="scope">
-            {{ scope.row.realCount }} {{ scope.row.digitalCurrencyCode }}
-          </template>
-        </el-table-column>
+        />
         <el-table-column
-          prop="Crypto"
+          prop="crypto"
           label="Crypto"
           align="center"
         />
         <el-table-column
           label="Network"
           align="center"
-          prop="Network"
-        >
-          <template slot-scope="scope">
-            {{ scope.row.fee }} {{ scope.row.feeUnit }}
-          </template>
-        </el-table-column>
+          prop="network"
+        />
         <el-table-column
           prop="email"
-          label="email"
+          label="Email"
           align="center"
-        >
-          <!-- <template slot-scope="scope">
-            {{ scope.row.usdtCount }} USDT
-          </template> -->
-        </el-table-column>
-        <el-table-column
-          fixed="right"
-          align="center"
-          width="120"
-        >
-          <!-- <template slot-scope="scope">
-            <el-button type="text" size="small" style="font-weight: bold" @click="deltailPayment(scope.row)">Detail</el-button>
-          </template> -->
-        </el-table-column>
+        />
       </el-table>
+      <div class="payment-pagination">
+        <el-pagination
+          background
+          layout="prev, pager, next, total"
+          :current-page="formInline.pageNo"
+          :page-size="formInline.pageSize"
+          :total="total"
+          @current-change="handleCurrentChange"
+        />
+      </div>
     </div>
   </div>
 </template>
@@ -96,18 +85,23 @@
 <script>
 import { mapGetters } from 'vuex'
 import { parseTime } from '@/utils/index.js'
+import { searchOrder } from '../../api/user'
+
 export default {
   name: 'Order',
   data() {
     return {
+      total: 0,
       timeList: '',
+      tableHeight: 46,
       formInline: {
+        email: '',
         payStatus: 1,
         keywords: '',
         startTime: '',
         endTime: '',
         coinType: '',
-        pageNum: 1,
+        pageNo: 1,
         pageSize: 20
       },
       paymentData: [
@@ -132,6 +126,53 @@ export default {
           this.formInline.endTime = ''
         }
       }
+    },
+    'formInline.email': {
+      deep: true,
+      handler(newVal) {
+        if (!newVal) {
+          this.getOrderData()
+        }
+      }
+    }
+  },
+  mounted() {
+    this.getOrderData()
+    setTimeout(() => {
+      this.tableHeight = window.innerHeight - 250
+    }, 100)
+  },
+  methods: {
+    // get order data
+    getOrderData() {
+      searchOrder(this.formInline).then(res => {
+        if (res && res.data) {
+          // console.log(res)
+          this.paymentData = res.data.records
+          this.total = res.data.total
+        }
+      })
+    },
+    // search order data
+    searchData() {
+      if (!this.formInline.email) {
+        this.$message({
+          type: 'error',
+          message: 'The input box cannot be empty'
+        })
+        return false
+      }
+      this.formInline.email.trim()
+      this.getOrderData()
+      this.$message({
+        type: 'success',
+        message: 'Search success'
+      })
+    },
+    // page turning
+    handleCurrentChange(val) {
+      this.formInline.pageNo = val
+      this.getOrderData()
     }
   }
 }
@@ -139,32 +180,54 @@ export default {
 
 <style lang="scss" scoped>
 .order-container{
-
+  width: 95%;
+  height: 94%;
+  background: #FFFFFF;
+  box-shadow: 0px 0px 20px rgb(177 202 239 / 50%);
+   border-radius: 10px;
+  padding: 30px  40px 30px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%,-50%);
+.searchButton{
+      // font-family: 'Gilroy';
+      border-radius: 0px 8px 8px 0px;
+      color: #FFFFFF;
+      background: #40A1FB;
+      border: 1px solid #E8EAEE;
+    }
   .order-top{
     display: flex;
-    margin: 30px;
+    // margin: 30px;
     align-items: center;
     div:nth-of-type(2){
       display: flex;
       align-items: center;
       p{
-        font-family: Roboto-Regular, Roboto;
-        width: 80px;
+        // font-family: Roboto-Regular, Roboto;
+        font-weight: bold;
+        width: 100px;
         margin: 0 30px 0 20px;
       }
     }
   }
   .order-content{
-    width: 90%;
-    margin: 20px 0 0 30px;
+    width: 100%;
+    margin: 20px 0 0 0px;
+    .payment-pagination{
+      margin-top: 10px;
+      display: flex;
+    justify-content: center;
+    }
     .el-table{
   font-size: 10px;
-  font-family: Roboto-Regular, Roboto;
+  // font-family: Roboto-Regular, Roboto;
   font-weight: 400;
   color: #333333;
   & ::v-deep thead{
     font-size: 12px;
-    font-family: Roboto-Regular, Roboto;
+    // font-family: Roboto-Regular, Roboto;
     font-weight: 400;
     color: #333333;
   }

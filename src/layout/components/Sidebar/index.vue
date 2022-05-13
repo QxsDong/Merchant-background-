@@ -1,7 +1,7 @@
 <template>
-  <div :class="{'has-logo':showLogo}">
+  <div id="scrollbar-container" :class="{'has-logo':showLogo}">
     <logo v-if="showLogo" :collapse="isCollapse" />
-    <el-scrollbar wrap-class="scrollbar-wrapper">
+    <el-scrollbar wrap-class="scrollbar-wrapper" class="el-scrollbar-content">
       <div v-if="isCollapse" class="logo1">
         <img src="@/assets/logos/solo.png" alt="">
       </div>
@@ -10,8 +10,8 @@
         <img src="@/assets/logos/solo1.png" alt="">
       </div>
       <el-menu
-        class="scrollbar-item"
         :default-active="activeMenu"
+        background-color="transparent"
         :collapse="isCollapse"
         :text-color="variables.menuText"
         :unique-opened="false"
@@ -62,7 +62,33 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+
+/* hover style    element */
+#scrollbar-container ::v-deep .el-menu-item{
+  width: 90%;
+  transition: .3s;
+  margin: 10px 0px;
+  background: #FFFFFF;
+}
+/* click select style */
+#scrollbar-container ::v-deep .is-active{
+  /* width: 270px; */
+
+  background-color: #FFFFFF !important;
+  box-shadow: 0px 10px 10px #185BDD;
+  border-radius: 0 30px 30px 0px;
+  margin-left: 0px;
+  transition: .2s;
+}
+#scrollbar-container ::v-deep.el-menu-item:hover{
+  outline: 0 !important;
+  background: #fff !important;
+  opacity: .7;
+  color: #409EFF !important;
+}
+
 .scrollbar-wrapper{
+
   .logo{
     display: flex;
     justify-content: center;
@@ -73,8 +99,9 @@ export default {
       height: 45px;
     }
     img:last-child{
-      width: 130px;
+      width: 150px;
       height: 30px;
+      margin: 5px 0 0 5px;
     }
   }
   .logo1{
@@ -83,12 +110,8 @@ export default {
       width: 45px;
     }
   }
-  .scrollbar-item{
-   background-color:transparent;
-  }
- .el-menu-item-group .el-menu-item.demo:hover{
-    background: #000 !important;
-    color: #fff !important;
-    }
+  // .scrollbar-item{
+  //  background-color:transparent;
+  // }
 }
 </style>

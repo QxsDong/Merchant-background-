@@ -69,7 +69,7 @@
 </template>
 
 <script>
-// import { login } from '../../api/u?ser'
+// import { login } from '../../api/user'
 export default {
   name: 'Login',
   data() {
@@ -124,7 +124,11 @@ export default {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loading = true
-          this.$store.dispatch('user/login', this.loginForm).then(() => {
+          this.$store.dispatch('user/login', this.loginForm).then((res) => {
+            this.$message({
+              type: 'success',
+              message: 'Log in successfully'
+            })
             this.$router.push({ path: this.redirect || '/' })
             this.loading = false
           }).catch(() => {
