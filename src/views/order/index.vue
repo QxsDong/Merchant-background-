@@ -28,29 +28,31 @@
           prop="orderId"
           label="Order ID"
           align="center"
-          width="190"
+          width="100"
         />
         <el-table-column
           prop="transactionTime"
           label="Transcation time"
           align="center"
-          width="190"
+          width="160"
         />
         <el-table-column
           prop="address"
           label="Address"
           align="center"
-          width="190"
+          width="180"
         />
         <el-table-column
           prop="fiat"
           label="Fiat"
           align="center"
+          width="110"
         />
         <el-table-column
           prop="fee"
           label="Fee"
           align="center"
+          width="110"
         />
         <el-table-column
           prop="crypto"
@@ -66,6 +68,7 @@
           prop="email"
           label="Email"
           align="center"
+          width="190"
         />
       </el-table>
       <div class="payment-pagination">
@@ -155,13 +158,13 @@ export default {
     },
     // search order data
     searchData() {
-      if (!this.formInline.email) {
-        this.$message({
-          type: 'error',
-          message: 'The input box cannot be empty'
-        })
-        return false
-      }
+      // if (!this.formInline.email) {
+      //   this.$message({
+      //     type: 'error',
+      //     message: 'The input box cannot be empty'
+      //   })
+      //   return false
+      // }
       this.formInline.email.trim()
       this.getOrderData()
       this.$message({

@@ -144,14 +144,18 @@ export default {
     },
     // search
     searchData() {
-      if (!this.formInline.crypto) {
-        this.$message({
-          type: 'error',
-          message: 'The input box cannot be empty'
-        })
-        return false
-      }
+      // if (!this.formInline.crypto) {
+      //   this.$message({
+      //     type: 'error',
+      //     message: 'The input box cannot be empty'
+      //   })
+      //   return false
+      // }
       this.getCryptos()
+      this.$message({
+        type: 'success',
+        message: 'Search success'
+      })
     }
   }
 }

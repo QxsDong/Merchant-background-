@@ -55,6 +55,7 @@ export default {
         type: 'warning'
       }).then(async() => {
         await this.$store.dispatch('user/logout')
+        console.log(this.$route.fullPath)
         this.$router.push(`/login?redirect=${this.$route.fullPath}`)
         this.$message({
           type: 'success',

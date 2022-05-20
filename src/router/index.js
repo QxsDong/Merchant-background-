@@ -68,12 +68,12 @@ export const constantRoutes = [
     ]
   },
   {
-    path: '/payment. method',
+    path: '/payment',
     component: Layout,
     children: [
       {
         path: 'index',
-        name: 'payment. method',
+        name: 'Payment',
         component: () => import('@/views/payment. method/index'),
         meta: { title: 'payment. method', icon: 'el-icon-s-finance' }
       }

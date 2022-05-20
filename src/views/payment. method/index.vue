@@ -75,6 +75,7 @@ export default {
   methods: {
     getPaymentData() {
       getpayWatList().then(res => {
+        console.log(res)
         if (res && res.data) {
           this.paymentData = res.data
         }
