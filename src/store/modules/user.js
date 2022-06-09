@@ -19,7 +19,6 @@ const mutations = {
   },
   SET_TOKEN: (state, data) => {
     state.token = data.token
-    state.name = data.merchant
   },
   SET_NAME: (state, name) => {
     state.name = name
@@ -37,10 +36,11 @@ const actions = {
   login({ commit }, userInfo) {
     const { username, password } = userInfo
     return new Promise((resolve, reject) => {
-      login({ merchantNo: username.trim(), merchantPassword: password }).then(response => {
+      login({ account: username.trim(), password: password }).then(response => {
         const { data } = response
-        commit('SET_TOKEN', data)
         setToken(data.token)
+        commit('SET_NAME', response)
+        commit('SET_TOKEN', data.token)
         resolve()
       }).catch(error => {
         reject(error)

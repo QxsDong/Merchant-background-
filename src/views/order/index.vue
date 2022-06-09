@@ -23,6 +23,7 @@
         :data="paymentData"
         border
         :lazy="true"
+        :cell-style="{padding: '4px 0 4px 0'}"
       >
         <el-table-column
           prop="orderId"
@@ -40,7 +41,7 @@
           prop="address"
           label="Address"
           align="center"
-          width="180"
+          width="260"
         />
         <el-table-column
           prop="fiat"
@@ -71,7 +72,7 @@
           width="190"
         />
       </el-table>
-      <div class="payment-pagination">
+      <div v-if="total>1" class="payment-pagination">
         <el-pagination
           background
           layout="prev, pager, next, total"
@@ -86,105 +87,98 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-import { parseTime } from '@/utils/index.js'
-import { searchOrder } from '../../api/user'
+// import { mapGetters } from 'vuex'
+// import { parseTime } from '@/utils/index.js'
+// import { searchOrder } from '../../api/user'
 
-export default {
-  name: 'Order',
-  data() {
-    return {
-      total: 0,
-      timeList: '',
-      tableHeight: 46,
-      formInline: {
-        email: '',
-        payStatus: 1,
-        keywords: '',
-        startTime: '',
-        endTime: '',
-        coinType: '',
-        pageNo: 1,
-        pageSize: 20
-      },
-      paymentData: [
-        { OrderID: 1, Transcationtime: 123, Address: 123, Fiat: { realCount: 1, currencyCode: 'USDT' }, Fee: { realCount: 1, digitalCurrencyCode: 2 }, Crypto: 2, Network: 3, email: 4 }
-      ]
-    }
-  },
-  computed: {
-    ...mapGetters([
-      'name'
-    ])
-  },
-  watch: {
-    timeList: {
-      // deep: true,
-      handler(val) {
-        if (val != null && val.length > 0) {
-          this.formInline.startTime = parseTime(this.timeList[0], '{y}-{m}-{d}')
-          this.formInline.endTime = parseTime(this.timeList[1], '{y}-{m}-{d}')
-        } else {
-          this.formInline.startTime = ''
-          this.formInline.endTime = ''
-        }
-      }
-    },
-    'formInline.email': {
-      deep: true,
-      handler(newVal) {
-        if (!newVal) {
-          this.getOrderData()
-        }
-      }
-    }
-  },
-  mounted() {
-    this.getOrderData()
-    setTimeout(() => {
-      this.tableHeight = window.innerHeight - 250
-    }, 100)
-  },
-  methods: {
-    // get order data
-    getOrderData() {
-      searchOrder(this.formInline).then(res => {
-        if (res && res.data) {
-          // console.log(res)
-          this.paymentData = res.data.records
-          this.total = res.data.total
-        }
-      })
-    },
-    // search order data
-    searchData() {
-      // if (!this.formInline.email) {
-      //   this.$message({
-      //     type: 'error',
-      //     message: 'The input box cannot be empty'
-      //   })
-      //   return false
-      // }
-      this.formInline.email.trim()
-      this.getOrderData()
-      this.$message({
-        type: 'success',
-        message: 'Search success'
-      })
-    },
-    // page turning
-    handleCurrentChange(val) {
-      this.formInline.pageNo = val
-      this.getOrderData()
-    }
-  }
-}
+// export default {
+//   name: 'Order',
+//   data() {
+//     return {
+//       total: 0,
+//       timeList: '',
+//       tableHeight: 46,
+//       formInline: {
+//         email: '',
+//         payStatus: 1,
+//         keywords: '',
+//         startTime: '',
+//         endTime: '',
+//         coinType: '',
+//         pageNo: 1,
+//         pageSize: 20
+//       },
+//       paymentData: [
+//         { OrderID: 1, Transcationtime: 123, Address: 123, Fiat: { realCount: 1, currencyCode: 'USDT' }, Fee: { realCount: 1, digitalCurrencyCode: 2 }, Crypto: 2, Network: 3, email: 4 }
+//       ]
+//     }
+//   },
+//   computed: {
+//     ...mapGetters([
+//       'name'
+//     ])
+//   },
+//   watch: {
+//     timeList: {
+//       // deep: true,
+//       handler(val) {
+//         if (val != null && val.length > 0) {
+//           this.formInline.startTime = parseTime(this.timeList[0], '{y}-{m}-{d}')
+//           this.formInline.endTime = parseTime(this.timeList[1], '{y}-{m}-{d}')
+//         } else {
+//           this.formInline.startTime = ''
+//           this.formInline.endTime = ''
+//         }
+//       }
+//     },
+//     'formInline.email': {
+//       deep: true,
+//       handler(newVal) {
+//         if (!newVal) {
+//           this.getOrderData()
+//         }
+//       }
+//     }
+//   },
+//   mounted() {
+//     this.getOrderData()
+//     setTimeout(() => {
+//       this.tableHeight = window.innerHeight - 320
+//     }, 100)
+//   },
+//   methods: {
+//     // get order data
+//     getOrderData() {
+//       searchOrder(this.formInline).then(res => {
+//         if (res && res.data) {
+//           // console.log(res)
+//           this.paymentData = res.data.records
+//           this.total = res.data.total
+//         }
+//       })
+//     },
+//     // search order data
+//     searchData() {
+//       this.formInline.email.trim()
+//       this.getOrderData()
+//       this.$message({
+//         type: 'success',
+//         message: 'Search success'
+//       })
+//     },
+//     // page turning
+//     handleCurrentChange(val) {
+//       this.formInline.pageNo = val
+//       this.getOrderData()
+//     }
+//   }
+// }
 </script>
 
 <style lang="scss" scoped>
 .order-container{
   width: 95%;
-  height: 94%;
+  height: 95%;
   background: #FFFFFF;
   box-shadow: 0px 0px 20px rgb(177 202 239 / 50%);
    border-radius: 10px;
@@ -194,7 +188,7 @@ export default {
   top: 50%;
   transform: translate(-50%,-50%);
 .searchButton{
-      // font-family: 'Gilroy';
+      font-family: RobotoBold;
       border-radius: 0px 8px 8px 0px;
       color: #FFFFFF;
       background: #40A1FB;
@@ -204,14 +198,21 @@ export default {
     display: flex;
     // margin: 30px;
     align-items: center;
+    ::v-deep .el-date-editor input{
+      font-family: RobotoLight;
+    }
     div:nth-of-type(2){
       display: flex;
       align-items: center;
       p{
-        // font-family: Roboto-Regular, Roboto;
+        font-family: RobotoBold;
         font-weight: bold;
         width: 100px;
-        margin: 0 30px 0 20px;
+        margin: 0 20px 0 30px;
+      }
+      ::v-deep .el-input input{
+        font-family: RobotoLight;
+        border-right: none;
       }
     }
   }
@@ -224,35 +225,56 @@ export default {
     justify-content: center;
     }
     .el-table{
-  font-size: 10px;
-  // font-family: Roboto-Regular, Roboto;
+  font-size: 12px;
+  font-family: 'SF Pro';
   font-weight: 400;
   color: #333333;
+  border-radius: 5px;
   & ::v-deep thead{
     font-size: 12px;
-    // font-family: Roboto-Regular, Roboto;
+    font-family: 'SF Pro';
     font-weight: 400;
     color: #333333;
   }
   & ::v-deep th{
-    background: #F4F7FF;
+    background: #F7F9FC;
   }
   & ::v-deep th, td{
-    border-bottom: 1px solid #CCCCCC;
-    border-right: 1px solid #CCCCCC;
+    color: #123077;
+    border-bottom: 1px solid #E8EAEE;
+    border-right: 1px solid #E8EAEE;
   }
   & ::v-deep .el-table__row td{
-
-    border-bottom: 1px solid #CCCCCC;
-    border-right: 1px solid #CCCCCC;
+    color: #5A6070;
+    border-bottom: 1px solid #E8EAEE;
+    border-right: 1px solid #E8EAEE;
   }
   & ::v-deep tr td{
-    border-bottom: 1px solid #CCCCCC;
+    border: 1px solid #E8EAEE;
   }
 }
 .el-table--group, .el-table--border{
-  border: 1px solid #CCCCCC;
+  border: 1px solid #E8EAEE;
 }
+  }
+  .payment-pagination{
+    ::v-deep .number{
+      background: #FFFFFF;
+      font-family: 'SF Pro';
+      color: #9AA8C3;
+      font-size: 12px;
+    }
+    ::v-deep .btn-prev{
+      background: #FFFFFF;
+    }
+    ::v-deep .btn-next{
+      background: #FFFFFF;
+    }
+    ::v-deep .el-pagination__total{
+      font-family: 'SF Pro';
+      color: #9AA8C3;
+      font-size: 12px;
+    }
   }
 }
 </style>

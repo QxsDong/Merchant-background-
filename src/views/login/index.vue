@@ -28,7 +28,6 @@
               auto-complete="on"
             />
           </el-form-item>
-
           <el-form-item prop="password">
             <span class="svg-container">
               <svg-icon icon-class="password" />
@@ -51,10 +50,10 @@
 
           <el-button :loading="loading" type="primary" class="loginButton" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">Sign In</el-button>
 
-          <div class="tips">
+          <!-- <div class="tips">
             <span style="margin-right:20px;">username: admin</span>
             <span> password: any</span>
-          </div>
+          </div> -->
 
         </el-form>
 
@@ -144,7 +143,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 /* 修复input 背景不协调 和光标变色 */
 /* Detail see https://github.com/PanJiaChen/vue-element-admin/pull/927 */
 
@@ -204,7 +203,7 @@ $cursor: #999;
     .title-font{
       font-size: 35px;
       font-weight: bold;
-      font-family: Roboto-Bold, Roboto;
+      font-family: RobotoLight;
       width: 300px;
       padding-top: 40px;
       color: #666666;
@@ -215,8 +214,8 @@ $cursor: #999;
       position: absolute;
       bottom: 5%;
       left: 42%;
-      font-size: 12px;
-      font-family: Roboto-Regular, Roboto;
+      font-size: 14px;
+      font-family: RobotoLight;
       font-weight: 400;
       text-align: center;
       line-height: 10px;
@@ -227,18 +226,20 @@ $cursor: #999;
         color: #1164FF;
       }
     }
-  .el-input {
+   .el-input {
     display: inline-block;
     width: 85%;
-    input {
+     ::v-deep input {
       background: transparent;
       border: 0;
-      -webkit-appearance: none;
+      -webkit-appearance: none !important;
       border-radius: 0;
       padding: 12px 5px 12px 15px;
       color: $light_gray;
       height: 35px;
       caret-color: $cursor;
+      border: none !important;
+      font-family: RobotoLight;
       &:-webkit-autofill {
         box-shadow: 0 0 0 1000px #fff inset !important;
         -webkit-text-fill-color: $light_gray !important;
@@ -259,6 +260,7 @@ $cursor: #999;
     background: #1164FF;
     margin-bottom:30px;
     //margin-top: 50px;
+    font-family: RobotoBold;
     margin-top: 20%;
     border-radius: 14px;
     border: none;
@@ -314,6 +316,7 @@ $light_gray:#eee;
       margin: 0px auto 40px auto;
       text-align: left;
       font-weight: bold;
+      font-family: RobotoBold;
     }
   }
 

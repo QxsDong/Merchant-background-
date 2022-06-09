@@ -43,39 +43,88 @@ export const constantRoutes = [
     hidden: true
   },
 
+  // {
+  //   path: '/',
+  //   component: Layout,
+  //   redirect: '/order',
+  //   active: true,
+  //   children: [{
+  //     path: '/order',
+  //     name: 'Order',
+  //     component: () => import('@/views/order/index'),
+  //     meta: { title: 'Order', icon: 'over', icon1: 'iconRight', Images: require('@/assets/menu-images/over.png'), ImgActive: require('@/assets/menu-images/overSelect.png'), active: true }
+  //   }]
+  // },
+
+  // {
+  //   path: '/cryptos',
+  //   component: Layout,
+  //   active: false,
+  //   children: [
+  //     {
+  //       path: 'index',
+  //       name: 'Cryptos',
+  //       component: () => import('@/views/cryptos/index'),
+  //       meta: { title: 'Cryptos', icon: 'Vector', icon1: 'iconRight', Images: require('@/assets/menu-images/Property.png'), ImgActive: require('@/assets/menu-images/PropertySelect.png'), active: false }
+  //     }
+  //   ]
+  // },
+  // {
+  //   path: '/payment',
+  //   component: Layout,
+  //   active: false,
+  //   children: [
+  //     {
+  //       path: 'index',
+  //       name: 'Payment',
+  //       component: () => import('@/views/payment. method/index'),
+  //       meta: { title: 'payment. method', icon: 'payment', icon1: 'iconRight', Images: require('@/assets/menu-images/Union.png'), ImgActive: require('@/assets/menu-images/UnionSelect.png'), active: false }
+  //     }
+  //   ]
+  // },
   {
     path: '/',
     component: Layout,
-    redirect: '/order',
+    redirect: '/Application',
+    active: true,
     children: [{
-      path: '/order',
-      name: 'Order',
-      component: () => import('@/views/order/index'),
-      meta: { title: 'Order', icon: 'el-icon-menu' }
+      path: '/Application',
+      name: 'Application',
+      component: () => import('@/views/Application/index'),
+      meta: { title: 'Application', icon: 'over', icon1: 'iconRight', Images: require('@/assets/menu-images/over.png'), ImgActive: require('@/assets/menu-images/overSelect.png'), active: true },
+      children: [
+        {
+          path: '/Application/collction',
+          name: 'Application',
+          component: () => import('@/views/Application/children/collection/index'),
+          meta: { title: '' }
+        }
+      ]
     }]
   },
-
   {
-    path: '/cryptos',
+    path: '/ability',
     component: Layout,
     children: [
       {
-        path: 'index',
-        name: 'Cryptos',
-        component: () => import('@/views/cryptos/index'),
-        meta: { title: 'Cryptos', icon: 'el-icon-cpu' }
-      }
-    ]
-  },
-  {
-    path: '/payment',
-    component: Layout,
-    children: [
-      {
-        path: 'index',
-        name: 'Payment',
-        component: () => import('@/views/payment. method/index'),
-        meta: { title: 'payment. method', icon: 'el-icon-s-finance' }
+        path: '/ability/index',
+        name: 'Ability',
+        component: () => import('@/views/ability/index'),
+        meta: { title: 'Ability', icon: 'payment', icon1: 'iconRight', Images: require('@/assets/menu-images/mine.png'), ImgActive: require('@/assets/menu-images/mineSelect.png'), active: false },
+        children: [
+          {
+            path: '/ability/index/ramp',
+            name: 'Ability',
+            component: () => import('@/views/ability/children/ramp/index'),
+            meta: { title: 'On/Off ramp', isActive: 'Ability' }
+          },
+          {
+            path: '/ability/index/crypto',
+            name: 'Ability',
+            component: () => import('@/views/ability/children/crypto/index'),
+            meta: { title: 'Crypto Acquirin', isActive: 'Ability' }
+          }
+        ]
       }
     ]
   },

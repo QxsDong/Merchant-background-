@@ -24,7 +24,6 @@
           prop="country"
           label="Country"
           align="center"
-          width="190"
         />
         <el-table-column
           label="Fee"
@@ -49,40 +48,40 @@
 </template>
 
 <script>
-import { getpayWatList } from '../../api/user'
-export default {
-  data() {
-    return {
-      tableHeight: 46,
-      formInline: {
-        payStatus: 1,
-        keywords: '',
-        startTime: '',
-        endTime: '',
-        coinType: '',
-        pageNum: 1,
-        pageSize: 20
-      },
-      paymentData: []
-    }
-  },
-  mounted() {
-    setTimeout(() => {
-      this.tableHeight = window.innerHeight - 150
-    }, 100)
-    this.getPaymentData()
-  },
-  methods: {
-    getPaymentData() {
-      getpayWatList().then(res => {
-        console.log(res)
-        if (res && res.data) {
-          this.paymentData = res.data
-        }
-      })
-    }
-  }
-}
+// import { getpayWatList } from '../../api/user'
+// export default {
+//   data() {
+//     return {
+//       tableHeight: 46,
+//       formInline: {
+//         payStatus: 1,
+//         keywords: '',
+//         startTime: '',
+//         endTime: '',
+//         coinType: '',
+//         pageNum: 1,
+//         pageSize: 20
+//       },
+//       paymentData: []
+//     }
+//   },
+//   mounted() {
+//     setTimeout(() => {
+//       this.tableHeight = window.innerHeight - 250
+//     }, 100)
+//     this.getPaymentData()
+//   },
+//   methods: {
+//     getPaymentData() {
+//       getpayWatList().then(res => {
+//         console.log(res)
+//         if (res && res.data) {
+//           this.paymentData = res.data
+//         }
+//       })
+//     }
+//   }
+// }
 </script>
 
 <style lang="scss" scoped>
@@ -100,32 +99,35 @@ export default {
   // padding: 30px;
   .payment-content{
     .el-table{
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 400;
   color: #333333;
+  border-radius: 5px;
   & ::v-deep thead{
     font-size: 12px;
     font-weight: 400;
-    color: #333333;
+
   }
   & ::v-deep th{
     background: #F4F7FF;
   }
   & ::v-deep th, td{
-    border-bottom: 1px solid #CCCCCC;
-    border-right: 1px solid #CCCCCC;
+     color: #123077;
+    font-family: 'SF Pro';
+    border-bottom: 1px solid #E8EAEE;
+    border-right: 1px solid #E8EAEE;
   }
   & ::v-deep .el-table__row td{
-
-    border-bottom: 1px solid #CCCCCC;
-    border-right: 1px solid #CCCCCC;
+    font-family: 'SF Pro';
+    border-bottom: 1px solid #E8EAEE;
+    border-right: 1px solid #E8EAEE;
   }
   & ::v-deep tr td{
-    border-bottom: 1px solid #CCCCCC;
+    border-bottom: 1px solid #E8EAEE;
   }
 }
 .el-table--group, .el-table--border{
-  border: 1px solid #CCCCCC;
+  border: 1px solid #E8EAEE;
 }
   }
 }

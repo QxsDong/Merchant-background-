@@ -1,42 +1,25 @@
 <template>
   <div class="navbar">
-    <hamburger :is-active="sidebar.opened" class="hamburger-container" @toggleClick="toggleSideBar" />
+    <!-- <hamburger :is-active="sidebar.opened" class="hamburger-container" @toggleClick="toggleSideBar" /> -->
 
     <breadcrumb class="breadcrumb-container" />
-
-    <div class="right-menu">
-      <el-dropdown class="avatar-container" trigger="click">
-        <div class="avatar-wrapper">
-          <div class="avatar-wrapper-content">
-            <p>ACH官方平台</p>
-            <!-- <p>{{ name.merchantName }}</p> -->
-          </div>
-          <i class="el-icon-caret-bottom" />
-        </div>
-        <el-dropdown-menu slot="dropdown" class="user-dropdown">
-          <router-link to="/">
-            <el-dropdown-item>
-              Home
-            </el-dropdown-item>
-          </router-link>
-          <el-dropdown-item divided @click.native="logout">
-            <span style="display:block;">Log Out</span>
-          </el-dropdown-item>
-        </el-dropdown-menu>
-      </el-dropdown>
+    <div class="navbar-right">
+      <p class="right-menuTime" />
+      <img src="../../assets/logos/news.png" alt="">
     </div>
+
   </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
 import Breadcrumb from '@/components/Breadcrumb'
-import Hamburger from '@/components/Hamburger'
+// import Hamburger from '@/components/Hamburger'
 
 export default {
   components: {
-    Breadcrumb,
-    Hamburger
+    Breadcrumb
+    // Hamburger
   },
   computed: {
     ...mapGetters([
@@ -44,29 +27,27 @@ export default {
       'name'
     ])
   },
+  mounted() {
+    document.querySelector('.right-menuTime').innerHTML = new Date().toLocaleDateString()
+    this.Id = setInterval(() => {
+      var time = new Date() // 程序计时的月从0开始取值后+1
+      var m = time.getMonth() + 1
+      var t = time.getFullYear() + '-' + m + '-' +
+      time.getDate() + ' ' + this.MoreThan(time.getHours()) + ':' +
+      this.MoreThan(time.getMinutes()) + ':' + this.MoreThan(time.getSeconds())
+      document.querySelector('.right-menuTime').innerHTML = t
+    }, 1000)
+  },
+  beforeDestroy() {
+    clearInterval(this.Id)
+  },
   methods: {
-    toggleSideBar() {
-      this.$store.dispatch('app/toggleSideBar')
-    },
-    async logout() {
-      this.$confirm('Are you sure you want to quit?', 'prompt', {
-        confirmButtonText: 'determine',
-        cancelButtonText: 'cancel',
-        type: 'warning'
-      }).then(async() => {
-        await this.$store.dispatch('user/logout')
-        console.log(this.$route.fullPath)
-        this.$router.push(`/login?redirect=${this.$route.fullPath}`)
-        this.$message({
-          type: 'success',
-          message: 'Exit the success!'
-        })
-      }).catch(() => {
-        this.$message({
-          type: 'info',
-          message: 'To cancel exit'
-        })
-      })
+    MoreThan(n) {
+      if (n > 9) {
+        return n
+      } else {
+        return '0' + n
+      }
     }
   }
 }
@@ -104,61 +85,28 @@ export default {
 
   .breadcrumb-container {
     float: left;
-  }
-
-  .right-menu {
-    float: right;
-    height: 100%;
-    line-height: 50px;
-
-    &:focus {
-      outline: none;
-    }
-
-    .right-menu-item {
-      display: inline-block;
-      padding: 0 8px;
-      height: 100%;
-      font-size: 18px;
-      color: #5a5e66;
-      vertical-align: text-bottom;
-
-      &.hover-effect {
-        cursor: pointer;
-        transition: background .3s;
-
-        &:hover {
-          background: rgba(0, 0, 0, .025)
-        }
-      }
-    }
-
-    .avatar-container {
-      margin-right: 30px;
-
-      .avatar-wrapper {
-        margin-top: 5px;
-        position: relative;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-
-        .user-avatar {
-          cursor: pointer;
-          width: 40px;
-          height: 40px;
-          border-radius: 10px;
-        }
-
-        .el-icon-caret-bottom {
-          cursor: pointer;
-          position: absolute;
-          right: -10px;
-          top: 20px;
-          font-size: 12px;
-        }
-      }
+    margin-left: 35px;
+    ::v-deep .no-redirect{
+      font-family: RobotoBold;
+      font-weight: 700;
+      font-size: 16px;
+      line-height: 19px;
+      text-transform: capitalize;
+      color: #123077;
     }
   }
+.navbar-right{
+  float: right;
+  margin-right: 40px;
+  // line-height: 50px;
+  display: flex;
+  align-items: center;
+  p{
+    margin-right: 20px;
+    font-size: 14px;
+    font-family: RobotoLight;
+    color: #5A6070;
+  }
+}
 }
 </style>

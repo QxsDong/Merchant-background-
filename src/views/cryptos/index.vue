@@ -52,7 +52,7 @@
           </template>
         </el-table-column>
       </el-table>
-      <div class="payment-pagination">
+      <div v-if="total>1" class="payment-pagination">
         <el-pagination
           background
           layout="prev, pager, next, total"
@@ -67,98 +67,100 @@
 </template>
 
 <script>
-import { getMerchant, setMerchantState } from '../../api/user'
-export default {
+// import { getMerchant, setMerchantState } from '../../api/user'
+// export default {
 
-  data() {
-    return {
-      total: 0,
-      value1: false,
-      filterText: '',
-      tableHeight: 46,
-      formInline: {
-        crypto: '',
-        pageNo: 1,
-        pageSize: 20
-      },
-      paymentData: [],
-      state: 0
+//   data() {
+//     return {
+//       total: 0,
+//       value1: false,
+//       filterText: '',
+//       tableHeight: 46,
+//       formInline: {
+//         crypto: '',
+//         pageNo: 1,
+//         pageSize: 20
+//       },
+//       paymentData: [],
+//       state: 0
 
-    }
-  },
-  watch: {
-    filterText(val) {
-      this.$refs.tree2.filter(val)
-    },
-    'formInline.crypto': {
-      handler(newVal) {
-        if (!newVal) {
-          this.getCryptos()
-        }
-      },
-      deep: true
-    }
-  },
-  mounted() {
-    this.getCryptos()
-    setTimeout(() => {
-      this.tableHeight = window.innerHeight - 280
-    }, 100)
-  },
+//     }
+//   },
+//   watch: {
+//     filterText(val) {
+//       this.$refs.tree2.filter(val)
+//     },
+//     'formInline.crypto': {
+//       handler(newVal) {
+//         if (!newVal) {
+//           this.getCryptos()
+//         }
+//       },
+//       deep: true
+//     }
+//   },
+//   mounted() {
+//     this.getCryptos()
+//     setTimeout(() => {
+//       this.tableHeight = window.innerHeight - 350
+//     }, 100)
+//   },
 
-  methods: {
-    filterNode(value, data) {
-      if (!value) return true
-      return data.label.indexOf(value) !== -1
-    },
-    // get cryptos merchant data
-    getCryptos() {
-      getMerchant(this.formInline).then(res => {
-        if (res && res.data) {
-          res.data.records.forEach(item => {
-            if (item.state === 1) {
-              item.state = true
-            } else {
-              item.state = false
-            }
-          })
-          this.paymentData = res.data.records
-          this.total = res.data.total
-        }
-      })
-    },
-    // set state
-    setState(stateData) {
-      setMerchantState({ id: stateData.id, state: stateData.state ? 1 : 0 }).then(res => {
-        if (res.code === 200) {
-          this.$message({
-            type: 'success',
-            message: res.msg
-          })
-        }
-      })
-    },
-    handleCurrentChange(val) {
-      this.formInline.pageNo = val
-      this.getOrderData()
-    },
-    // search
-    searchData() {
-      // if (!this.formInline.crypto) {
-      //   this.$message({
-      //     type: 'error',
-      //     message: 'The input box cannot be empty'
-      //   })
-      //   return false
-      // }
-      this.getCryptos()
-      this.$message({
-        type: 'success',
-        message: 'Search success'
-      })
-    }
-  }
-}
+//   methods: {
+//     filterNode(value, data) {
+//       if (!value) return true
+//       return data.label.indexOf(value) !== -1
+//     },
+//     // get cryptos merchant data
+//     getCryptos() {
+//       getMerchant(this.formInline).then(res => {
+//         if (res && res.data) {
+//           res.data.records.forEach(item => {
+//             if (item.state === 1) {
+//               item.state = true
+//             } else {
+//               item.state = false
+//             }
+//           })
+
+//           this.paymentData = res.data.records
+//           this.total = res.data.total
+//           console.log(this.total)
+//         }
+//       })
+//     },
+//     // set state
+//     setState(stateData) {
+//       setMerchantState({ id: stateData.id, state: stateData.state ? 1 : 0 }).then(res => {
+//         if (res.code === 200) {
+//           this.$message({
+//             type: 'success',
+//             message: res.msg
+//           })
+//         }
+//       })
+//     },
+//     handleCurrentChange(val) {
+//       this.formInline.pageNo = val
+//       this.getOrderData()
+//     },
+//     // search
+//     searchData() {
+//       // if (!this.formInline.crypto) {
+//       //   this.$message({
+//       //     type: 'error',
+//       //     message: 'The input box cannot be empty'
+//       //   })
+//       //   return false
+//       // }
+//       this.getCryptos()
+//       this.$message({
+//         type: 'success',
+//         message: 'Search success'
+//       })
+//     }
+//   }
+// }
 </script>
 <style lang="scss" scoped>
 .el-input{
@@ -185,15 +187,19 @@ export default {
       font-size: 14px;
       font-weight: bold;
       margin: 10px 20px 0 0;
-      color: #666;
+      color: #123077;
+      font-family: RobotoBold;
     }
 .searchButton{
   height: 40px;
-      // font-family: 'Gilroy';
+      font-family: RobotoBold;
       border-radius: 0px 8px 8px 0px;
       color: #FFFFFF;
       background: #40A1FB;
       border: 1px solid #E8EAEE;
+    }
+    ::v-deep .el-input input{
+      font-family: RobotoLight;
     }
   }
   .cryptos-content{
@@ -204,13 +210,14 @@ export default {
       margin-top: 20px;
     }
     .el-table{
-  font-size: 10px;
-  font-family: Roboto-Regular, Roboto;
+  font-size: 12px;
+  font-family: 'SF Pro';
   font-weight: 400;
   color: #333333;
+  border-radius: 5px;
   & ::v-deep thead{
     font-size: 12px;
-    font-family: Roboto-Regular, Roboto;
+    font-family: 'SF Pro';
     font-weight: 400;
     color: #333333;
   }
@@ -218,16 +225,17 @@ export default {
     background: #F4F7FF;
   }
   & ::v-deep th, td{
-    border-bottom: 1px solid #CCCCCC;
-    border-right: 1px solid #CCCCCC;
+    color: #123077;
+    border-bottom: 1px solid #E8EAEE;
+    border-right: 1px solid #E8EAEE;
   }
   & ::v-deep .el-table__row td{
 
-    border-bottom: 1px solid #CCCCCC;
-    border-right: 1px solid #CCCCCC;
+    border-bottom: 1px solid #E8EAEE;
+    border-right: 1px solid #E8EAEE;
   }
   & ::v-deep tr td{
-    border-bottom: 1px solid #CCCCCC;
+    border-bottom: 1px solid #E8EAEE;
   }
 }
 .el-table--group, .el-table--border{
