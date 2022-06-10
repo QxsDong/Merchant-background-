@@ -36,6 +36,12 @@ export const constantRoutes = [
     component: () => import('@/views/login/index'),
     hidden: true
   },
+  {
+    path: '/enroll',
+    component: () => import('@/views/enroll/index'),
+    hidden: true,
+    meta: { title: 'Individual Applicati' }
+  },
 
   {
     path: '/404',

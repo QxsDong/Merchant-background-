@@ -4,14 +4,16 @@
       <p :class="active==1?'active':''" @click="active=1">买币</p>
       <p :class="active==2?'active':''" @click="active=2">卖币</p>
     </div>
+    <!-- 买币 -->
     <div v-if="active==1" class="offRamp-content">
       <div class="offRamp-conTop">
         <div :class="active1==1?'active':''" @click="active1=1">买币币种</div>
         <div :class="active1==2?'active':''" @click="active1=2">收款方式</div>
       </div>
-      <div class="offRamp-con">
+      <div v-if="active1==1" class="offRamp-con">
         <el-table
           ref="table"
+          key="1"
           :height="tableHeight"
           :data="paymentData.result"
           border
@@ -19,7 +21,7 @@
         >
           <el-table-column
 
-            label="收款方式"
+            label="Crypro"
             align="center"
           >
             <template slot-scope="scope">
@@ -31,23 +33,18 @@
             </template>
           </el-table-column>
           <el-table-column
-            prop="sellEnable"
-            label="收款币种"
+            prop="network"
+            label="Network"
             align="center"
           />
           <el-table-column
             prop="network"
-            label="network"
+            label="Price From"
             align="center"
           />
           <el-table-column
             prop="price"
-            label="Price"
-            align="center"
-          />
-          <el-table-column
-            prop="sellEnable"
-            label="fee"
+            label="提现手续费"
             align="center"
           />
           <el-table-column
@@ -73,17 +70,143 @@
           />
         </div> -->
       </div>
+      <div v-else class="offRamp-con">
+        <el-table
+          ref="table"
+          key="2"
+          :height="tableHeight"
+          :data="paymentData.result"
+          border
+          :lazy="true"
+        >
+          <el-table-column
+
+            label="收款方式"
+            align="center"
+          >
+            <template slot-scope="scope">
+              <el-popover placement="top-start" title="" trigger="hover" style="margin-right:20px">
+                <img :src="scope.row.logoUrl" alt="" style="width: 150px;height: 150px">
+                <img slot="reference" :src="scope.row.logoUrl" style="width: 30px;height: 30px;">
+              </el-popover>
+              <span style="position: absolute;top:15px">{{ scope.row.name }}</span>
+            </template>
+          </el-table-column>
+          <el-table-column
+            prop="sellEnable"
+            label="收款币种"
+            align="center"
+          />
+          <el-table-column
+            prop="network"
+            label="结算币种"
+            align="center"
+          />
+          <el-table-column
+            prop="price"
+            label="Fee"
+            align="center"
+          />
+          <el-table-column
+            prop="price"
+            label="Settlement Period"
+            align="center"
+          />
+          <el-table-column
+            label="Action"
+            align="center"
+          >
+            <template slot-scope="scope">
+              <el-switch
+                v-model="scope.row.buyEnable"
+              />
+            <!-- <el-button type="text" size="small" style="font-weight: bold">Detail</el-button> -->
+            </template>
+          </el-table-column>
+        </el-table>
+        <!-- <div v-if="total>1" class="payment-pagination">
+          <el-pagination
+            background
+            layout="prev, pager, next, total"
+            :current-page="formInline.pageNo"
+            :page-size="formInline.pageSize"
+            :total="total"
+            @current-change="handleCurrentChange"
+          />
+        </div> -->
+      </div>
     </div>
+    <!-- 卖币 -->
     <div v-if="active==2" class="offRamp-content">
       <div class="offRamp-conTop">
         <div :class="active1==1?'active':''" @click="active1=1">买币币种</div>
         <div :class="active1==2?'active':''" @click="active1=2">收款方式</div>
       </div>
-      <div class="offRamp-con">
+      <div v-if="active1==1" class="offRamp-con">
         <el-table
           ref="table"
+          key="3"
           :height="tableHeight"
+          :data="paymentData1.result"
+          border
+          :lazy="true"
+        >
+          <el-table-column
 
+            label="Crypro"
+            align="center"
+          >
+            <template slot-scope="scope">
+              <el-popover placement="top-start" title="" trigger="hover" style="margin-right:20px">
+                <img :src="scope.row.logoUrl" alt="" style="width: 150px;height: 150px">
+                <img slot="reference" :src="scope.row.logoUrl" style="width: 30px;height: 30px;">
+              </el-popover>
+              <span style="position: absolute;top:15px">{{ scope.row.name }}</span>
+            </template>
+          </el-table-column>
+          <el-table-column
+            prop="network"
+            label="Network"
+            align="center"
+          />
+          <el-table-column
+            prop="network"
+            label="Price From"
+            align="center"
+          />
+          <el-table-column
+            prop="sellEnable"
+            label="提现手续费"
+            align="center"
+          />
+          <el-table-column
+            label="action"
+            align="center"
+          >
+            <template slot-scope="scope">
+              <el-switch
+                v-model="scope.row.buyEnable"
+              />
+            <!-- <el-button type="text" size="small" style="font-weight: bold">Detail</el-button> -->
+            </template>
+          </el-table-column>
+        </el-table>
+        <!-- <div v-if="total>1" class="payment-pagination">
+          <el-pagination
+            background
+            layout="prev, pager, next, total"
+            :current-page="formInline.pageNo"
+            :page-size="formInline.pageSize"
+            :total="total"
+            @current-change="handleCurrentChange"
+          />
+        </div> -->
+      </div>
+      <div v-else class="offRamp-con">
+        <el-table
+          ref="table"
+          key="4"
+          :height="tableHeight"
           border
           :lazy="true"
         >
@@ -162,7 +285,38 @@ export default {
         ],
         'totalPage': 9
       },
-
+      paymentData1: {
+        'total': 89,
+        'pageIndex': 1,
+        'result': [
+          {
+            'name': 'ACH',
+            'fullName': 'Alchemy Pay',
+            'network': 'BSC',
+            'price': 1.83000000,
+            'logoUrl': 'https://alchemywalletdownload.oss-cn-hongkong.aliyuncs.com/alchemypay/crypto-images/1INCH.svg',
+            'buyEnable': 1, // 1-是，0-否
+            'sellEnable': 1
+          },
+          {
+            'name': 'AAVE',
+            'fullName': 'Aave',
+            'network': 'ETH',
+            'logoUrl': 'https://alchemywalletdownload.oss-cn-hongkong.aliyuncs.com/alchemypay/crypto-images/AAVE.svg',
+            'buyEnable': 1,
+            'sellEnable': 1
+          },
+          {
+            'name': 'ACH',
+            'fullName': 'Alchemy Pay',
+            'network': 'ETH',
+            'logoUrl': 'https://alchemywalletdownload.oss-cn-hongkong.aliyuncs.com/alchemypay/crypto-images/ACH.svg',
+            'buyEnable': 1,
+            'sellEnable': 1
+          }
+        ],
+        'totalPage': 9
+      },
       tableHeight: 46
     }
   },
@@ -266,12 +420,14 @@ export default {
                 background: #F4F7FF;
               }
               & ::v-deep th, td{
+                height: 45px;
                 color: #123077;
                 border-bottom: 1px solid #E8EAEE;
                 border-right: 1px solid #E8EAEE;
               }
               & ::v-deep .el-table__row td{
-
+                height: 45px;
+                padding: 10px;
                 border-bottom: 1px solid #E8EAEE;
                 border-right: 1px solid #E8EAEE;
               }

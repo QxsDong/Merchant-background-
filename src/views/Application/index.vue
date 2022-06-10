@@ -66,7 +66,7 @@
           </template>
         </el-table-column>
       </el-table>
-      <div v-if="total>1" class="payment-pagination">
+      <!-- <div v-if="total>1" class="payment-pagination">
         <el-pagination
           background
           layout="prev, pager, next, total"
@@ -75,7 +75,7 @@
           :total="total"
           @current-change="handleCurrentChange"
         />
-      </div>
+      </div> -->
     </div>
     <router-view />
   </div>
@@ -101,7 +101,7 @@ export default {
   methods: {
     handleClick(val) {
       this.$router.push('/Application/collction')
-      console.log(val)
+      // console.log(val)
     }
   }
 }

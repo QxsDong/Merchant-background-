@@ -5,7 +5,8 @@
         <p>Crypto收单</p>
         <span v-if="state==1" class="Activated">Activated</span>
         <div v-else-if="state==2" class="Applying">Applying...</div>
-        <div v-else class="Unopened">Unopened</div>
+        <!-- <div v-else class="Unopened">Unopened</div> -->
+        <div v-else class="Activated">Not developed...</div>
       </div>
       <div class="ability-con">
         With Crypto Acquiring Products, your customers can use digital currency to buy on your website Services or products; we can settle USDT or fiat to you.
@@ -21,8 +22,8 @@
         <p v-if="state==2">You can contact email: xxx to check the approval progress</p>
       </div>
       <div v-if="state==3" class="ability-tottom">
-        <el-button type="primary" class="allocation">申请</el-button>
-        <el-button class="TryButton">Try it now</el-button>
+        <el-button type="primary" class="allocation" disabled>暂不开放</el-button>
+        <el-button class="TryButton" disabled>Try it now</el-button>
       </div>
     </div>
     <div class="ability-content">
@@ -30,10 +31,11 @@
         <p>法币收单</p>
         <span v-if="state1==1" class="Activated">Activated</span>
         <div v-else-if="state1==2" class="Applying">Applying...</div>
-        <div v-else class="Unopened">Unopened</div>
+        <!-- <div v-else class="Unopened">Unopened</div> -->
+        <div v-else class="Activated">Not developed...</div>
       </div>
       <div class="ability-con">
-        With Crypto Acquiring Products, your customers can use digital currency to buy on your website Services or products; we can settle USDT or fiat to you.
+        Provide credit card collection channels, local payment in Indonesia, local payment in Mexico and other payment channels.
       </div>
       <div v-if="state1==1" class="ability-tottom">
         <el-button type="primary" class="allocation">查看配置</el-button>
@@ -46,8 +48,8 @@
         <p v-if="state1==2">You can contact email: xxx to check the approval progress</p>
       </div>
       <div v-if="state1==3" class="ability-tottom">
-        <el-button type="primary" class="allocation">申请</el-button>
-        <el-button class="TryButton">Try it now</el-button>
+        <el-button type="primary" class="allocation" disabled>暂不开放</el-button>
+        <el-button class="TryButton" disabled>Try it now</el-button>
       </div>
     </div>
     <div class="ability-content">
@@ -58,7 +60,8 @@
         <div v-else class="Unopened">Unopened</div>
       </div>
       <div class="ability-con">
-        With Crypto Acquiring Products, your customers can use digital currency to buy on your website Services or products; we can settle USDT or fiat to you.
+        With this capability, you can help your users purchase various digital currencies with fiat, or your
+        Users can also sell various digital currencies on this platform to obtain legal currency.
       </div>
       <div v-if="state2==1" class="ability-tottom">
         <el-button type="primary" class="allocation" @click="$router.push('/ability/index/ramp')">查看配置</el-button>
@@ -85,8 +88,8 @@ export default {
   name: 'Ability',
   data() {
     return {
-      state: 1,
-      state1: 2,
+      state: 3,
+      state1: 3,
       state2: 1,
       isShow: false
     }
@@ -174,7 +177,12 @@ export default {
         color: #5A6070;
         line-height: 20px;
         padding: 20px 0 0 0;
-        text-align: justify;
+        word-break: keep-all;
+        // word-wrap: break-word; // 只对英文起作用，以单词作为换行依据。
+        // white-space: pre-wrap; //只对中文起作用，强制换行。
+        text-align:justify;  //css英文语句的两端对齐：
+        text-justify:inter-ideograph;
+        // letter-spacing: .5px;
       }
       .ability-tottom{
         width: 100%;
@@ -191,7 +199,7 @@ export default {
         .allocation{
           width: 130px;
           height: 40px;
-          background: #40A1FB;
+          // background: #40A1FB;
           border-radius: 6px;
           font-family: RobotoBold;
           font-weight: 800;

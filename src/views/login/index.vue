@@ -47,7 +47,7 @@
               <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
             </span>
           </el-form-item>
-
+          <p class="enroll">No account?<span @click="$router.push('/enroll')"> GO to Apply</span></p>
           <el-button :loading="loading" type="primary" class="loginButton" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">Sign In</el-button>
 
           <!-- <div class="tips">
@@ -158,6 +158,20 @@ $cursor: #999;
 }
 
 /* reset element-ui css */
+.enroll{
+ font-size: 16px;
+  font-family:  SF  Pro;
+  font-weight: 400;
+  color: #5A6070;
+  line-height: 19px;
+  position: relative;
+    top: -20px;
+  span{
+    color: #0193F2FF;
+    cursor: pointer;
+
+  }
+}
 .login-container {
   width: 100%;
   display: flex;
