@@ -7,7 +7,8 @@ const getDefaultState = () => {
     token: getToken(),
     name: '',
     avatar: '',
-    searchData: ''
+    abilityData: ''
+
   }
 }
 
@@ -21,7 +22,7 @@ const mutations = {
     state.token = data.token
   },
   SET_NAME: (state, name) => {
-    state.name = name
+    state.name = name.data.merchantNo
   },
   SET_AVATAR: (state, avatar) => {
     state.avatar = avatar

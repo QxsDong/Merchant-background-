@@ -1,11 +1,11 @@
 <template>
   <div class="offRamp-container">
     <div class="offRamp-title">
-      <p :class="active==1?'active':''" @click="active=1">买币</p>
-      <p :class="active==2?'active':''" @click="active=2">卖币</p>
+      <p :class="buySell==1?'active':''" @click="buySell=1">买币</p>
+      <p :class="buySell==2?'active':''" @click="buySell=2">卖币</p>
     </div>
     <!-- 买币 -->
-    <div v-if="active==1" class="offRamp-content">
+    <div v-if="buySell==1" class="offRamp-content">
       <div class="offRamp-conTop">
         <div :class="active1==1?'active':''" @click="active1=1">买币币种</div>
         <div :class="active1==2?'active':''" @click="active1=2">收款方式</div>
@@ -15,12 +15,11 @@
           ref="table"
           key="1"
           :height="tableHeight"
-          :data="paymentData.result"
+          :data="paymentData"
           border
           :lazy="true"
         >
           <el-table-column
-
             label="Crypro"
             align="center"
           >
@@ -29,7 +28,7 @@
                 <img :src="scope.row.logoUrl" alt="" style="width: 150px;height: 150px">
                 <img slot="reference" :src="scope.row.logoUrl" style="width: 30px;height: 30px;">
               </el-popover>
-              <span style="position: absolute;top:15px">{{ scope.row.name }}</span>
+              <span style="position: absolute;top:15px">{{ scope.row.crypto }}</span>
             </template>
           </el-table-column>
           <el-table-column
@@ -38,12 +37,12 @@
             align="center"
           />
           <el-table-column
-            prop="network"
+            prop="channel"
             label="Price From"
             align="center"
           />
           <el-table-column
-            prop="price"
+            prop="networkFee"
             label="提现手续费"
             align="center"
           />
@@ -54,21 +53,13 @@
             <template slot-scope="scope">
               <el-switch
                 v-model="scope.row.buyEnable"
+                @change="setBuySell(scope.row.buyEnable==true?1:0)"
               />
             <!-- <el-button type="text" size="small" style="font-weight: bold">Detail</el-button> -->
             </template>
           </el-table-column>
         </el-table>
-        <!-- <div v-if="total>1" class="payment-pagination">
-          <el-pagination
-            background
-            layout="prev, pager, next, total"
-            :current-page="formInline.pageNo"
-            :page-size="formInline.pageSize"
-            :total="total"
-            @current-change="handleCurrentChange"
-          />
-        </div> -->
+
       </div>
       <div v-else class="offRamp-con">
         <el-table
@@ -108,11 +99,6 @@
             align="center"
           />
           <el-table-column
-            prop="price"
-            label="Settlement Period"
-            align="center"
-          />
-          <el-table-column
             label="Action"
             align="center"
           >
@@ -137,17 +123,17 @@
       </div>
     </div>
     <!-- 卖币 -->
-    <div v-if="active==2" class="offRamp-content">
+    <div v-if="buySell==2" class="offRamp-content">
       <div class="offRamp-conTop">
-        <div :class="active1==1?'active':''" @click="active1=1">买币币种</div>
-        <div :class="active1==2?'active':''" @click="active1=2">收款方式</div>
+        <div :class="active1==1?'active':''" @click="active1=1">卖币币种</div>
+        <div :class="active1==2?'active':''" @click="active1=2">出款方式</div>
       </div>
       <div v-if="active1==1" class="offRamp-con">
         <el-table
           ref="table"
           key="3"
           :height="tableHeight"
-          :data="paymentData1.result"
+          :data="paymentData1"
           border
           :lazy="true"
         >
@@ -161,7 +147,7 @@
                 <img :src="scope.row.logoUrl" alt="" style="width: 150px;height: 150px">
                 <img slot="reference" :src="scope.row.logoUrl" style="width: 30px;height: 30px;">
               </el-popover>
-              <span style="position: absolute;top:15px">{{ scope.row.name }}</span>
+              <span style="position: absolute;top:15px">{{ scope.row.crypto }}</span>
             </template>
           </el-table-column>
           <el-table-column
@@ -170,12 +156,12 @@
             align="center"
           />
           <el-table-column
-            prop="network"
+            prop="channel"
             label="Price From"
             align="center"
           />
           <el-table-column
-            prop="sellEnable"
+            prop="networkFee"
             label="提现手续费"
             align="center"
           />
@@ -191,16 +177,7 @@
             </template>
           </el-table-column>
         </el-table>
-        <!-- <div v-if="total>1" class="payment-pagination">
-          <el-pagination
-            background
-            layout="prev, pager, next, total"
-            :current-page="formInline.pageNo"
-            :page-size="formInline.pageSize"
-            :total="total"
-            @current-change="handleCurrentChange"
-          />
-        </div> -->
+
       </div>
       <div v-else class="offRamp-con">
         <el-table
@@ -232,98 +209,80 @@
           />
 
         </el-table>
-        <!-- <div v-if="total>1" class="payment-pagination">
-          <el-pagination
-            background
-            layout="prev, pager, next, total"
-            :current-page="formInline.pageNo"
-            :page-size="formInline.pageSize"
-            :total="total"
-            @current-change="handleCurrentChange"
-          />
-        </div> -->
       </div>
+    </div>
+    <div v-if="total>1" class="payment-pagination">
+      <el-pagination
+        background
+        layout="prev, pager, next, total"
+        :current-page="pageIndex"
+        :page-size="pageSize"
+        :total="total"
+        @current-change="handleCurrentChange"
+      />
     </div>
   </div>
 </template>
 <script>
+import { getCryptoList, setCryptoState } from '@/api/user'
 export default {
   name: 'OffRamp',
   data() {
     return {
-      active: 1,
+      buySell: 1,
       active1: 1,
-      paymentData: {
-        'total': 89,
-        'pageIndex': 1,
-        'result': [
-          {
-            'name': 'ACH',
-            'fullName': 'Alchemy Pay',
-            'network': 'BSC',
-            'price': 1.83000000,
-            'logoUrl': 'https://alchemywalletdownload.oss-cn-hongkong.aliyuncs.com/alchemypay/crypto-images/1INCH.svg',
-            'buyEnable': 1, // 1-是，0-否
-            'sellEnable': 1
-          },
-          {
-            'name': 'AAVE',
-            'fullName': 'Aave',
-            'network': 'ETH',
-            'logoUrl': 'https://alchemywalletdownload.oss-cn-hongkong.aliyuncs.com/alchemypay/crypto-images/AAVE.svg',
-            'buyEnable': 1,
-            'sellEnable': 1
-          },
-          {
-            'name': 'ACH',
-            'fullName': 'Alchemy Pay',
-            'network': 'ETH',
-            'logoUrl': 'https://alchemywalletdownload.oss-cn-hongkong.aliyuncs.com/alchemypay/crypto-images/ACH.svg',
-            'buyEnable': 1,
-            'sellEnable': 1
-          }
-        ],
-        'totalPage': 9
-      },
-      paymentData1: {
-        'total': 89,
-        'pageIndex': 1,
-        'result': [
-          {
-            'name': 'ACH',
-            'fullName': 'Alchemy Pay',
-            'network': 'BSC',
-            'price': 1.83000000,
-            'logoUrl': 'https://alchemywalletdownload.oss-cn-hongkong.aliyuncs.com/alchemypay/crypto-images/1INCH.svg',
-            'buyEnable': 1, // 1-是，0-否
-            'sellEnable': 1
-          },
-          {
-            'name': 'AAVE',
-            'fullName': 'Aave',
-            'network': 'ETH',
-            'logoUrl': 'https://alchemywalletdownload.oss-cn-hongkong.aliyuncs.com/alchemypay/crypto-images/AAVE.svg',
-            'buyEnable': 1,
-            'sellEnable': 1
-          },
-          {
-            'name': 'ACH',
-            'fullName': 'Alchemy Pay',
-            'network': 'ETH',
-            'logoUrl': 'https://alchemywalletdownload.oss-cn-hongkong.aliyuncs.com/alchemypay/crypto-images/ACH.svg',
-            'buyEnable': 1,
-            'sellEnable': 1
-          }
-        ],
-        'totalPage': 9
-      },
-      tableHeight: 46
+      paymentData: [],
+      paymentData1: [],
+      tableHeight: 46,
+      pageIndex: 1,
+      pageSize: 10,
+      total: 0
+    }
+  },
+  watch: {
+    buySell(newVal, oldVal) {
+      if (newVal !== oldVal) {
+        this.pageIndex = 1
+        this.MerchantList()
+      }
     }
   },
   mounted() {
     setTimeout(() => {
       this.tableHeight = window.innerHeight - 390
     }, 100)
+    this.MerchantList()
+  },
+  methods: {
+    MerchantList() {
+      console.log(this.pageIndex)
+      const params = {
+        'merchantAppId': this.$route.query.merchantAppId,
+        'pageIndex': this.pageIndex,
+        'pageSize': 10,
+        'side': this.buySell
+      }
+      getCryptoList(params).then(res => {
+        if (res.returnCode === '0000' && res.data) {
+          if (this.buySell === 1) {
+            this.paymentData = res.data.result
+            this.total = res.data.total
+            return
+          } else {
+            this.paymentData1 = res.data.result
+            this.total = res.data.total
+          }
+        }
+      })
+      // getMerchantAddList(params).then(res => {
+      //   console.log(res)
+      // })
+    },
+
+    handleCurrentChange(val) {
+      this.pageIndex = val
+      this.MerchantList()
+    }
   }
 }
 </script>
@@ -420,22 +379,47 @@ export default {
                 background: #F4F7FF;
               }
               & ::v-deep th, td{
-                height: 45px;
+
                 color: #123077;
                 border-bottom: 1px solid #E8EAEE;
                 border-right: 1px solid #E8EAEE;
               }
               & ::v-deep .el-table__row td{
                 height: 45px;
-                padding: 10px;
                 border-bottom: 1px solid #E8EAEE;
                 border-right: 1px solid #E8EAEE;
+
               }
               & ::v-deep tr td{
+                padding:  10px 0 0 0 ;
                 border-bottom: 1px solid #E8EAEE;
               }
             }
         }
       }
+  }
+  .payment-pagination{
+    display: flex;
+    justify-content: center;
+    position: relative;
+    top: -35px;
+    z-index: 999;
+    ::v-deep .number{
+      background: #FFFFFF;
+      font-family: 'SF Pro';
+      color: #9AA8C3;
+      font-size: 12px;
+    }
+    ::v-deep .btn-prev{
+      background: #FFFFFF;
+    }
+    ::v-deep .btn-next{
+      background: #FFFFFF;
+    }
+    ::v-deep .el-pagination__total{
+      font-family: 'SF Pro';
+      color: #9AA8C3;
+      font-size: 12px;
+    }
   }
 </style>

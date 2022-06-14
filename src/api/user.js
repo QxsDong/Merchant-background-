@@ -41,3 +41,56 @@ export function logout() {
     method: 'get'
   })
 }
+export function maechantInit() {
+  return request({
+    url: '/apply/init',
+    method: 'get'
+  })
+}
+// 申请提交列表
+export function createMerchant(data) {
+  return request({
+    url: '/apply/create',
+    method: 'post',
+    data
+  })
+}
+// 获取app配置列表
+export function merchantList() {
+  return request({
+    url: '/app/list',
+    method: 'get'
+  })
+}
+// 查看app
+export function getApplication(data) {
+  return request({
+    url: '/app/10005',
+    method: 'GET',
+    data
+  })
+}
+// 修改商户app信息
+export function setApplication(data) {
+  return request({
+    url: '/app/10005',
+    method: 'post',
+    data
+  })
+}
+// 能力管理列表
+export function getCryptoList(data) {
+  return request({
+    url: '/crypto/list',
+    method: 'GET',
+    params: { ...data }
+  })
+}
+// 设置状态
+export function setCryptoState(data) {
+  return request({
+    url: 'crypto/23',
+    method: 'GET',
+    params: { ...data }
+  })
+}

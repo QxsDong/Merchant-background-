@@ -10,36 +10,36 @@
         :cell-style="{padding: '4px 0 4px 0'}"
       >
         <el-table-column
-          prop="Application"
+          prop="appName"
           label="Application Name"
           align="center"
           width="140"
         />
         <el-table-column
-          prop="transactionTime"
+          prop="appId"
           label="App ID"
           align="center"
           width="160"
         />
         <el-table-column
-          prop="address"
+          prop="appSecrete"
           label="Secret"
           align="center"
           width="100"
         />
         <el-table-column
-          prop="fiat"
+          prop="productCode"
           label="Product"
           align="center"
           width="110"
         />
         <el-table-column
-          prop="fee"
+          prop="callbackUrl"
           label="Callback Address"
           align="center"
         />
         <el-table-column
-          prop="crypto"
+          prop="ipConfig"
           label="IP Address"
           align="center"
         />
@@ -49,11 +49,14 @@
           prop="network"
         />
         <el-table-column
-          prop="email"
           label="State"
           align="center"
           width="100"
-        />
+        >
+          <template slot-scope="scope">
+            {{ scope.row.status==1?'启用':'禁用' }}
+          </template>
+        </el-table-column>
         <el-table-column
           prop="email"
           label="Operate"
@@ -62,7 +65,7 @@
         >
           <template slot-scope="scope">
             <el-button type="text" size="small" @click="handleClick(scope.row)">查看</el-button>
-            <el-button type="text" size="small">编辑</el-button>
+            <el-button type="text" size="small">{{ scope.row.status==1?'失效':'生效' }}</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -81,6 +84,8 @@
   </div>
 </template>
 <script>
+
+import { merchantList } from '../../api/user'
 export default {
   name: 'Application',
   data() {
@@ -97,10 +102,28 @@ export default {
     setTimeout(() => {
       this.tableHeight = window.innerHeight - 300
     }, 100)
+    merchantList().then(res => {
+      if (res.returnCode === '0000' && res.data) {
+        this.paymentData = res.data
+        res.data.forEach(item => {
+          if (item.productCode === '80001') {
+            console.log(item)
+            this.$store.state.productCode = item.merchantAppId
+          }
+        })
+      }
+    })
   },
   methods: {
     handleClick(val) {
-      this.$router.push('/Application/collction')
+      // console.log(val)
+      this.$router.push({
+        path: '/Application/collction',
+        query: {
+          id: val.merchantAppId
+        }
+
+      })
       // console.log(val)
     }
   }

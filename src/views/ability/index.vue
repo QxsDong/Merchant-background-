@@ -64,7 +64,7 @@
         Users can also sell various digital currencies on this platform to obtain legal currency.
       </div>
       <div v-if="state2==1" class="ability-tottom">
-        <el-button type="primary" class="allocation" @click="$router.push('/ability/index/ramp')">查看配置</el-button>
+        <el-button type="primary" class="allocation" @click="goContent">查看配置</el-button>
         <el-button class="TryButton">Try it now</el-button>
       </div>
       <div v-if="state2==2" class="ability-tottom1">
@@ -84,6 +84,7 @@
   </div>
 </template>
 <script>
+
 export default {
   name: 'Ability',
   data() {
@@ -91,14 +92,26 @@ export default {
       state: 3,
       state1: 3,
       state2: 1,
-      isShow: false
+      isShow: false,
+      abilty: ''
     }
+  },
+  mounted() {
   },
   methods: {
     goContent() {
       this.isShow = true
-      this.$router.push('/ability/index/crypto')
+      this.$router.push({ path: '/ability/index/ramp', query: {
+        merchantAppId: this.$store.state.productCode
+      }})
+      // this.$router.push({
+      //   path: '/ability/index/crypto',
+      //   query: {
+      //     merchantAppId: this.$store.state.productCode
+      //   }
+      // })
     }
+
   }
 }
 </script>

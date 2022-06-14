@@ -5,7 +5,7 @@
         <div class="sidebar_log-top">
           <img src="../../../assets/logos/Merchant.svg" alt="">
           <div>
-            <p>dsadsa</p>
+            <p>{{ name }}</p>
             <p>dsadsa</p>
           </div>
           <img src="../../../assets/logos/ic_logout.png" alt="" @click="logout">

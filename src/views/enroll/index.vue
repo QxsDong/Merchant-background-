@@ -38,22 +38,40 @@
             <p>Submit Application</p>
           </div>
         </div>
-        <Basic />
+        <Basic v-if="state==1" :biz-type="bizType" />
+        <SelectCity v-else-if="state==2" :fiat-pay-in="fiatPayIn" />
+        <Successful v-else />
       </div>
+
     </div>
   </div>
 </template>
 <script >
 import Basic from './components/Basic'
+import SelectCity from './components/selectCity.vue'
+import Successful from './components/successful.vue'
+import { maechantInit } from '../../api/user'
 export default {
   name: 'Enroll',
   components: {
-    Basic
+    Basic,
+    SelectCity,
+    Successful
   },
   data() {
     return {
-      state: 2
+      state: 1,
+      bizType: '',
+      fiatPayIn: ''
     }
+  },
+  mounted() {
+    maechantInit().then(res => {
+      if (res.returnCode === '0000' && res.data) {
+        this.bizType = res.data.bizType
+        this.fiatPayIn = res.data.fiatPayIn
+      }
+    })
   }
 
 }

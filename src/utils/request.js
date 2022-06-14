@@ -18,12 +18,12 @@ service.interceptors.request.use(
     // const { code } = config.data
     // console.log(code)
 
-    if (store.getters.token) {
-      // let each request carry token
-      // ['X-Token'] is a custom headers key
-      // please modify it according to the actual situation
-      config.headers['Authorization'] = getToken()
-    }
+    // if (store.getters.token) {
+    // let each request carry token
+    // ['X-Token'] is a custom headers key
+    // please modify it according to the actual situation
+    config.headers['Authorization'] = getToken()
+    // }
     return config
   },
   error => {
@@ -47,8 +47,9 @@ service.interceptors.response.use(
    */
   response => {
     const res = response.data
+    // console.log(response)
     // if the custom code is not 20000, it is judged as an error.
-    if (res.returnCode !== '0000') {
+    if (response.status !== 200) {
       Message({
         message: res.msg || 'Error',
         type: 'error',
@@ -83,5 +84,4 @@ service.interceptors.response.use(
     return Promise.reject(error)
   }
 )
-
 export default service

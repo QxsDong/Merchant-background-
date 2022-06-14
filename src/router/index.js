@@ -97,7 +97,7 @@ export const constantRoutes = [
       path: '/Application',
       name: 'Application',
       component: () => import('@/views/Application/index'),
-      meta: { title: 'Application', icon: 'over', icon1: 'iconRight', Images: require('@/assets/menu-images/over.png'), ImgActive: require('@/assets/menu-images/overSelect.png'), active: true },
+      meta: { title: 'Application', icon: 'over', icon1: 'iconRight', Images: require('@/assets/menu-images/applic.png'), ImgActive: require('@/assets/menu-images/applicSelect.png'), active: true },
       children: [
         {
           path: '/Application/collction',
@@ -116,7 +116,7 @@ export const constantRoutes = [
         path: '/ability/index',
         name: 'Ability',
         component: () => import('@/views/ability/index'),
-        meta: { title: 'Ability', icon: 'payment', icon1: 'iconRight', Images: require('@/assets/menu-images/mine.png'), ImgActive: require('@/assets/menu-images/mineSelect.png'), active: false },
+        meta: { title: 'Ability', icon: 'payment', icon1: 'iconRight', Images: require('@/assets/menu-images/ability.png'), ImgActive: require('@/assets/menu-images/abilitySelect.png'), active: false },
         children: [
           {
             path: '/ability/index/ramp',

@@ -4,39 +4,39 @@
       <div class="collection-title">ACH Collection <span style="font-size: 10px;font-family: SF  Pro;color: #40A1FB;margin-left:40px">API 文档</span></div>
       <div class="collection-content">
 
-        <el-form-item label="Product Capability" prop="name" class="collection-con">
-          <el-input v-model="ruleForm.name" :disabled="true" />
+        <el-form-item label="Product Capability" class="collection-con">
+          <el-input v-model="ruleForm.productCode" :disabled="true" />
         </el-form-item>
-        <el-form-item label="APP ID" prop="name" class="collection-con">
-          <el-input v-model="ruleForm.name" :disabled="true" />
+        <el-form-item label="APP ID" class="collection-con">
+          <el-input v-model="ruleForm.appId" :disabled="true" />
         </el-form-item>
-        <el-form-item label="Secret" prop="name" class="collection-con">
-          <el-input v-model="ruleForm.name" :disabled="Edit" />
+        <el-form-item label="Secret" prop="appSecrete" class="collection-con">
+          <el-input v-model="ruleForm.appSecrete" :disabled="Edit" />
           <span @click="Edit=!Edit">Edit</span>
         </el-form-item>
-        <el-form-item label="Noticeurl" prop="name" class="collection-con">
-          <el-input v-model="ruleForm.name" :disabled="Edit1" />
+        <el-form-item label="Noticeurl" prop="noticeUrl" class="collection-con">
+          <el-input v-model="ruleForm.noticeUrl" :disabled="Edit1" />
           <span @click="Edit1=!Edit1">Edit</span>
         </el-form-item>
-        <el-form-item label="Public key" prop="name" class="collection-con">
-          <el-input v-model="ruleForm.name" :disabled="true" />
+        <el-form-item label="Public key" class="collection-con">
+          <el-input v-model="ruleForm.publicKey" :disabled="true" />
         </el-form-item>
-        <el-form-item label="Private key" prop="name" class="collection-con">
-          <el-input v-model="ruleForm.name" :disabled="true" />
+        <el-form-item label="Private key" class="collection-con">
+          <el-input v-model="ruleForm.Privatekey" :disabled="true" />
         </el-form-item>
       </div>
 
       <p class="collection_prompt "><img style="margin-right: 10px" src="@/assets/logos/GroupIcon.png" alt="">当在订单中传入Noticeurl时，以订单上的Noticeurl为准。</p>
       <div class="collection-title" style="margin:38px 0 0 0px">IP Settings</div>
-      <el-form-item prop="resource" hide-required-asterisk="false" class="coll-radio">
-        <el-radio-group v-model="ruleForm.resource">
-          <el-radio :label="0">Can accept API calls from any IP</el-radio>
-          <el-radio :label="1">Can only accept API calls from a specific IP</el-radio>
+      <el-form-item class="coll-radio">
+        <el-radio-group v-model="resource">
+          <el-radio label="1" :disabled="ruleForm.ipConfig?true:false">Can accept API calls from any IP</el-radio>
+          <el-radio label="2" disabled>Can only accept API calls from a specific IP</el-radio>
         </el-radio-group>
       </el-form-item>
-      <el-form-item prop="desc">
+      <el-form-item prop="ipConfig">
         <div style="height:70px;overflow:hidden">
-          <el-input v-model="ruleForm.desc" :disabled="ruleForm.resource==0?true:false" type="textarea" />
+          <el-input v-model="ruleForm.ipConfig" :disabled="resource=='2'?true:false" type="textarea" />
         </div>
       </el-form-item>
       <el-form-item>
@@ -47,41 +47,65 @@
   </div>
 </template>
 <script>
+import { getApplication, setApplication } from '@/api/user'
 export default {
   data() {
     return {
       Edit1: true,
       Edit: true,
       input: '',
+      resource: '1',
       ruleForm: {
-        name: '',
-
+        productCode: '',
+        noticeUrl: '',
+        appId: '',
+        appSecrete: '',
+        publicKey: '',
+        Privatekey: '',
         delivery: false,
-        resource: 0,
         desc: ''
       },
       rules: {
-        name: [
-          { required: true, message: '请输入活动名称', trigger: 'blur' },
-          { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
+        appSecrete: [
+          { required: true, message: 'Secret cannot be empty', trigger: 'blur' }
         ],
-        resource: [
-          { required: true, message: '请选择活动资源', trigger: 'change' }
-        ],
-        desc: [
-          { required: true, message: '请填写活动形式', trigger: 'blur' }
+        // noticeUrl: [
+        //   { required: true, message: 'Noticeurl cannot be empty', trigger: 'blur' }
+        // ],
+        ipConfig: [
+          { required: true, message: 'Please enter the IP address', trigger: 'blur' }
         ]
       }
 
     }
   },
+  mounted() {
+    const params = {
+      merchantAppId: this.$route.query.id
+    }
+    getApplication(params).then(res => {
+      if (res.returnCode === '0000' && res.data) {
+        this.ruleForm = res.data
+        // this.ruleForm.ipConfig = 3211
+        this.ruleForm.ipConfig ? this.resource = '2' : '1'
+      }
+    })
+  },
   methods: {
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          alert('submit!')
+          setApplication(this.ruleForm).then(res => {
+            if (res.returnCode === '0000' && res.success) {
+              this.$message({
+                type: 'success',
+                message: 'Modification successful'
+              })
+              this.$router.go(-1)
+            }
+          })
         } else {
-          console.log('error submit!!')
+          this.$message('error submit!!')
           return false
         }
       })
@@ -149,13 +173,15 @@ export default {
       }
       .el-input{
         width: 220px;
-          height: 30px;
+        height: 30px;
+
       }
       .el-input ::v-deep input{
           width: 220px;
           height: 30px;
           border: none;
           background: #F8FAFD;
+          padding:0 38px 0 10px ;
           border-radius: 2px;
           font-size: 12px;
           font-family: SF  Pro;

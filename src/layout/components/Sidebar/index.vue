@@ -88,10 +88,12 @@ export default {
   // align-items: center;
   color: #fff;
   img:nth-of-type(1){
+      width: 30px;
+      height: 30px;
       color: #40A1FB !important;
       font-size: 22px;
       float: left;
-      margin: 20px 20px 0 0;
+      margin: 12px 20px 0 0;
     }
     img:nth-of-type(2){
       color: #40A1FB !important;
