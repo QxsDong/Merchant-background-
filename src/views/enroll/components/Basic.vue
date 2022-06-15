@@ -11,7 +11,7 @@
       <el-form-item label="Name" prop="name">
         <el-input v-model="ruleForm.name" />
       </el-form-item>
-      <el-form-item v-show="ruleForm.type==1" label="Company Name" prop="fullName" style="width:100%">
+      <el-form-item v-show="ruleForm.type==1" label="Company Name" :prop="ruleForm.type==1?'fullName':''" style="width:100%">
         <el-input v-model="ruleForm.fullName" />
       </el-form-item>
       <el-form-item label="URL">
@@ -20,9 +20,10 @@
       <el-form-item label="license Number" prop="licenseNo">
         <el-input v-model="ruleForm.licenseNo" />
       </el-form-item>
-      <el-form-item label="ID Photo" prop="dialogImageUrl">
+      <el-form-item label="ID Photo" prop="licenseUrl">
         <el-upload
-          action="https://jsonplaceholder.typicode.com/posts/"
+          action=""
+          :http-request="uploadImg"
           list-type="picture-card"
           :on-preview="handlePictureCardPreview"
           :on-remove="handleRemove"
@@ -31,7 +32,7 @@
           <i class="el-icon-plus" />
         </el-upload>
         <el-dialog :visible.sync="dialogVisible">
-          <img width="100%" :src="ruleForm.dialogImageUrl" alt="">
+          <img width="100%" :src="ruleForm.licenseUrl" alt="">
         </el-dialog>
 
       </el-form-item>
@@ -53,18 +54,41 @@
         <el-input v-model="ruleForm.contactEmail" />
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="submitForm('ruleForm')">next</el-button>
+        <el-button type="primary" :style="{background:nextActive?'#40A1FBFF':''}" @click="submitForm('ruleForm')">Next</el-button>
       </el-form-item>
     </el-form>
 
   </div>
 </template>
 <script>
-
+import { uploadImages } from '@/api/user'
 export default {
   name: 'Basic',
   props: ['bizType'],
   data() {
+    var validateEmail = (rule, value, callback) => {
+      var reg = /^[A-Za-z0-9\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/
+      if (value === '') {
+        callback(new Error('Please enter Email'))
+        return
+      } else if (reg.test(value) === false) {
+        callback(new Error('Please enter the correct email address'))
+        return
+      } else {
+        callback()
+      }
+    }
+    var validatePhone = (rule, value, callback) => {
+      if (value === '') {
+        callback(new Error('The phone number cannot be empty'))
+        return
+      } else if (isNaN(value) === true) {
+        callback(new Error('Please enter the number type'))
+        return
+      } else {
+        callback()
+      }
+    }
     return {
       ruleForm: {
         type: '',
@@ -81,7 +105,7 @@ export default {
         resource: '',
         desc: '',
         applyProductParam: {},
-        dialogImageUrl: ''
+        licenseUrl: ''
       },
       dialogImageUrl: '',
       dialogVisible: false,
@@ -91,7 +115,7 @@ export default {
           { required: true, message: 'Please enter a name', trigger: 'blur' }
         ],
         fullName: [
-          { required: true, message: 'Please enter a name', trigger: 'blur' }
+          { required: true, message: 'Please enter full name', trigger: 'blur' }
         ],
         type: [
           { required: true, message: 'Please select a merchant or individual', trigger: 'change' }
@@ -106,21 +130,23 @@ export default {
           { required: true, message: 'Please enter Full Name', trigger: 'blur' }
         ],
         contactPhone: [
-          { required: true, message: 'Please enter phone', trigger: 'blur' }
+          { required: true, validator: validatePhone, trigger: 'blur' }
         ],
         contactEmail: [
-          { required: true, message: 'Please enter Email', trigger: 'blur' }
+          { required: true, validator: validateEmail, trigger: 'blur' }
         ],
-        dialogImageUrl: [
+        licenseUrl: [
           { required: true, message: '请选择图片', trigger: 'blur' }
-        ],
-        resource: [
-          { required: true, message: '请选择活动资源', trigger: 'change' }
-        ],
-        desc: [
-          { required: true, message: '请填写活动形式', trigger: 'blur' }
         ]
       }
+    }
+  },
+  computed: {
+    nextActive() {
+      if (this.ruleForm.dialogImageUrl && this.ruleForm.name && this.ruleForm.type && this.ruleForm.licenseNo && this.ruleForm.merchantBizType.length > 0 && this.ruleForm.contactName && this.ruleForm.contactPhone && this.ruleForm.contactEmail) {
+        return true
+      }
+      return false
     }
   },
 
@@ -129,6 +155,8 @@ export default {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           this.$parent.state = 2
+          sessionStorage.setItem('State', 2)
+          this.$store.state.user.ruleForm = this.ruleForm
         } else {
           console.log('error submit!!')
           return false
@@ -146,9 +174,17 @@ export default {
       this.dialogVisible = true
     },
     handleChange(file, fileList) {
-      this.ruleForm.dialogImageUrl = URL.createObjectURL(file.raw)
-      // var files = this.addForm.image
-      // files.push(this.addForm.image)
+      this.ruleForm.licenseUrl = URL.createObjectURL(file.raw)
+    },
+    uploadImg(params) {
+      const file = params.file
+      const from = new FormData()
+      from.append('pic', file)
+      uploadImages(from).then(res => {
+        if (res.returnCode === '0000' && res.data) {
+          this.ruleForm.licenseUrl = res.data.picUrl
+        }
+      })
     }
   }
 }
@@ -230,9 +266,17 @@ export default {
     .el-form-item:last-child{
       width: 400px;
       position: absolute;
-      bottom: 100px;
+      bottom: 80px;
       left: 50%;
       transform: translate(-50%,0);
+      ::v-deep button{
+        width: 200px;
+        height: 40px;
+        font-family: RobotoBold;
+        background: #40A1FB80;
+        border: none;
+        border-radius: 6px;
+      }
     }
     .el-form-item:nth-of-type(4){
       ::v-deep input{
@@ -247,6 +291,11 @@ export default {
     .el-form-item:nth-of-type(7){
       height: 100%;
       margin: 0;
+    }
+    .el-form-item:nth-of-type(4){
+      ::v-deep .el-form-item__label{
+        text-indent: 10px;
+      }
     }
     .el-form-item:nth-of-type(11){
       ::v-deep input{

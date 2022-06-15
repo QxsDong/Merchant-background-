@@ -97,19 +97,14 @@ export default {
     }
   },
   mounted() {
+    // console.log(this.$store.state.user)
   },
   methods: {
     goContent() {
       this.isShow = true
       this.$router.push({ path: '/ability/index/ramp', query: {
-        merchantAppId: this.$store.state.productCode
+        merchantAppId: this.$store.state.user.productCode
       }})
-      // this.$router.push({
-      //   path: '/ability/index/crypto',
-      //   query: {
-      //     merchantAppId: this.$store.state.productCode
-      //   }
-      // })
     }
 
   }

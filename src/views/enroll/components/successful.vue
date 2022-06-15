@@ -3,7 +3,7 @@
     <img src="@/assets/logos/successful.png" alt="">
     <p>Submitted successful</p>
     <div>We will notify you of the audit result by email within 24 hours, or you can contact your email address
-      Inquiry about progress: zhouxinxin@alchemypay.org</div>
+      Inquiry about progress: {{ $store.state.user.ruleForm.contactEmail }}</div>
   </div>
 </template>
 <script>

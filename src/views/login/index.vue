@@ -47,7 +47,7 @@
               <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
             </span>
           </el-form-item>
-          <p class="enroll">No account?<span @click="$router.push('/enroll')"> GO to Apply</span></p>
+          <p class="enroll">No account?<span @click="nextApply"> GO to Apply</span></p>
           <el-button :loading="loading" type="primary" class="loginButton" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">Sign In</el-button>
 
           <!-- <div class="tips">
@@ -86,6 +86,7 @@ export default {
         callback()
       }
     }
+
     return {
       loginForm: {
         username: '',
@@ -138,6 +139,11 @@ export default {
           return false
         }
       })
+    },
+    nextApply() {
+      this.$router.push('/enroll')
+      sessionStorage.setItem('vuex', JSON.stringify({}))
+      sessionStorage.setItem('State', 1)
     }
   }
 }

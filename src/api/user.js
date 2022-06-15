@@ -89,7 +89,31 @@ export function getCryptoList(data) {
 // 设置状态
 export function setCryptoState(data) {
   return request({
-    url: 'crypto/23',
+    url: '/crypto/23',
+    method: 'GET',
+    params: { ...data }
+  })
+}
+// 上传图片
+export function uploadImages(data) {
+  return request({
+    url: '/apply/pic/upload',
+    method: 'POST',
+    data: data
+  })
+}
+// 出款方式请求列表
+export function getSellPayout(data) {
+  return request({
+    url: '/withdraw/list',
+    method: 'GET',
+    params: { ...data }
+  })
+}
+// 出款方式请求列表
+export function getBuyList(data) {
+  return request({
+    url: '/payment-method/',
     method: 'GET',
     params: { ...data }
   })

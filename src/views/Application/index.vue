@@ -98,6 +98,17 @@ export default {
       ]
     }
   },
+  watch: {
+    '$store.state.user.productCode': {
+      immediate: true,
+      deep: true,
+      handler(newVal, oldVal) {
+        if (newVal !== oldVal) {
+          sessionStorage.setItem('vuex', JSON.stringify(this.$store.state))
+        }
+      }
+    }
+  },
   mounted() {
     setTimeout(() => {
       this.tableHeight = window.innerHeight - 300
@@ -105,10 +116,10 @@ export default {
     merchantList().then(res => {
       if (res.returnCode === '0000' && res.data) {
         this.paymentData = res.data
+
         res.data.forEach(item => {
           if (item.productCode === '80001') {
-            console.log(item)
-            this.$store.state.productCode = item.merchantAppId
+            this.$store.state.user.productCode = item.productCode
           }
         })
       }

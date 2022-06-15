@@ -6,24 +6,24 @@
     </div>
     <div v-for="item in selectCity" :key="item.id" class="selectCity-con">
       <div class="title">
-        <el-checkbox v-model="item.select" />
-        <p>{{ item.name }}</p>
+        <el-checkbox v-model="menusIds1" :label="item.id">
+          <p>{{ item.name }}</p>
+        </el-checkbox>
         <span>Try is now</span>
 
       </div>
-      <div :class="item.select && item.name=='Fiat Acquiring'?'content content_select':'content'">
+      <div :class="menusIds1.includes(2) &&item.name=='Fiat Acquiring'?'content content_select':'content'">
         {{ item.con }}
         <p v-if="item.name=='Fiat Acquiring'">In which countries would you like to start your fiat acquiring business?</p>
         <div v-if="item.name==='Fiat Acquiring'" class="checkbox_city">
-          <div v-for="i in fiatPayIn" :key="i.dictType">
+          <div v-for="(i,indexkey) in fiatPayIn" :key="i.dictType">
 
-            <el-checkbox v-model="i.dictType">{{ i.dictName }}</el-checkbox>
+            <el-checkbox v-model="menusIds" :label="i.dictType" @change="handleCheck(1,indexkey)">{{ i.dictName }}</el-checkbox>
             <div v-for="j in i.dictDataList" :key="j.dictValue" class="checkbox_city-con">
-              <el-checkbox v-model="j.dictValue">{{ j.dictLabel }}</el-checkbox>
+              <el-checkbox v-model="menusIds" :label="j.dictValue" @change="handleCheck(2,indexkey)">{{ j.dictLabel }}</el-checkbox>
             </div>
           </div>
         </div>
-
       </div>
     </div>
     <div :class="selectButton?'Submit active':'Submit'" @click="SubmitNext">Submit</div>
@@ -54,25 +54,83 @@ export default {
           select: false,
           con: 'With this capability, you can help your users purchase various digital currencies with fiat, or your Users can also sell various digital currencies on this platform to obtain legal currency.'
         }
-      ]
+      ],
+      menusIds: [],
+      menusIds1: [],
+      fiatPayInData: []
 
     }
   },
   computed: {
     selectButton() {
       let select1
-      this.selectCity.forEach(item => {
-        if (item.select === true) {
+      this.menusIds1.forEach(item => {
+        if (item === 2) {
           select1 = true
         }
       })
       return select1
     }
   },
+  watch: {
+    menusIds: {
+      deep: true,
+      handler(newVal) {
+        if (newVal) {
+          const obj = {}
+          this.fiatPayIn.map(item => {
+            if (newVal.includes(item.dictType)) {
+              // debugger
+              obj[item.dictType] = item.dictDataList.filter(i => { if (newVal.includes(i.dictValue)) { return i.dictValue } }).map(j => {
+                return j.dictValue
+              })
+            }
+          })
+          this.fiatPayInData = obj
+          console.log(this.fiatPayInData)
+        }
+      }
+    }
+  },
   methods: {
     SubmitNext() {
       if (this.selectButton) {
         this.$parent.state = 3
+        sessionStorage.setItem('State', 3)
+      }
+    },
+    handleCheck(type, a = 0) { // 多选框
+      const self = this
+      if (type == 2) { // 二级菜单点击
+        let index = 0
+        self.fiatPayIn[a].dictDataList.map(item => {
+          if (self.menusIds.indexOf(item.dictValue) > -1) {
+            index += 1
+          }
+        })
+        if (index > 0) {
+          if (self.menusIds.indexOf(self.fiatPayIn[a].dictType) < 0) {
+            self.menusIds.push(self.fiatPayIn[a].dictType)
+          }
+        } else {
+          if (self.menusIds.indexOf(self.fiatPayIn[a].dictType) > 0) {
+            self.menusIds.splice(self.menusIds.indexOf(self.fiatPayIn[a].dictType), 1)
+          }
+        }
+      } else {
+        if (self.menusIds.indexOf(self.fiatPayIn[a].dictType) > -1) {
+          self.fiatPayIn[a].dictDataList.map(item => {
+            if (self.menusIds.findIndex((n) => n == item.dictValue) < 0) {
+              self.menusIds.push(item.dictValue)
+            }
+          })
+        } else {
+          self.fiatPayIn[a].dictDataList.map(item => {
+            if (self.menusIds.findIndex((n) => n == item.dictValue) > -1) {
+              self.menusIds.splice(self.menusIds.findIndex((n) => n == item.dictValue), 1)
+            }
+          })
+        }
       }
     }
   }
@@ -112,7 +170,7 @@ export default {
       span{
         font-weight: 400;
         color: #40A1FB;
-        line-height: 12px;
+        line-height: 20px;
       }
     }
     .content{

@@ -65,6 +65,17 @@ export default {
       fiatPayIn: ''
     }
   },
+  watch: {
+    '$store.state.user.ruleForm.contactEmail': {
+      immediate: true,
+      deep: true,
+      handler(newVal, oldVal) {
+        if (newVal !== '') {
+          sessionStorage.setItem('vuex', JSON.stringify(this.$store.state))
+        }
+      }
+    }
+  },
   mounted() {
     maechantInit().then(res => {
       if (res.returnCode === '0000' && res.data) {
@@ -72,6 +83,7 @@ export default {
         this.fiatPayIn = res.data.fiatPayIn
       }
     })
+    this.state = parseInt(sessionStorage.getItem('State') ? sessionStorage.getItem('State') : 1)
   }
 
 }

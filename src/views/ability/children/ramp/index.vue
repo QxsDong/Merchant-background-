@@ -7,10 +7,10 @@
     <!-- 买币 -->
     <div v-if="buySell==1" class="offRamp-content">
       <div class="offRamp-conTop">
-        <div :class="active1==1?'active':''" @click="active1=1">买币币种</div>
-        <div :class="active1==2?'active':''" @click="active1=2">收款方式</div>
+        <div :class="sellPayout==1?'active':''" @click="sellPayout=1">买币币种</div>
+        <div :class="sellPayout==2?'active':''" @click="sellPayout=2">收款方式</div>
       </div>
-      <div v-if="active1==1" class="offRamp-con">
+      <div v-if="sellPayout==1" class="offRamp-con">
         <el-table
           ref="table"
           key="1"
@@ -66,7 +66,7 @@
           ref="table"
           key="2"
           :height="tableHeight"
-          :data="paymentData.result"
+          :data="sellTbale"
           border
           :lazy="true"
         >
@@ -125,10 +125,10 @@
     <!-- 卖币 -->
     <div v-if="buySell==2" class="offRamp-content">
       <div class="offRamp-conTop">
-        <div :class="active1==1?'active':''" @click="active1=1">卖币币种</div>
-        <div :class="active1==2?'active':''" @click="active1=2">出款方式</div>
+        <div :class="sellPayout==1?'active':''" @click="sellPayout=1">卖币币种</div>
+        <div :class="sellPayout==2?'active':''" @click="sellPayout=2">出款方式</div>
       </div>
-      <div v-if="active1==1" class="offRamp-con">
+      <div v-if="sellPayout==1" class="offRamp-con">
         <el-table
           ref="table"
           key="3"
@@ -188,22 +188,22 @@
           :lazy="true"
         >
           <el-table-column
-            prop="sellEnable"
+            prop="alpha3"
             label="国家"
             align="center"
           />
           <el-table-column
-            prop="network"
+            prop="currency"
             label="法币币种"
             align="center"
           />
           <el-table-column
-            prop="price"
+            prop="fixedFee"
             label="手续费"
             align="center"
           />
           <el-table-column
-            prop="sellEnable"
+            prop="status"
             label="action"
             align="center"
           />
@@ -224,26 +224,36 @@
   </div>
 </template>
 <script>
-import { getCryptoList, setCryptoState } from '@/api/user'
+import { getCryptoList, setCryptoState, getSellPayout, getBuyList } from '@/api/user'
 export default {
   name: 'OffRamp',
   data() {
     return {
       buySell: 1,
-      active1: 1,
+      sellPayout: 1,
       paymentData: [],
       paymentData1: [],
       tableHeight: 46,
       pageIndex: 1,
-      pageSize: 10,
-      total: 0
+      pageSize: 11,
+      total: 0,
+      sellTbale: [],
+      buyTable: []
     }
   },
   watch: {
     buySell(newVal, oldVal) {
       if (newVal !== oldVal) {
         this.pageIndex = 1
+        this.sellPayout = 1
         this.MerchantList()
+      }
+    },
+    sellPayout(newVal) {
+      if (newVal === 2 && this.buySell === 2) {
+        this.SellPayout()
+      } else {
+        this.getBuyTable()
       }
     }
   },
@@ -255,7 +265,6 @@ export default {
   },
   methods: {
     MerchantList() {
-      console.log(this.pageIndex)
       const params = {
         'merchantAppId': this.$route.query.merchantAppId,
         'pageIndex': this.pageIndex,
@@ -277,6 +286,34 @@ export default {
       // getMerchantAddList(params).then(res => {
       //   console.log(res)
       // })
+    },
+    // 出款方式列表
+    SellPayout() {
+      const params = {
+        'merchantAppId': this.$route.query.merchantAppId,
+        'pageIndex': this.pageIndex,
+        'pageSize': 10
+      }
+      getSellPayout(params).then(res => {
+        // console.log(res.data)
+        if (res.returnCode === '0000' && res.data) {
+          this.sellTbale = res.data.result
+        }
+      })
+    },
+    // 收款方式列表
+    getBuyTable() {
+      const params = {
+        'merchantAppId': this.$route.query.merchantAppId,
+        'pageIndex': this.pageIndex,
+        'pageSize': 10
+      }
+      getBuyList(params).then(res => {
+        console.log(res)
+        if (res.returnCode === '0000' && res.data.result) {
+          this.buyTable = res.data.result
+        }
+      })
     },
 
     handleCurrentChange(val) {
