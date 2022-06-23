@@ -11,12 +11,12 @@
           <el-input v-model="ruleForm.appId" :disabled="true" />
         </el-form-item>
         <el-form-item label="Secret" prop="appSecrete" class="collection-con" style="">
-          <el-input v-model="ruleForm.appSecrete" :disabled="Edit" />
-          <!-- <span @click="Edit=!Edit">Edit</span> -->
+          <el-input ref="changeInput" v-model="ruleForm.appSecrete" :disabled="Edit" />
+          <span @click="cangeDisabled(1)">Edit</span>
         </el-form-item>
         <el-form-item label="Noticeurl" prop="noticeUrl" class="collection-con">
-          <el-input v-model="ruleForm.noticeUrl" :disabled="Edit1" />
-          <!-- <span @click="Edit1=!Edit1">Edit</span> -->
+          <el-input ref="changeInput1" v-model="ruleForm.noticeUrl" :disabled="Edit1" />
+          <span @click="cangeDisabled(2)">Edit</span>
         </el-form-item>
         <el-form-item label="Public key" class="collection-con">
           <el-input v-model="ruleForm.publicKey" :disabled="true" />
@@ -113,6 +113,13 @@ export default {
     resetForm(formName) {
       this.$refs[formName].resetFields()
       this.$router.go(-1)
+    },
+    cangeDisabled(val) {
+      if (val == 1) {
+        this.Edit = false
+      } else {
+        this.Edit1 = false
+      }
     }
   }
 }
