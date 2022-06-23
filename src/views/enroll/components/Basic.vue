@@ -4,8 +4,8 @@
     <el-form ref="ruleForm" :model="ruleForm" :rules="rules" label-width="120px" class="demo-ruleForm">
       <el-form-item label="type" prop="type">
         <el-select v-model="ruleForm.type" placeholder="Please select Register">
-          <el-option label="Individual Applicati" value="2" />
-          <el-option label="Merchant Application" value="1" />
+          <el-option label="Individual" value="2" />
+          <el-option label="Company" value="1" />
         </el-select>
       </el-form-item>
       <el-form-item label="Name" prop="name">
@@ -41,7 +41,7 @@
           <el-checkbox v-for="item in bizType" :key="item.dictValue" :label="item.dictValue" :name="item.dictValue">{{ item.dictLabel }}</el-checkbox>
         </el-checkbox-group>
       </el-form-item>
-      <el-form-item style="width:100%;">
+      <el-form-item style="width:100%;margin-bottom:0">
         <div class="basic-totle" style="margin-left:-120px !important">Business Info</div>
       </el-form-item>
       <el-form-item label="Full Name" prop="contactName">
@@ -53,7 +53,7 @@
       <el-form-item label="Emai Address" prop="contactEmail" style="width:100%">
         <el-input v-model="ruleForm.contactEmail" />
       </el-form-item>
-      <el-form-item style="bottom:calc(100vh - 95vh)">
+      <el-form-item>
         <el-button type="primary" :style="{background:nextActive?'#40A1FBFF':''}" @click="submitForm('ruleForm')">Next</el-button>
       </el-form-item>
     </el-form>
@@ -274,11 +274,10 @@ export default {
 
     }
     .el-form-item:last-child{
-      width: 400px;
-      position: absolute;
-      bottom: 5%;
-      left: 50%;
-      transform: translate(-50%,0);
+      // width: 200px;
+      width: 200px !important;
+      height: 40px;
+    //  margin: 0 auto ;
       ::v-deep button{
         width: 200px;
         height: 40px;

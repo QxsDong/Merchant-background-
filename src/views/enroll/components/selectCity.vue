@@ -147,6 +147,9 @@ export default {
 <style lang="scss" scoped>
 .selectCity-container{
   // position: relative;
+  width: 80%;
+  height: 400px;
+  overflow-y: scroll;
   .selectCity-title{
     font-size: 14px;
     font-family: RobotoBold;

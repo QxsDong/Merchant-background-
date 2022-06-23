@@ -116,7 +116,7 @@ export default {
     height: 100%;
     padding: 20px 20px 0;
     display: flex;
-    flex-wrap: wrap;
+    // flex-wrap: wrap;
     .ability-content{
       width: 280px;
       height: 360px;
@@ -185,12 +185,10 @@ export default {
         color: #5A6070;
         line-height: 20px;
         padding: 20px 0 0 0;
-        word-break: keep-all;
-        // word-wrap: break-word; // 只对英文起作用，以单词作为换行依据。
-        // white-space: pre-wrap; //只对中文起作用，强制换行。
-        text-align:justify;  //css英文语句的两端对齐：
-        text-justify:inter-ideograph;
-        // letter-spacing: .5px;
+        letter-spacing: .7px;
+        text-align: justify;
+        // text-justify:   ;
+
       }
       .ability-tottom{
         width: 100%;

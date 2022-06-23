@@ -171,7 +171,7 @@ export default {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        margin-bottom: 40px;
+        margin-bottom: 20px;
         .enroll_steps_State{
           width: 128px;
           height: 100%;

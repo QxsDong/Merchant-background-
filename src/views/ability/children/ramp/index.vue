@@ -26,11 +26,11 @@
               align="left"
             >
               <template slot-scope="scope">
-                <el-popover placement="top-start" title="" trigger="hover" style="margin-right:20px">
-                  <img :src="scope.row.logoUrl" alt="" style="width: 150px;height: 150px">
-                  <img slot="reference" :src="scope.row.logoUrl" style="width: 30px;height: 30px;margin-left:10%">
-                </el-popover>
-                <span style="position: absolute;top:15px;line-height:10px">{{ scope.row.fullName }}</span>
+                <!-- <el-popover placement="top-start" title="" trigger="hover" style="margin-right:20px"> -->
+                <!-- <img :src="scope.row.logoUrl" alt="" style="width: 150px;height: 150px"> -->
+                <img slot="reference" :src="scope.row.logoUrl" style="width: 30px;height: 30px;margin-left:10%">
+                <!-- </el-popover> -->
+                <span style="position: absolute;top:15px;">{{ scope.row.fullName }}</span>
               </template>
             </el-table-column>
             <el-table-column
@@ -136,10 +136,10 @@
               align="left"
             >
               <template slot-scope="scope">
-                <el-popover placement="top-start" title="" trigger="hover" style="margin-right:20px">
-                  <img :src="scope.row.logoUrl" alt="" style="width: 150px;height: 150px">
-                  <img slot="reference" :src="scope.row.logoUrl" style="width: 30px;height: 30px;margin-left:10%">
-                </el-popover>
+                <!-- <el-popover placement="top-start" title="" trigger="hover" style="margin-right:20px">
+                  <img :src="scope.row.logoUrl" alt="" style="width: 150px;height: 150px"> -->
+                <img slot="reference" :src="scope.row.logoUrl" style="width: 30px;height: 30px;margin-left:10%">
+                <!-- </el-popover> -->
                 <span style="position: absolute;top:15px;">{{ scope.row.fullName }}</span>
               </template>
             </el-table-column>

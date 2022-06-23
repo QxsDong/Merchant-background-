@@ -10,13 +10,13 @@
         <el-form-item label="APP ID" class="collection-con">
           <el-input v-model="ruleForm.appId" :disabled="true" />
         </el-form-item>
-        <el-form-item label="Secret" prop="appSecrete" class="collection-con">
+        <el-form-item label="Secret" prop="appSecrete" class="collection-con" style="">
           <el-input v-model="ruleForm.appSecrete" :disabled="Edit" />
-          <span @click="Edit=!Edit">Edit</span>
+          <!-- <span @click="Edit=!Edit">Edit</span> -->
         </el-form-item>
         <el-form-item label="Noticeurl" prop="noticeUrl" class="collection-con">
           <el-input v-model="ruleForm.noticeUrl" :disabled="Edit1" />
-          <span @click="Edit1=!Edit1">Edit</span>
+          <!-- <span @click="Edit1=!Edit1">Edit</span> -->
         </el-form-item>
         <el-form-item label="Public key" class="collection-con">
           <el-input v-model="ruleForm.publicKey" :disabled="true" />
@@ -30,8 +30,8 @@
       <div class="collection-title" style="margin:38px 0 0 0px">IP Settings</div>
       <el-form-item class="coll-radio">
         <el-radio-group v-model="resource">
-          <el-radio label="1" :disabled="ruleForm.ipConfig?true:false">Can accept API calls from any IP</el-radio>
-          <el-radio label="2" disabled>Can only accept API calls from a specific IP</el-radio>
+          <el-radio label="1">Can accept API calls from any IP</el-radio>
+          <el-radio label="2">Can only accept API calls from a specific IP</el-radio>
         </el-radio-group>
       </el-form-item>
       <el-form-item prop="ipConfig">
@@ -68,13 +68,13 @@ export default {
       rules: {
         appSecrete: [
           { required: true, message: 'Secret cannot be empty', trigger: 'blur' }
-        ],
+        ]
         // noticeUrl: [
         //   { required: true, message: 'Noticeurl cannot be empty', trigger: 'blur' }
         // ],
-        ipConfig: [
-          { required: true, message: 'Please enter the IP address', trigger: 'blur' }
-        ]
+        // ipConfig: [
+        //   { required: true, message: 'Please enter the IP address', trigger: 'blur' }
+        // ]
       }
 
     }
@@ -138,7 +138,7 @@ export default {
     line-height: 17px;
   }
   .collection-content{
-    max-width: 1000px;
+    min-width: 1000px;
     display: flex;
     flex-wrap: wrap;
     margin-top: 20px;
