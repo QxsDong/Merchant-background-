@@ -124,6 +124,7 @@ export default {
   outline: 0 !important;
   background: #fff !important;
   opacity: .7;
+  color: #0D45D4;
   // color: #409EFF !important;
 }
 

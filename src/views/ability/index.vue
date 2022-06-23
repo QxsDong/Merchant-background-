@@ -67,11 +67,11 @@
         <el-button type="primary" class="allocation" @click="goContent">查看配置</el-button>
         <el-button class="TryButton">Try it now</el-button>
       </div>
-      <div v-if="state2==2" class="ability-tottom1">
+      <div v-if="state2==2 ||state2==0 " class="ability-tottom1">
         <!-- <el-button type="primary" class="allocation">查看配置</el-button> -->
         <!-- <el-button v-else-if="state==3" type="primary" class="allocation">申请</el-button> -->
         <el-button class="TryButton">Try it now</el-button>
-        <p v-if="state2==2">You can contact email: xxx to check the approval progress</p>
+        <p v-if="state2==2 ||state2==0">You can contact email: xxx to check the approval progress</p>
       </div>
       <div v-if="state2==3" class="ability-tottom">
         <el-button type="primary" class="allocation">申请</el-button>
@@ -97,13 +97,13 @@ export default {
     }
   },
   mounted() {
-    // console.log(this.$store.state.user)
+    this.state2 = this.$store.state.user.productCode.status
   },
   methods: {
     goContent() {
       this.isShow = true
       this.$router.push({ path: '/ability/index/ramp', query: {
-        merchantAppId: this.$store.state.user.productCode
+        merchantAppId: this.$store.state.user.productCode.merchantAppId
       }})
     }
 

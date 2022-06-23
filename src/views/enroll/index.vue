@@ -39,7 +39,7 @@
           </div>
         </div>
         <Basic v-if="state==1" :biz-type="bizType" />
-        <SelectCity v-else-if="state==2" :fiat-pay-in="fiatPayIn" />
+        <SelectCity v-else-if="state==2" :fiat-pay-in="fiatPayIn" :product-type="productType" />
         <Successful v-else />
       </div>
 
@@ -62,7 +62,8 @@ export default {
     return {
       state: 1,
       bizType: '',
-      fiatPayIn: ''
+      fiatPayIn: '',
+      productType: ''
     }
   },
   watch: {
@@ -81,6 +82,21 @@ export default {
       if (res.returnCode === '0000' && res.data) {
         this.bizType = res.data.bizType
         this.fiatPayIn = res.data.fiatPayIn
+        const selectCity = [
+          {
+            con: 'With Crypto Acquiring Products, your customers can use digital currency to buy on your website Services or products; we can settle USDT or fiat to you.'
+          },
+          {
+            con: 'Provide credit card collection channels, local payment in Indonesia, local payment in Mexico and other payment channels.'
+          },
+          {
+            con: 'With this capability, you can help your users purchase various digital currencies with fiat, or your Users can also sell various digital currencies on this platform to obtain legal currency.'
+          }
+        ]
+        res.data.productType.forEach((item, index) => {
+          item.con = selectCity[index].con
+        })
+        this.productType = res.data.productType
       }
     })
     this.state = parseInt(sessionStorage.getItem('State') ? sessionStorage.getItem('State') : 1)
@@ -90,8 +106,13 @@ export default {
 </script>
 <style lang="scss" scoped>
 .enroll-container{
-  width: 1600px;
-  height: 900px;
+  width: 90%;
+  height: 90%;
+  // width: 1480px;
+  // height: 900px;
+  min-width: 1280px;
+  min-height: 700px;
+  max-width: 1300px;
   background: #F4F7FEFF;
   border-radius: 20px;
   position: absolute;
@@ -101,7 +122,7 @@ export default {
   display: flex;
   overflow: hidden;
   .enroll_left{
-    width: 300px;
+    width: 240px;
     height: 100%;
     background: url('../../assets/Individual/leftTab.png') no-repeat;
     background-size: 100% 100%;
@@ -115,7 +136,8 @@ export default {
     }
   }
   .enroll_right{
-    width: 1300px;
+    width: calc(100% - 240px);
+    // width: 1300px;
     height: 100%;
     position: relative;
     .enroll_right_Nav{
@@ -134,8 +156,10 @@ export default {
       }
     }
     .enroll_right_content{
-      width: 1180px;
-      height: 760px;
+      max-width: 1180px;
+      max-height: 760px;
+      width: 90%;
+      height: 85%;
       background: #FFFFFF;
       box-shadow: 0px 0px 20px 0px rgba(177, 202, 239, 0.5);
       border-radius: 10px;

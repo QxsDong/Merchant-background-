@@ -38,7 +38,7 @@
       </el-form-item>
       <el-form-item label="Business Type" prop="merchantBizType">
         <el-checkbox-group v-model="ruleForm.merchantBizType">
-          <el-checkbox v-for="item in bizType" :key="item.dictValue" :label="item.dictLabel" :name="item.dictValue" />
+          <el-checkbox v-for="item in bizType" :key="item.dictValue" :label="item.dictValue" :name="item.dictValue">{{ item.dictLabel }}</el-checkbox>
         </el-checkbox-group>
       </el-form-item>
       <el-form-item style="width:100%;">
@@ -53,11 +53,10 @@
       <el-form-item label="Emai Address" prop="contactEmail" style="width:100%">
         <el-input v-model="ruleForm.contactEmail" />
       </el-form-item>
-      <el-form-item>
+      <el-form-item style="bottom:calc(100vh - 95vh)">
         <el-button type="primary" :style="{background:nextActive?'#40A1FBFF':''}" @click="submitForm('ruleForm')">Next</el-button>
       </el-form-item>
     </el-form>
-
   </div>
 </template>
 <script>
@@ -102,10 +101,7 @@ export default {
         contactEmail: '',
         merchantBizType: [],
         applyProductCode: [],
-        resource: '',
-        desc: '',
-        applyProductParam: {},
-        licenseUrl: ''
+        applyProductParam: {}
       },
       dialogImageUrl: '',
       dialogVisible: false,
@@ -143,7 +139,7 @@ export default {
   },
   computed: {
     nextActive() {
-      if (this.ruleForm.dialogImageUrl && this.ruleForm.name && this.ruleForm.type && this.ruleForm.licenseNo && this.ruleForm.merchantBizType.length > 0 && this.ruleForm.contactName && this.ruleForm.contactPhone && this.ruleForm.contactEmail) {
+      if (this.ruleForm.licenseUrl && this.ruleForm.name && this.ruleForm.type && this.ruleForm.licenseNo && this.ruleForm.merchantBizType.length > 0 && this.ruleForm.contactName && this.ruleForm.contactPhone && this.ruleForm.contactEmail) {
         return true
       }
       return false
@@ -208,6 +204,11 @@ export default {
     .el-form-item {
       height: 30px;
       margin:0 50px 15px 0;
+      ::v-deep .el-checkbox{
+        height: 30px;
+        margin: 0 10px 0 0;
+        padding: 0;
+      }
       ::v-deep .el-upload{
         width: 220px;
         height: 124px;
@@ -263,10 +264,19 @@ export default {
         top: 100%;
       }
     }
+    .el-form-item:nth-of-type(7){
+      line-height: 0px !important;
+      height: auto !important;
+      .el-checkbox-group{
+        display: flex;
+        flex-wrap: wrap;
+      }
+
+    }
     .el-form-item:last-child{
       width: 400px;
       position: absolute;
-      bottom: 80px;
+      bottom: 5%;
       left: 50%;
       transform: translate(-50%,0);
       ::v-deep button{
@@ -288,15 +298,15 @@ export default {
       }
     }
 
-    .el-form-item:nth-of-type(7){
-      height: 100%;
-      margin: 0;
-    }
-    .el-form-item:nth-of-type(4){
-      ::v-deep .el-form-item__label{
-        text-indent: 10px;
-      }
-    }
+    // .el-form-item:nth-of-type(7){
+    //   height: 100%;
+    //   margin: 0;
+    // }
+    // .el-form-item:nth-of-type(4){
+    //   ::v-deep .el-form-item__label{
+    //     text-indent: 10px;
+    //   }
+    // }
     .el-form-item:nth-of-type(11){
       ::v-deep input{
         width: 610px;

@@ -59,8 +59,10 @@ export default {
     // position: relative;
     height: 90%;
     width: 93%;
-    min-width: 1600px;
-    min-height: 900px;
+    min-width: 1280px;
+    min-height: 600px;
+    max-width: 1600px;
+    max-height: 900px;
     position: absolute;
     left: 50%;
     top: 50%;
@@ -70,6 +72,11 @@ export default {
     &.mobile.openSidebar{
       position: fixed;
       top: 0;
+    }
+    .main-container{
+      max-width: 1400px;
+      // width: 100%;
+      height: 100%;
     }
   }
   .drawer-bg {

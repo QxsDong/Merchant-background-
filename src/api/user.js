@@ -35,12 +35,7 @@ export function getpayWatList() {
     method: 'get'
   })
 }
-export function logout() {
-  return request({
-    url: '/logout',
-    method: 'get'
-  })
-}
+
 export function maechantInit() {
   return request({
     url: '/apply/init',
@@ -86,12 +81,12 @@ export function getCryptoList(data) {
     params: { ...data }
   })
 }
-// 设置状态
-export function setCryptoState(data) {
+// 设置买卖币状态
+export function setCryptoState(urlId, data) {
   return request({
-    url: '/crypto/23',
-    method: 'GET',
-    params: { ...data }
+    url: '/crypto/' + urlId,
+    method: 'post',
+    data
   })
 }
 // 上传图片
@@ -113,8 +108,30 @@ export function getSellPayout(data) {
 // 出款方式请求列表
 export function getBuyList(data) {
   return request({
-    url: '/payment-method/',
+    url: '/payment-method/list',
     method: 'GET',
     params: { ...data }
+  })
+}
+// 设置支付方式
+export function setCollectionState(urlId, data) {
+  return request({
+    url: '/payment-method/' + urlId,
+    method: 'post',
+    data
+  })
+}
+// 设置收款方式
+export function setSelltionState(urlId, data) {
+  return request({
+    url: '/withdraw/' + urlId,
+    method: 'post',
+    data
+  })
+}
+export function logout() {
+  return request({
+    url: '/logout',
+    method: 'get'
   })
 }

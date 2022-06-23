@@ -1,5 +1,5 @@
 <template>
-  <div class="application-container">
+  <div ref="application" class="application-container">
     <div class="order-content">
       <el-table
         ref="table"
@@ -37,21 +37,24 @@
           prop="callbackUrl"
           label="Callback Address"
           align="center"
+          width="150"
         />
         <el-table-column
           prop="ipConfig"
           label="IP Address"
           align="center"
+          width="100"
         />
         <el-table-column
           label="Creation Time"
           align="center"
           prop="network"
+          width="100"
         />
         <el-table-column
           label="State"
           align="center"
-          width="100"
+          width="70"
         >
           <template slot-scope="scope">
             {{ scope.row.status==1?'启用':'禁用' }}
@@ -61,11 +64,11 @@
           prop="email"
           label="Operate"
           align="center"
-          width="120"
+          width="100"
         >
           <template slot-scope="scope">
             <el-button type="text" size="small" @click="handleClick(scope.row)">查看</el-button>
-            <el-button type="text" size="small">{{ scope.row.status==1?'失效':'生效' }}</el-button>
+            <el-button type="text" size="small" @click="handleState(scope.row)">{{ scope.row.status==1?'失效':'生效' }}</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -85,7 +88,7 @@
 </template>
 <script>
 
-import { merchantList } from '../../api/user'
+import { merchantList, getApplication } from '../../api/user'
 export default {
   name: 'Application',
   data() {
@@ -111,23 +114,12 @@ export default {
   },
   mounted() {
     setTimeout(() => {
-      this.tableHeight = window.innerHeight - 300
+      this.tableHeight = window.innerHeight - (window.innerHeight - this.$refs.application.clientHeight) - 80
     }, 100)
-    merchantList().then(res => {
-      if (res.returnCode === '0000' && res.data) {
-        this.paymentData = res.data
-
-        res.data.forEach(item => {
-          if (item.productCode === '80001') {
-            this.$store.state.user.productCode = item.productCode
-          }
-        })
-      }
-    })
+    this.merchantListApp()
   },
   methods: {
     handleClick(val) {
-      // console.log(val)
       this.$router.push({
         path: '/Application/collction',
         query: {
@@ -136,6 +128,32 @@ export default {
 
       })
       // console.log(val)
+    },
+    handleState(val) {
+      val.status = !val.status
+      val.status = val.status === true ? 1 : 0
+      getApplication(val).then(res => {
+        if (res.returnCode === '0000' && res.data) {
+          this.$message({
+            type: 'success',
+            message: '设置成功'
+          })
+          this.merchantListApp()
+        }
+      })
+    },
+    merchantListApp() {
+      merchantList().then(res => {
+        if (res.returnCode === '0000' && res.data) {
+          this.paymentData = res.data
+
+          res.data.forEach(item => {
+            if (item.productCode === '80001') {
+              this.$store.state.user.productCode = item
+            }
+          })
+        }
+      })
     }
   }
 }
@@ -144,15 +162,13 @@ export default {
 <style lang="scss" scoped>
 .application-container{
   width: 95%;
-  height: 95%;
+  height: 90%;
   background: #FFFFFF;
   box-shadow: 0px 0px 20px rgb(177 202 239 / 50%);
    border-radius: 10px;
   padding: 30px  40px 30px;
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%,-50%);
+  margin: 40px auto 0;
+  position: relative;
    .order-content{
     width: 100%;
     margin: 20px 0 0 0px;

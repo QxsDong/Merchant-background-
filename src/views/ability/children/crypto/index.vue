@@ -167,12 +167,12 @@ export default {
 <style lang="scss" scoped>
   .offRamp-container{
     width: 100%;
-    height: 100%;
+    height: 95%;
     position: absolute;
     left: 0;
     top: 0;
     background: #F4F7FE;
-    padding: 20px 30px 0;
+    padding: 0px 30px 0;
     .offRamp-title{
       height: 50px;
       display: flex;

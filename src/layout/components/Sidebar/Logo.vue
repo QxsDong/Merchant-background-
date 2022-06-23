@@ -6,7 +6,7 @@
           <img src="../../../assets/logos/Merchant.svg" alt="">
           <div>
             <p>{{ name }}</p>
-            <p>dsadsa</p>
+            <p />
           </div>
           <img src="../../../assets/logos/ic_logout.png" alt="" @click="logout">
         </div>
