@@ -88,91 +88,91 @@
 
 <script>
 // import { mapGetters } from 'vuex'
-// import { parseTime } from '@/utils/index.js'
+import { parseTime } from '@/utils/index.js'
 // import { searchOrder } from '../../api/user'
 
-// export default {
-//   name: 'Order',
-//   data() {
-//     return {
-//       total: 0,
-//       timeList: '',
-//       tableHeight: 46,
-//       formInline: {
-//         email: '',
-//         payStatus: 1,
-//         keywords: '',
-//         startTime: '',
-//         endTime: '',
-//         coinType: '',
-//         pageNo: 1,
-//         pageSize: 20
-//       },
-//       paymentData: [
-//         { OrderID: 1, Transcationtime: 123, Address: 123, Fiat: { realCount: 1, currencyCode: 'USDT' }, Fee: { realCount: 1, digitalCurrencyCode: 2 }, Crypto: 2, Network: 3, email: 4 }
-//       ]
-//     }
-//   },
-//   computed: {
-//     ...mapGetters([
-//       'name'
-//     ])
-//   },
-//   watch: {
-//     timeList: {
-//       // deep: true,
-//       handler(val) {
-//         if (val != null && val.length > 0) {
-//           this.formInline.startTime = parseTime(this.timeList[0], '{y}-{m}-{d}')
-//           this.formInline.endTime = parseTime(this.timeList[1], '{y}-{m}-{d}')
-//         } else {
-//           this.formInline.startTime = ''
-//           this.formInline.endTime = ''
-//         }
-//       }
-//     },
-//     'formInline.email': {
-//       deep: true,
-//       handler(newVal) {
-//         if (!newVal) {
-//           this.getOrderData()
-//         }
-//       }
-//     }
-//   },
-//   mounted() {
-//     this.getOrderData()
-//     setTimeout(() => {
-//       this.tableHeight = window.innerHeight - 320
-//     }, 100)
-//   },
-//   methods: {
-//     // get order data
-//     getOrderData() {
-//       searchOrder(this.formInline).then(res => {
-//         if (res && res.data) {
-//           // console.log(res)
-//           this.paymentData = res.data.records
-//           this.total = res.data.total
-//         }
-//       })
-//     },
-//     // search order data
-//     searchData() {
-//       this.formInline.email.trim()
-//       this.getOrderData()
-//       this.$message({
-//         type: 'success',
-//         message: 'Search success'
-//       })
-//     },
-//     // page turning
-//     handleCurrentChange(val) {
-//       this.formInline.pageNo = val
-//       this.getOrderData()
-//     }
-//   }
-// }
+export default {
+  name: 'Order',
+  data() {
+    return {
+      total: 0,
+      timeList: '',
+      tableHeight: 46,
+      formInline: {
+        email: '',
+        payStatus: 1,
+        keywords: '',
+        startTime: '',
+        endTime: '',
+        coinType: '',
+        pageNo: 1,
+        pageSize: 20
+      },
+      paymentData: [
+        { OrderID: 1, Transcationtime: 123, Address: 123, Fiat: { realCount: 1, currencyCode: 'USDT' }, Fee: { realCount: 1, digitalCurrencyCode: 2 }, Crypto: 2, Network: 3, email: 4 }
+      ]
+    }
+  },
+  computed: {
+    ...mapGetters([
+      'name'
+    ])
+  },
+  watch: {
+    timeList: {
+      // deep: true,
+      handler(val) {
+        if (val != null && val.length > 0) {
+          this.formInline.startTime = parseTime(this.timeList[0], '{y}-{m}-{d}')
+          this.formInline.endTime = parseTime(this.timeList[1], '{y}-{m}-{d}')
+        } else {
+          this.formInline.startTime = ''
+          this.formInline.endTime = ''
+        }
+      }
+    },
+    'formInline.email': {
+      deep: true,
+      handler(newVal) {
+        if (!newVal) {
+          this.getOrderData()
+        }
+      }
+    }
+  },
+  mounted() {
+    this.getOrderData()
+    setTimeout(() => {
+      this.tableHeight = window.innerHeight - 320
+    }, 100)
+  },
+  methods: {
+    // get order data
+    getOrderData() {
+      searchOrder(this.formInline).then(res => {
+        if (res && res.data) {
+          // console.log(res)
+          this.paymentData = res.data.records
+          this.total = res.data.total
+        }
+      })
+    },
+    // search order data
+    searchData() {
+      this.formInline.email.trim()
+      this.getOrderData()
+      this.$message({
+        type: 'success',
+        message: 'Search success'
+      })
+    },
+    // page turning
+    handleCurrentChange(val) {
+      this.formInline.pageNo = val
+      this.getOrderData()
+    }
+  }
+}
 </script>
 
 <style lang="scss" scoped>

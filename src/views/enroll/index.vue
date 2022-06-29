@@ -76,6 +76,7 @@ export default {
         }
       }
     }
+
   },
   mounted() {
     maechantInit().then(res => {

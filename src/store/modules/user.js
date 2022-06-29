@@ -23,7 +23,7 @@ const mutations = {
     state.token = data.token
   },
   SET_NAME: (state, name) => {
-    state.name = name.data.merchantNo
+    state.name = name.data
   },
   SET_AVATAR: (state, avatar) => {
     state.avatar = avatar
@@ -42,6 +42,7 @@ const actions = {
         const { data } = response
         setToken(data.token)
         commit('SET_NAME', response)
+        // console.log(response)
         commit('SET_TOKEN', data.token)
         resolve()
       }).catch(error => {

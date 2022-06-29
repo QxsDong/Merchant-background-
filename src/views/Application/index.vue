@@ -48,7 +48,7 @@
         <el-table-column
           label="Creation Time"
           align="center"
-          prop="network"
+          prop="createdTime"
           width="100"
         />
         <el-table-column
@@ -88,7 +88,7 @@
 </template>
 <script>
 
-import { merchantList, getApplication } from '../../api/user'
+import { merchantList, setApplication } from '../../api/user'
 export default {
   name: 'Application',
   data() {
@@ -132,8 +132,9 @@ export default {
     handleState(val) {
       val.status = !val.status
       val.status = val.status === true ? 1 : 0
-      getApplication(val).then(res => {
-        if (res.returnCode === '0000' && res.data) {
+      setApplication(val, val.merchantAppId).then(res => {
+        // console.log(res)
+        if (res.returnCode === '0000') {
           this.$message({
             type: 'success',
             message: '设置成功'
@@ -146,7 +147,7 @@ export default {
       merchantList().then(res => {
         if (res.returnCode === '0000' && res.data) {
           this.paymentData = res.data
-
+          // console.log(res.data)
           res.data.forEach(item => {
             if (item.productCode === '80001') {
               this.$store.state.user.productCode = item
@@ -162,12 +163,12 @@ export default {
 <style lang="scss" scoped>
 .application-container{
   width: 95%;
-  height: 90%;
+  height: 93%;
   background: #FFFFFF;
   box-shadow: 0px 0px 20px rgb(177 202 239 / 50%);
    border-radius: 10px;
   padding: 30px  40px 30px;
-  margin: 40px auto 0;
+  margin: 20px auto 0;
   position: relative;
    .order-content{
     width: 100%;

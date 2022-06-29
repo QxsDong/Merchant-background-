@@ -5,7 +5,7 @@
         <div class="sidebar_log-top">
           <img src="../../../assets/logos/Merchant.svg" alt="">
           <div>
-            <p>{{ name }}</p>
+            <p>{{ name.merchantNo }}</p>
             <p />
           </div>
           <img src="../../../assets/logos/ic_logout.png" alt="" @click="logout">
@@ -60,7 +60,7 @@ export default {
         type: 'warning'
       }).then(async() => {
         await this.$store.dispatch('user/logout')
-        console.log(this.$route.fullPath)
+        // console.log(this.$route.fullPath)
         this.$router.push(`/login?redirect=${this.$route.fullPath}`)
         this.$message({
           type: 'success',

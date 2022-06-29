@@ -9,7 +9,7 @@
         <div v-else class="Activated">Not developed...</div>
       </div>
       <div class="ability-con">
-        With Crypto Acquiring Products, your customers can use digital currency to buy on your website Services or products; we can settle USDT or fiat to you.
+        With Crypto Acquiring Products, your customers can use digital currency to buy on your website Services or products ; we can settle USDT or fiat to you.
       </div>
       <div v-if="state==1" class="ability-tottom">
         <el-button type="primary" class="allocation" @click="goContent">查看配置</el-button>
@@ -185,9 +185,9 @@ export default {
         color: #5A6070;
         line-height: 20px;
         padding: 20px 0 0 0;
-        letter-spacing: .7px;
-        text-align: justify;
-        // text-justify:   ;
+        text-align:justify;
+        text-justify:inter-ideograph;
+        word-spacing: -1px;
 
       }
       .ability-tottom{

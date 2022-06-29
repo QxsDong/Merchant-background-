@@ -9,7 +9,7 @@ Vue.use(Vuex)
 
 const store = new Vuex.Store({
   plugins: [createPersistedState({
-    storage: window.sessionStorage,
+    storage: window.localStorage,
     reducer(val) {
       return {
         // 需要储存的数据

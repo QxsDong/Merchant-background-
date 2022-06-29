@@ -171,7 +171,7 @@ $cursor: #999;
   color: #5A6070;
   line-height: 19px;
   position: relative;
-    top: -20px;
+    top: -5px;
   span{
     color: #0193F2FF;
     cursor: pointer;

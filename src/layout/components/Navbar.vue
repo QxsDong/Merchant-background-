@@ -6,6 +6,14 @@
     <div class="navbar-right">
       <p class="right-menuTime" />
       <img src="../../assets/logos/news.png" alt="">
+      <el-select v-model="value" placeholder="请选择" @change="selectLanguage">
+        <el-option
+          v-for="item in languageList"
+          :key="item.value"
+          :label="item.name"
+          :value="item.value"
+        />
+      </el-select>
     </div>
 
   </div>
@@ -14,12 +22,23 @@
 <script>
 import { mapGetters } from 'vuex'
 import Breadcrumb from '@/components/Breadcrumb'
+import { parseTime } from '@/utils/index.js'
 // import Hamburger from '@/components/Hamburger'
-
+import i18n from '@/utils/i18n'
 export default {
   components: {
     Breadcrumb
     // Hamburger
+  },
+  data() {
+    return {
+      languageList: [
+        { name: 'English(US)', value: 'en', state: true },
+        { name: '中文', value: 'zh', state: false }
+      ],
+      value: sessionStorage.getItem('language') ? sessionStorage.getItem('language') : 'en'
+
+    }
   },
   computed: {
     ...mapGetters([
@@ -31,23 +50,20 @@ export default {
     document.querySelector('.right-menuTime').innerHTML = new Date().toLocaleDateString()
     this.Id = setInterval(() => {
       var time = new Date() // 程序计时的月从0开始取值后+1
-      var m = time.getMonth() + 1
-      var t = time.getFullYear() + '-' + m + '-' +
-      time.getDate() + ' ' + this.MoreThan(time.getHours()) + ':' +
-      this.MoreThan(time.getMinutes()) + ':' + this.MoreThan(time.getSeconds())
-      document.querySelector('.right-menuTime').innerHTML = t
+      // var m = time.getMonth() + 1
+      // var t = time.getFullYear() + '-' + m + '-' +
+      // time.getDate() + ' ' + this.MoreThan(time.getHours()) + ':' +
+      // this.MoreThan(time.getMinutes()) + ':' + this.MoreThan(time.getSeconds())
+      document.querySelector('.right-menuTime').innerHTML = parseTime(time, '{y}-{m}-{d} {h}:{i}:{s}')
     }, 1000)
   },
   beforeDestroy() {
     clearInterval(this.Id)
   },
   methods: {
-    MoreThan(n) {
-      if (n > 9) {
-        return n
-      } else {
-        return '0' + n
-      }
+    selectLanguage() {
+      sessionStorage.setItem('language', this.value)
+      i18n.locale = this.value
     }
   }
 }
@@ -108,5 +124,15 @@ export default {
     color: #5A6070;
   }
 }
+}
+.el-select{
+  width: 130px;
+  margin-left: 20px;
+  ::v-deep input{
+    border: none;
+    font-family: 'SF Pro';
+    font-size: 14px;
+    font-weight: bold;
+  }
 }
 </style>

@@ -58,17 +58,17 @@ export function merchantList() {
   })
 }
 // 查看app
-export function getApplication(data) {
+export function getApplication(data, urlId) {
   return request({
-    url: '/app/10005',
+    url: '/app/' + urlId,
     method: 'GET',
     data
   })
 }
 // 修改商户app信息
-export function setApplication(data) {
+export function setApplication(data, urlId) {
   return request({
-    url: '/app/10005',
+    url: '/app/' + urlId,
     method: 'post',
     data
   })
@@ -129,9 +129,18 @@ export function setSelltionState(urlId, data) {
     data
   })
 }
+// 退出登陆
 export function logout() {
   return request({
     url: '/logout',
     method: 'get'
+  })
+}
+// 订单列表
+export function getOrderList(data) {
+  return request({
+    url: 'order/orderList',
+    method: 'post',
+    data
   })
 }

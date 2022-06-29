@@ -1,8 +1,8 @@
 <template>
   <div class="offRamp-container">
     <div class="offRamp-title">
-      <p :class="buySell==1?'active':''" @click="buySell=1">买币</p>
-      <p :class="buySell==2?'active':''" @click="buySell=2">卖币</p>
+      <p :class="buySell==1?'active':''" @click="buySell=1">{{ $t('nav.Buy_coins') }}</p>
+      <p :class="buySell==2?'active':''" @click="buySell=2">{{ $t('nav.Sell_coins') }}</p>
     </div>
 
     <div class="offRamp-content">
@@ -22,15 +22,18 @@
             :lazy="true"
           >
             <el-table-column
-              label="Crypro"
+              label="Name"
               align="left"
             >
               <template slot-scope="scope">
+                <div style="height100%;display:flex; align-items: center;">
+                  <img slot="reference" :src="scope.row.logoUrl" style="width: 30px;height: 30px;margin-left:10%">
+                  <!-- </el-popover> -->
+                  <span style="line-height:10px;margin-left:10px">{{ scope.row.fullName }}</span>
+                </div>
                 <!-- <el-popover placement="top-start" title="" trigger="hover" style="margin-right:20px"> -->
                 <!-- <img :src="scope.row.logoUrl" alt="" style="width: 150px;height: 150px"> -->
-                <img slot="reference" :src="scope.row.logoUrl" style="width: 30px;height: 30px;margin-left:10%">
-                <!-- </el-popover> -->
-                <span style="position: absolute;top:15px;">{{ scope.row.fullName }}</span>
+
               </template>
             </el-table-column>
             <el-table-column
@@ -42,12 +45,15 @@
               prop="channel"
               label="Price From"
               align="center"
-            />
-            <el-table-column
+            >
+              <template slot-scope="scope">
+                {{ scope.row.channel===1?'binance':scope.row.channel }}
+                <template /></template></el-table-column>
+            <!-- <el-table-column
               prop="networkFee"
               label="提现手续费"
               align="center"
-            />
+            /> -->
             <el-table-column
               label="action"
               align="center"
@@ -90,14 +96,14 @@
               label="结算币种"
               align="center"
             />
-            <el-table-column
+            <!-- <el-table-column
               label="Fee"
               align="center"
             >
               <template slot-scope="scope">
                 {{ scope.row.fixedFee + scope.row.feeRate }}
               </template>
-            </el-table-column>
+            </el-table-column> -->
             <el-table-column
               label="Action"
               align="center"
@@ -112,7 +118,7 @@
                 <!-- <el-button type="text" size="small" style="font-weight: bold">Detail</el-button> -->
               </template>
             </el-table-column>
-            </el-table-column></el-table>
+          </el-table>
         </div>
       </div>
       <!-- 卖币 -->
@@ -132,15 +138,15 @@
           >
             <el-table-column
 
-              label="Crypro"
-              align="left"
+              label="Name"
+              align="center"
             >
               <template slot-scope="scope">
-                <!-- <el-popover placement="top-start" title="" trigger="hover" style="margin-right:20px">
-                  <img :src="scope.row.logoUrl" alt="" style="width: 150px;height: 150px"> -->
-                <img slot="reference" :src="scope.row.logoUrl" style="width: 30px;height: 30px;margin-left:10%">
-                <!-- </el-popover> -->
-                <span style="position: absolute;top:15px;">{{ scope.row.fullName }}</span>
+                <div style="height100%;display:flex; align-items: center;margin-left:20%">
+                  <img slot="reference" :src="scope.row.logoUrl" style="width: 30px;height: 30px;">
+                  <!-- </el-popover> -->
+                  <span style="line-height:10px;margin-left:10px">{{ scope.row.fullName }}</span>
+                </div>
               </template>
             </el-table-column>
             <el-table-column
@@ -152,8 +158,12 @@
               prop="channel"
               label="Price From"
               align="center"
-            />
-            <el-table-column
+            >
+              <template slot-scope="scope">
+                {{ scope.row.channel===1?'binance':scope.row.channel }}
+              </template>
+            </el-table-column>
+            <!-- <el-table-column
 
               label="提现手续费"
               align="center"
@@ -161,7 +171,7 @@
               <template slot-scope="scope">
                 {{ scope.row.networkFee }}
               </template>
-            </el-table-column>
+            </el-table-column> -->
             <el-table-column
               label="action"
               align="center"
@@ -198,14 +208,14 @@
               label="法币币种"
               align="center"
             />
-            <el-table-column
+            <!-- <el-table-column
               label="手续费"
               align="center"
             >
               <template slot-scope="scope">
                 {{ scope.row.fixedFee + scope.row.fixedFee }}
               </template>
-            </el-table-column>
+            </el-table-column> -->
             <el-table-column
               label="action"
               align="center"
@@ -435,6 +445,7 @@ export default {
     top: 0;
     background: #F4F7FE;
     padding: 20px 30px 0;
+
     .offRamp-title{
       height: 50px;
       display: flex;
@@ -456,6 +467,7 @@ export default {
       .active{
         background: #FFFFFF;
         box-shadow: 0px -15px 20px -5px rgba(177, 202, 239, 0.5);
+        font-family: RobotoBold;
         position: relative;
         z-index: 2;
       }
@@ -498,6 +510,7 @@ export default {
           .active{
             background: #40A1FBFF;
             color: #FFFFFF;
+
           }
         }
         .offRamp-con{
@@ -519,7 +532,7 @@ export default {
                 background: #F4F7FF;
               }
               & ::v-deep th, td{
-
+                text-align: center;
                 color: #123077;
                 border-bottom: 1px solid #E8EAEE;
                 border-right: 1px solid #E8EAEE;

@@ -75,19 +75,7 @@ export const constantRoutes = [
   //     }
   //   ]
   // },
-  // {
-  //   path: '/payment',
-  //   component: Layout,
-  //   active: false,
-  //   children: [
-  //     {
-  //       path: 'index',
-  //       name: 'Payment',
-  //       component: () => import('@/views/payment. method/index'),
-  //       meta: { title: 'payment. method', icon: 'payment', icon1: 'iconRight', Images: require('@/assets/menu-images/Union.png'), ImgActive: require('@/assets/menu-images/UnionSelect.png'), active: false }
-  //     }
-  //   ]
-  // },
+
   {
     path: '/',
     component: Layout,
@@ -97,7 +85,7 @@ export const constantRoutes = [
       path: '/Application',
       name: 'Application',
       component: () => import('@/views/Application/index'),
-      meta: { title: 'Application', icon: 'over', icon1: 'iconRight', Images: require('@/assets/menu-images/applic.png'), ImgActive: require('@/assets/menu-images/applicSelect.png'), active: true },
+      meta: { title: 'nav.Application_title', icon: 'over', icon1: 'iconRight', Images: require('@/assets/menu-images/applic.png'), ImgActive: require('@/assets/menu-images/applicSelect.png'), active: true },
       children: [
         {
           path: '/Application/collction',
@@ -116,7 +104,7 @@ export const constantRoutes = [
         path: '/ability/index',
         name: 'Ability',
         component: () => import('@/views/ability/index'),
-        meta: { title: 'Ability', icon: 'payment', icon1: 'iconRight', Images: require('@/assets/menu-images/ability.png'), ImgActive: require('@/assets/menu-images/abilitySelect.png'), active: false },
+        meta: { title: 'nav.Abilty_title', icon: 'payment', icon1: 'iconRight', Images: require('@/assets/menu-images/ability.png'), ImgActive: require('@/assets/menu-images/abilitySelect.png'), active: false },
         children: [
           {
             path: '/ability/index/ramp',
@@ -131,6 +119,29 @@ export const constantRoutes = [
             meta: { title: 'Crypto Acquirin', isActive: 'Ability' }
           }
         ]
+      }
+    ]
+  },
+  // {
+  //   path: '/order',
+  //   component: Layout,
+  //   children: [{
+  //     path: 'index',
+  //     name: 'Order',
+  //     component: () => import('@/views/order/index'),
+  //     meta: { title: 'Order', Images: require('@/assets/menu-images/Union.png'), ImgActive: require('@/assets/menu-images/UnionSelect.png'), active: false }
+  //   }]
+  // },
+  {
+    path: '/payment',
+    component: Layout,
+    active: false,
+    children: [
+      {
+        path: 'index',
+        name: 'orders',
+        component: () => import('@/views/orders/index'),
+        meta: { title: 'nav.Orders_title', icon: 'payment', icon1: 'iconRight', Images: require('@/assets/menu-images/Union.png'), ImgActive: require('@/assets/menu-images/UnionSelect.png'), active: false }
       }
     ]
   },

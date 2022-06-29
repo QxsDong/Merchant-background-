@@ -31,8 +31,9 @@
         >
           <i class="el-icon-plus" />
         </el-upload>
-        <el-dialog :visible.sync="dialogVisible">
-          <img width="100%" :src="ruleForm.licenseUrl" alt="">
+        <el-dialog :visible.sync="dialogVisible" append-to-body margin-top="10vh" custom-class="uploadImages">
+          <img style="width:100%;height:100%" :src="ruleForm.licenseUrl" alt="">
+          <div class="scroll_upload" />
         </el-dialog>
 
       </el-form-item>
@@ -139,9 +140,16 @@ export default {
   },
   computed: {
     nextActive() {
-      if (this.ruleForm.licenseUrl && this.ruleForm.name && this.ruleForm.type && this.ruleForm.licenseNo && this.ruleForm.merchantBizType.length > 0 && this.ruleForm.contactName && this.ruleForm.contactPhone && this.ruleForm.contactEmail) {
-        return true
+      if (this.ruleForm.type === '2') {
+        if (this.ruleForm.licenseUrl && this.ruleForm.name && this.ruleForm.type && this.ruleForm.licenseNo && this.ruleForm.merchantBizType.length > 0 && this.ruleForm.contactName && this.ruleForm.contactPhone && this.ruleForm.contactEmail) {
+          return true
+        }
+      } else {
+        if (this.ruleForm.licenseUrl && this.ruleForm.name && this.ruleForm.type && this.ruleForm.licenseNo && this.ruleForm.merchantBizType.length > 0 && this.ruleForm.contactName && this.ruleForm.contactPhone && this.ruleForm.contactEmail && this.ruleForm.fullName) {
+          return true
+        }
       }
+
       return false
     }
   },
@@ -149,11 +157,12 @@ export default {
   methods: {
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
-        if (valid) {
+        if (valid && this.nextActive) {
           this.$parent.state = 2
           sessionStorage.setItem('State', 2)
           this.$store.state.user.ruleForm = this.ruleForm
         } else {
+          // console.log(this.$store.state.user.ruleForm)
           console.log('error submit!!')
           return false
         }
@@ -178,16 +187,27 @@ export default {
       from.append('pic', file)
       uploadImages(from).then(res => {
         if (res.returnCode === '0000' && res.data) {
+          this.$message({
+            type: 'success',
+            message: res.returnMsg
+          })
           this.ruleForm.licenseUrl = res.data.picUrl
+          return
         }
+        this.$message({
+          type: 'error',
+          message: res.returnMsg
+        })
       })
     }
   }
 }
 </script>
 <style lang="scss" scoped>
+
 .basic-container{
   width: 100%;
+
   .basic-totle{
     font-size: 14px;
     font-family: RobotoBold;
@@ -204,6 +224,7 @@ export default {
     .el-form-item {
       height: 30px;
       margin:0 50px 15px 0;
+
       ::v-deep .el-checkbox{
         height: 30px;
         margin: 0 10px 0 0;
@@ -260,6 +281,7 @@ export default {
     }
     .el-form-item:nth-of-type(6){
       height: 125px;
+      margin-bottom: 0px;
       ::v-deep .el-form-item__error{
         top: 100%;
       }
@@ -267,6 +289,7 @@ export default {
     .el-form-item:nth-of-type(7){
       line-height: 0px !important;
       height: auto !important;
+      margin-bottom: 5px;
       .el-checkbox-group{
         display: flex;
         flex-wrap: wrap;
@@ -277,7 +300,7 @@ export default {
       // width: 200px;
       width: 200px !important;
       height: 40px;
-    //  margin: 0 auto ;
+     margin: 5px  0 0 ;
       ::v-deep button{
         width: 200px;
         height: 40px;
@@ -333,5 +356,19 @@ export default {
   color: #A7A7A7;
   line-height: 14px;
 }
+::v-deep .uploadImages{
+  height: 90%;
+  margin: 0 !important;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    border-radius: 20px;
+    overflow: hidden;
+    .el-dialog__body{
+      height: 96%;
+      // overflow: scroll;
+    }
+  }
 
 </style>

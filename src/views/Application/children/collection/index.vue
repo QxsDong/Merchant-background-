@@ -1,48 +1,50 @@
 <template>
   <div class="collection-container">
+
     <el-form ref="ruleForm" :model="ruleForm" :rules="rules" hide-required-asterisk class="demo-ruleForm">
-      <div class="collection-title">ACH Collection <span style="font-size: 10px;font-family: SF  Pro;color: #40A1FB;margin-left:40px">API 文档</span></div>
+      <div class="collection-title">ACH Collection <span style="font-size: 10px;font-family: SF  Pro;color: #40A1FB;margin-left:40px;cursor: pointer;" @click="goToRamp"> API 文档 </span></div>
       <div class="collection-content">
 
         <el-form-item label="Product Capability" class="collection-con">
-          <el-input v-model="ruleForm.productCode" :disabled="true" />
+          <el-input v-model="ruleForm.productCode" :readonly="true" />
         </el-form-item>
         <el-form-item label="APP ID" class="collection-con">
-          <el-input v-model="ruleForm.appId" :disabled="true" />
+          <el-input v-model="ruleForm.appId" :readonly="true" />
         </el-form-item>
         <el-form-item label="Secret" prop="appSecrete" class="collection-con" style="">
-          <el-input ref="changeInput" v-model="ruleForm.appSecrete" :disabled="Edit" />
-          <span @click="cangeDisabled(1)">Edit</span>
+          <el-input ref="changeInput" v-model="ruleForm.appSecrete" :readonly="Edit" />
+          <!-- <span @click="cangeDisabled(1)">Edit</span> -->
         </el-form-item>
         <el-form-item label="Noticeurl" prop="noticeUrl" class="collection-con">
-          <el-input ref="changeInput1" v-model="ruleForm.noticeUrl" :disabled="Edit1" />
-          <span @click="cangeDisabled(2)">Edit</span>
+          <el-input ref="changeInput1" v-model="ruleForm.noticeUrl" :readonly="Edit1" />
+          <!-- <span @click="cangeDisabled(2)">Edit</span> -->
         </el-form-item>
         <el-form-item label="Public key" class="collection-con">
-          <el-input v-model="ruleForm.publicKey" :disabled="true" />
+          <el-input v-model="ruleForm.publicKey" :readonly="true" />
         </el-form-item>
         <el-form-item label="Private key" class="collection-con">
-          <el-input v-model="ruleForm.Privatekey" :disabled="true" />
+          <el-input v-model="ruleForm.privateKey" :readonly="true" />
         </el-form-item>
       </div>
-
+      <p class="collection_Url">Return Url : <span style="cursor: pointer;" @click="goToRamp(1)">http://ramp.alchemypay.org?appId={{ ruleForm.appId }}</span> </p>
       <p class="collection_prompt "><img style="margin-right: 10px" src="@/assets/logos/GroupIcon.png" alt="">当在订单中传入Noticeurl时，以订单上的Noticeurl为准。</p>
-      <div class="collection-title" style="margin:38px 0 0 0px">IP Settings</div>
+
+      <div class="collection-title" style="margin:20px 0 0 0px">IP Settings</div>
       <el-form-item class="coll-radio">
-        <el-radio-group v-model="resource">
+        <el-radio-group v-model="resource" @change="handleChange">
           <el-radio label="1">Can accept API calls from any IP</el-radio>
-          <el-radio label="2">Can only accept API calls from a specific IP</el-radio>
+          <el-radio label="2" disabled>Can only accept API calls from a specific IP</el-radio>
         </el-radio-group>
       </el-form-item>
-      <el-form-item prop="ipConfig">
+      <el-form-item>
         <div style="height:70px;overflow:hidden">
-          <el-input v-model="ruleForm.ipConfig" :disabled="resource=='2'?true:false" type="textarea" />
+          <el-input v-model="ipConfig" type="textarea" />
         </div>
       </el-form-item>
-      <el-form-item>
+      <!-- <el-form-item>
         <el-button type="primary" @click="submitForm('ruleForm')">save</el-button>
         <el-button @click="resetForm('ruleForm')">Cancel</el-button>
-      </el-form-item>
+      </el-form-item> -->
     </el-form>
   </div>
 </template>
@@ -54,7 +56,7 @@ export default {
       Edit1: true,
       Edit: true,
       input: '',
-      resource: '1',
+      resource: '',
       ruleForm: {
         productCode: '',
         noticeUrl: '',
@@ -65,6 +67,7 @@ export default {
         delivery: false,
         desc: ''
       },
+      ipConfig: '',
       rules: {
         appSecrete: [
           { required: true, message: 'Secret cannot be empty', trigger: 'blur' }
@@ -83,11 +86,13 @@ export default {
     const params = {
       merchantAppId: this.$route.query.id
     }
-    getApplication(params).then(res => {
+    getApplication(params, this.$route.query.id).then(res => {
       if (res.returnCode === '0000' && res.data) {
         this.ruleForm = res.data
-        // this.ruleForm.ipConfig = 3211
-        this.ruleForm.ipConfig ? this.resource = '2' : '1'
+        // debugger
+        this.ruleForm.ipConfig ? this.resource = '2' : this.resource = '1'
+        // console.log(this.resource)
+        this.ruleForm.ipConfig && this.resource === '2' ? this.ipConfig = this.ruleForm.ipConfig : this.ipConfig
       }
     })
   },
@@ -95,7 +100,9 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          setApplication(this.ruleForm).then(res => {
+          this.resource === '2' ? this.ipConfig = this.ruleForm.ipConfig : this.ruleForm.ipConfig = this.ipConfig
+          // console.log(this.ruleForm)
+          setApplication(this.ruleForm, this.$route.query.id).then(res => {
             if (res.returnCode === '0000' && res.success) {
               this.$message({
                 type: 'success',
@@ -116,9 +123,43 @@ export default {
     },
     cangeDisabled(val) {
       if (val == 1) {
-        this.Edit = false
+        this.Edit = !this.Edit
+        if (!this.Edit) {
+          this.$refs.changeInput.$el.children[0].style = `background:#fff;border:1px solid #A7A7A7`
+          setTimeout(() => {
+            this.$refs.changeInput.$el.children[0].focus()
+          }, 500)
+          return
+        } else {
+          this.$refs.changeInput.$el.children[0].style = ''
+          this.$refs.changeInput.$el.children[0].blur()
+          return
+        }
       } else {
-        this.Edit1 = false
+        this.Edit1 = !this.Edit1
+        if (!this.Edit1) {
+          this.$refs.changeInput1.$el.children[0].style = `background:#fff;border:1px solid #A7A7A7`
+          setTimeout(() => {
+            this.$refs.changeInput1.$el.children[0].focus()
+          }, 500)
+        } else {
+          this.$refs.changeInput1.$el.children[0].style = ''
+          this.$refs.changeInput1.$el.children[0].blur()
+        }
+      }
+    },
+    handleChange(val) {
+      if (val === '2') {
+        this.ipConfig = this.ruleForm.ipConfig
+        return
+      }
+    },
+    goToRamp(val) {
+      if (val === 1) {
+        window.open(`http://ramp.alchemypay.org?appId=${this.ruleForm.appId}`)
+        return
+      } else {
+        window.open('https://www.showdoc.com.cn/1996224128508945/9035851473642080')
       }
     }
   }
@@ -137,6 +178,37 @@ export default {
   top: 50%;
   transform: translate(-50%,-50%);
   z-index: 999;
+  .collection_Url{
+    width: 100%;
+   font-size: 12px;
+    text-align: left;
+    font-family: SF  Pro !important;
+    font-weight: 400 !important;
+    color: #5A6070;
+    display: flex;
+    align-items: center;
+    margin: 20px 0 0 ;
+    span{
+      display: block;
+      // width: 220px;
+      height: 30px;
+      line-height: 30px;
+      background: #F8FAFD;
+      margin-left: 1px;
+      color: #A7A7A7;
+      border: none;
+      padding:0 38px 0 10px ;
+      border-radius: 2px;
+      font-size: 12px;
+      font-family: SF  Pro;
+      margin-left: 55px;
+      // white-space:nowrap;
+      overflow: hidden;
+    }
+    span:hover{
+      color: #40A1FB;
+    }
+  }
   .collection-title{
     font-size: 14px;
     font-family: RobotoBold;
@@ -150,14 +222,16 @@ export default {
     flex-wrap: wrap;
     margin-top: 20px;
     .collection-con{
+      height: 30px;
       display: flex;
       align-items: center;
       justify-content: space-between;
       margin: 20px 50px 0 0;
       position: relative;
+      white-space: nowrap;
       ::v-deep .el-form-item__label{
         display: inline-block;
-        width: 125px;
+        width: 90px;
         height: 14px;
         font-size: 12px;
         text-align: left;
@@ -168,14 +242,16 @@ export default {
         margin-right: 30px;
       }
       span{
+        display: block;
+        height: 30px;
         font-size: 10px;
         font-family: SF  Pro;
         font-weight: 400;
         color: #40A1FB;
-        line-height: 12px;
+        line-height: 30px;
         position: absolute;
-        right: 20px;
-        top: 13px;
+        right: 10px;
+        top: 5px;
         cursor: pointer;
       }
       .el-input{
@@ -205,7 +281,7 @@ export default {
       font-weight: 400;
       color: #BBC2CF;
       line-height: 14px;
-      margin-top: 20px;
+      margin: 20px 0 0 ;
       display: flex;
       align-items: center;
   }

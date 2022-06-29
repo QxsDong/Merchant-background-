@@ -6,7 +6,7 @@
     </div>
     <div v-for="item in productType" :key="item.id" class="selectCity-con">
       <div class="title">
-        <el-checkbox v-model="menusIds1" :label="item.dictValue">
+        <el-checkbox v-model="menusIds1" :label="item.dictValue" @change="menusIdsIncludes">
           <p>{{ item.dictLabel }}</p>
         </el-checkbox>
         <span>Try is now</span>
@@ -76,14 +76,6 @@ export default {
           this.fiatPayInData = obj
         }
       }
-    },
-    menusIds1: {
-      deep: true,
-      handler(newVal) {
-        if (newVal.length > 0) {
-          console.log(newVal)
-        }
-      }
     }
 
   },
@@ -94,7 +86,7 @@ export default {
         params.applyProductCode = this.menusIds1.join(',')
         params.applyProductParam = JSON.stringify(this.fiatPayInData)
         params.merchantBizType = JSON.stringify(this.$store.state.user.ruleForm.merchantBizType)
-        console.log(params)
+        // console.log(params)
         createMerchant(params).then(res => {
           if (res.returnCode === '0000' && res.success) {
             this.$message({
@@ -139,6 +131,11 @@ export default {
             }
           })
         }
+      }
+    },
+    menusIdsIncludes() {
+      if (!this.menusIds1.includes('80003')) {
+        this.fiatPayInData = ''
       }
     }
   }
@@ -251,4 +248,25 @@ export default {
 
   }
 }
+.selectCity-container::-webkit-scrollbar
+{
+    width:10px;
+    height:10px;
+    // background-color:#F5F5F5;
+}
+.selectCity-container::-webkit-scrollbar-track
+{
+    // -webkit-box-shadow:inset 0 0 6px rgba(0,0,0,0.3);
+    border-radius:10px;
+    background-color:#F5F5F5;
+}
+/*定义滑块
+ 内阴影+圆角*/
+.selectCity-container::-webkit-scrollbar-thumb
+{
+    border-radius:10px;
+    // -webkit-box-shadow:inset 0 0 6px rgba(0,0,0,.3);
+    background-color:#A7A7A7;
+}
+
 </style>

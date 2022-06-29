@@ -22,6 +22,7 @@ service.interceptors.request.use(
     // let each request carry token
     // ['X-Token'] is a custom headers key
     // please modify it according to the actual situation
+    // config.headers['Authorization'] = getToken()
     config.headers['Authorization'] = getToken()
     // }
     return config
@@ -47,16 +48,16 @@ service.interceptors.response.use(
    */
   response => {
     const res = response.data
+    // console.log(res)
     // console.log(response)
     // if the custom code is not 20000, it is judged as an error.
-    if (response.status !== 200) {
+    if (res.returnCode !== '0000') {
       Message({
-        message: res.msg || 'Error',
+        message: res.returnMsg || 'Error',
         type: 'error',
         duration: 5 * 1000
       })
-
-      if (res.code === 50008 || res.code === 50012 || res.code === 50014 || res.code === 1002) {
+      if (res.returnCode === '10006' || res.returnCode === '10001') {
         // to re-login
         // MessageBox.confirm('You have been logged out, you can cancel to stay on this page, or log in again', 'Confirm logout', {
         //   confirmButtonText: 'Re-Login',

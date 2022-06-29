@@ -5,7 +5,7 @@
         <el-menu-item :index="resolvePath(onlyOneChild.path)" :class="{'submenu-title-noDropdown':!isNest}">
           <!-- <item :icon="onlyOneChild.meta.icon||(item.meta&&item.meta.icon)" :title="onlyOneChild.meta.title" /> -->
           <img :src="$route.name!==onlyOneChild.name?onlyOneChild.meta.Images:onlyOneChild.meta.ImgActive" alt="">
-          <span slot="title">{{ onlyOneChild.meta.title }}</span>
+          <span slot="title">{{ $t(onlyOneChild.meta.title) }}</span>
           <img :src="$route.name!==onlyOneChild.name?require('../../../assets/menu-images/right_o.png'):iconRight" alt="">
         </el-menu-item>
       </app-link>
