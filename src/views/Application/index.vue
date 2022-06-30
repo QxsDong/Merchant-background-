@@ -57,7 +57,7 @@
           width="70"
         >
           <template slot-scope="scope">
-            {{ scope.row.status==1?'启用':'禁用' }}
+            {{ scope.row.status==1?$t('nav.application_enable'):$t('nav.application_disable') }}
           </template>
         </el-table-column>
         <el-table-column
@@ -67,8 +67,8 @@
           fixed="right"
         >
           <template slot-scope="scope">
-            <el-button type="text" size="small" @click="handleClick(scope.row)">查看</el-button>
-            <el-button type="text" size="small" @click="handleState(scope.row)">{{ scope.row.status==1?'失效':'生效' }}</el-button>
+            <el-button type="text" size="small" @click="handleClick(scope.row)">{{ $t('nav.application_View') }}</el-button>
+            <el-button type="text" size="small" @click="handleState(scope.row)">{{ scope.row.status==1?$t('nav.application_Take'):$t('nav.application_lapse') }}</el-button>
           </template>
         </el-table-column>
       </el-table>

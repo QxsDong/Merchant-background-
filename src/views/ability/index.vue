@@ -2,82 +2,84 @@
   <div class="ability-container">
     <div class="ability-content">
       <div class="ability-title">
-        <p>Crypto收单</p>
-        <span v-if="state==1" class="Activated">Activated</span>
-        <div v-else-if="state==2" class="Applying">Applying...</div>
+        <p>{{ $t('nav.Ability_crypto') }}</p>
+        <span v-if="state==1" class="Activated">{{ $t('nav.Ability_Activated') }}</span>
+        <div v-else-if="state==2" class="Applying">{{ $t('nav.Ability_Applying') }}...</div>
         <!-- <div v-else class="Unopened">Unopened</div> -->
-        <div v-else class="Activated">Not developed...</div>
+        <div v-else class="Activated">{{ $t('nav.Ability_developed') }}...</div>
       </div>
       <div class="ability-con">
-        With Crypto Acquiring Products, your customers can use digital currency to buy on your website Services or products ; we can settle USDT or fiat to you.
+        {{ $t('nav.Ability_cryptoContent') }}
       </div>
       <div v-if="state==1" class="ability-tottom">
         <el-button type="primary" class="allocation" @click="goContent">查看配置</el-button>
-        <el-button class="TryButton">Try it now</el-button>
+        <el-button class="TryButton">{{ $t('nav.Ability_now') }}</el-button>
       </div>
       <div v-if="state==2" class="ability-tottom1">
         <!-- <el-button type="primary" class="allocation">查看配置</el-button> -->
         <!-- <el-button v-else-if="state==3" type="primary" class="allocation">申请</el-button> -->
-        <el-button class="TryButton">Try it now</el-button>
+        <el-button class="TryButton">{{ $t('nav.Ability_now') }}</el-button>
         <p v-if="state==2">You can contact email: xxx to check the approval progress</p>
       </div>
       <div v-if="state==3" class="ability-tottom">
-        <el-button type="primary" class="allocation" disabled>暂不开放</el-button>
-        <el-button class="TryButton" disabled>Try it now</el-button>
+        <el-button type="primary" class="allocation" disabled>{{ $t('nav.Ability_Closed') }}</el-button>
+        <el-button class="TryButton" disabled>{{ $t('nav.Ability_now') }}</el-button>
       </div>
     </div>
     <div class="ability-content">
       <div class="ability-title">
-        <p>法币收单</p>
-        <span v-if="state1==1" class="Activated">Activated</span>
-        <div v-else-if="state1==2" class="Applying">Applying...</div>
+        <p>{{ $t('nav.Ability_Fiat') }}</p>
+        <span v-if="state1==1" class="Activated">{{ $t('nav.Ability_Activated') }}</span>
+        <div v-else-if="state1==2" class="Applying">{{ $t('nav.Ability_Applying') }}...</div>
         <!-- <div v-else class="Unopened">Unopened</div> -->
-        <div v-else class="Activated">Not developed...</div>
+        <div v-else class="Activated">{{ $t('nav.Ability_developed') }}...</div>
       </div>
       <div class="ability-con">
-        Provide credit card collection channels, local payment in Indonesia, local payment in Mexico and other payment channels.
+        {{ $t('nav.Ability_flatContent') }}
       </div>
       <div v-if="state1==1" class="ability-tottom">
         <el-button type="primary" class="allocation">查看配置</el-button>
-        <el-button class="TryButton">Try it now</el-button>
+        <el-button class="TryButton">{{ $t('nav.Ability_now') }}</el-button>
       </div>
       <div v-if="state1==2" class="ability-tottom1">
         <!-- <el-button type="primary" class="allocation">查看配置</el-button> -->
         <!-- <el-button v-else-if="state==3" type="primary" class="allocation">申请</el-button> -->
-        <el-button class="TryButton">Try it now</el-button>
+        <el-button class="TryButton">{{ $t('nav.Ability_now') }}w</el-button>
         <p v-if="state1==2">You can contact email: xxx to check the approval progress</p>
       </div>
       <div v-if="state1==3" class="ability-tottom">
-        <el-button type="primary" class="allocation" disabled>暂不开放</el-button>
-        <el-button class="TryButton" disabled>Try it now</el-button>
+        <el-button type="primary" class="allocation" disabled>{{ $t('nav.Ability_Closed') }}</el-button>
+        <el-button class="TryButton" disabled>{{ $t('nav.Ability_now') }}</el-button>
       </div>
     </div>
     <div class="ability-content">
       <div class="ability-title">
-        <p>On/Off ramp</p>
-        <span v-if="state2==1" class="Activated">Activated</span>
-        <div v-else-if="state2==2" class="Applying">Applying...</div>
-        <div v-else class="Unopened">Unopened</div>
+        <p>{{ $t('nav.Ability_ramp') }}</p>
+        <span v-if="state2==1" class="Activated">{{ $t('nav.Ability_Activated') }}</span>
+        <div v-else-if="state2==2" class="Applying">{{ $t('nav.Ability_Applying') }}...</div>
+        <div v-else class="Unopened">{{ $t('nav.Ability_Unopened') }}</div>
       </div>
       <div class="ability-con">
-        With this capability, you can help your users purchase various digital currencies with fiat, or your
-        Users can also sell various digital currencies on this platform to obtain legal currency.
+        {{ $t('nav.Ability_rampContent') }}
       </div>
       <div v-if="state2==1" class="ability-tottom">
-        <el-button type="primary" class="allocation" @click="goContent">查看配置</el-button>
-        <el-button class="TryButton">Try it now</el-button>
+        <el-button type="primary" class="allocation" @click="goContent">{{ $t('nav.Ability_configuration') }}</el-button>
+        <el-button class="TryButton" disabled>{{ $t('nav.Ability_now') }}</el-button>
       </div>
       <div v-if="state2==2 ||state2==0 " class="ability-tottom1">
         <!-- <el-button type="primary" class="allocation">查看配置</el-button> -->
         <!-- <el-button v-else-if="state==3" type="primary" class="allocation">申请</el-button> -->
-        <el-button class="TryButton">Try it now</el-button>
+        <el-button class="TryButton">{{ $t('nav.Ability_now') }}</el-button>
         <p v-if="state2==2 ||state2==0">You can contact email: xxx to check the approval progress</p>
       </div>
       <div v-if="state2==3" class="ability-tottom">
-        <el-button type="primary" class="allocation">申请</el-button>
-        <el-button class="TryButton">Try it now</el-button>
+        <el-button type="primary" class="allocation" @click="$router.replace('/enroll')">申请</el-button>
+        <el-button class="TryButton">{{ $t('nav.Ability_now') }}</el-button>
       </div>
     </div>
+    <!-- <div class="ability_toast">
+      点击
+    </div> -->
     <!-- <div v-show="isShow" class="content"> -->
     <router-view />
     <!-- </div> -->
@@ -97,6 +99,7 @@ export default {
     }
   },
   mounted() {
+    // console.log(this.$store.state.user.productCode.status = 3)
     this.state2 = this.$store.state.user.productCode.status
   },
   methods: {
@@ -127,6 +130,7 @@ export default {
       box-sizing: border-box;
       position: relative;
       margin:0 20px 20px;
+
       .ability-title{
         height: 30px;
         display: flex;
@@ -185,9 +189,10 @@ export default {
         color: #5A6070;
         line-height: 20px;
         padding: 20px 0 0 0;
+        // word-break: keep-all;
         text-align:justify;
-        text-justify:inter-ideograph;
-        word-spacing: -1px;
+        word-break: break-all;
+        word-spacing:1.8px ;
 
       }
       .ability-tottom{
@@ -205,6 +210,7 @@ export default {
         .allocation{
           width: 130px;
           height: 40px;
+          padding: 0;
           // background: #40A1FB;
           border-radius: 6px;
           font-family: RobotoBold;

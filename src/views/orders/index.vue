@@ -20,8 +20,8 @@
           </div>
           <div>
             <!-- <p style="color: #666666;width: 100px;">email : </p> -->
-            <el-input v-model="paramsData.email" style="flex:1;margin-right:0" prefix-icon="el-icon-search" placeholder="Please enter email " />
-            <el-button slot="append" class="searchButton" type="primary" :disabled="disabledButton" @click="searchDataEmail">search</el-button></div>
+            <el-input v-model="paramsData.email" style="flex:1;margin-right:0" prefix-icon="el-icon-search" :placeholder="$t('nav.Orders_Email')" />
+            <el-button slot="append" class="searchButton" type="primary" :disabled="disabledButton" @click="searchDataEmail">{{ $t('nav.Orders_search') }}</el-button></div>
         </div>
         <div class="offRamp-con">
           <el-table
@@ -86,7 +86,7 @@
               prop="completeTime"
               label="Complete Time"
               align="center"
-              width="190"
+              width="150"
             />
             <el-table-column
               prop="orderState"

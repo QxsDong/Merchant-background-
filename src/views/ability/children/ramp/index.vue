@@ -9,8 +9,8 @@
       <!-- 买币 -->
       <div v-if="buySell==1">
         <div class="offRamp-conTop">
-          <div :class="sellPayout==1?'active':''" @click="sellPayout=1">买币币种</div>
-          <div :class="sellPayout==2?'active':''" @click="sellPayout=2">收款方式</div>
+          <div :class="sellPayout==1?'active':''" @click="sellPayout=1">{{ $t('nav.ramp_Buy') }}</div>
+          <div :class="sellPayout==2?'active':''" @click="sellPayout=2">{{ $t('nav.ramp_Collection') }}</div>
         </div>
         <div v-if="sellPayout==1" class="offRamp-con">
           <el-table
@@ -124,8 +124,8 @@
       <!-- 卖币 -->
       <div v-if="buySell==2">
         <div class="offRamp-conTop">
-          <div :class="sellPayout==1?'active':''" @click="sellPayout=1">卖币币种</div>
-          <div :class="sellPayout==2?'active':''" @click="sellPayout=2">出款方式</div>
+          <div :class="sellPayout==1?'active':''" @click="sellPayout=1">{{ $t('nav.ramp_Sell') }}</div>
+          <div :class="sellPayout==2?'active':''" @click="sellPayout=2">{{ $t('nav.ramp_payment') }}</div>
         </div>
         <div v-if="sellPayout==1" class="offRamp-con">
           <el-table
@@ -508,6 +508,7 @@ export default {
             // border-right: none;
           }
           .active{
+            font-family: RobotoBold;
             background: #40A1FBFF;
             color: #FFFFFF;
 

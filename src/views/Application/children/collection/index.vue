@@ -2,10 +2,10 @@
   <div class="collection-container">
 
     <el-form ref="ruleForm" :model="ruleForm" :rules="rules" hide-required-asterisk class="demo-ruleForm">
-      <div class="collection-title">ACH Collection <span style="font-size: 10px;font-family: SF  Pro;color: #40A1FB;margin-left:40px;cursor: pointer;" @click="goToRamp"> API 文档 </span></div>
+      <div class="collection-title">ACH Collection <span style="font-size: 10px;font-family: SF  Pro;color: #40A1FB;margin-left:40px;cursor: pointer;" @click="goToRamp"> {{ $t('nav.Collection_documentation') }}</span></div>
       <div class="collection-content">
 
-        <el-form-item label="Product Capability" class="collection-con">
+        <el-form-item :label="$t('nav.Collection_product')" class="collection-con">
           <el-input v-model="ruleForm.productCode" :readonly="true" />
         </el-form-item>
         <el-form-item label="APP ID" class="collection-con">
@@ -15,25 +15,25 @@
           <el-input ref="changeInput" v-model="ruleForm.appSecrete" :readonly="Edit" />
           <!-- <span @click="cangeDisabled(1)">Edit</span> -->
         </el-form-item>
-        <el-form-item label="Noticeurl" prop="noticeUrl" class="collection-con">
+        <el-form-item :label="$t('nav.Collection_Noticeurl')" prop="noticeUrl" class="collection-con">
           <el-input ref="changeInput1" v-model="ruleForm.noticeUrl" :readonly="Edit1" />
           <!-- <span @click="cangeDisabled(2)">Edit</span> -->
         </el-form-item>
-        <el-form-item label="Public key" class="collection-con">
+        <el-form-item :label="$t('nav.Collection_Publickey')" class="collection-con">
           <el-input v-model="ruleForm.publicKey" :readonly="true" />
         </el-form-item>
-        <el-form-item label="Private key" class="collection-con">
+        <el-form-item :label="$t('nav.Collection_Private')" class="collection-con">
           <el-input v-model="ruleForm.privateKey" :readonly="true" />
         </el-form-item>
       </div>
-      <p class="collection_Url">Return Url : <span style="cursor: pointer;" @click="goToRamp(1)">http://ramp.alchemypay.org?appId={{ ruleForm.appId }}</span> </p>
-      <p class="collection_prompt "><img style="margin-right: 10px" src="@/assets/logos/GroupIcon.png" alt="">当在订单中传入Noticeurl时，以订单上的Noticeurl为准。</p>
+      <p class="collection_Url"><span>{{ $t('nav.Collection_ReturnUrl') }}</span> <span style="cursor: pointer;" @click="goToRamp(1)">http://ramp.alchemypay.org?appId={{ ruleForm.appId }}</span> </p>
+      <p class="collection_prompt "><img style="margin-right: 10px" src="@/assets/logos/GroupIcon.png" alt="">{{ $t('nav.Collection_toast') }}</p>
 
-      <div class="collection-title" style="margin:20px 0 0 0px">IP Settings</div>
+      <div class="collection-title" style="margin:20px 0 0 0px">{{ $t('nav.Collection_IPSettings') }}</div>
       <el-form-item class="coll-radio">
         <el-radio-group v-model="resource" @change="handleChange">
-          <el-radio label="1">Can accept API calls from any IP</el-radio>
-          <el-radio label="2" disabled>Can only accept API calls from a specific IP</el-radio>
+          <el-radio label="1">{{ $t('nav.Collection_acceptAPI') }}</el-radio>
+          <el-radio label="2" disabled>{{ $t('nav.Collection_specificIP') }}</el-radio>
         </el-radio-group>
       </el-form-item>
       <el-form-item>
@@ -188,7 +188,10 @@ export default {
     display: flex;
     align-items: center;
     margin: 20px 0 0 ;
-    span{
+    span:first-child{
+      width: 120px;
+    }
+    span:last-child{
       display: block;
       // width: 220px;
       height: 30px;
@@ -201,7 +204,7 @@ export default {
       border-radius: 2px;
       font-size: 12px;
       font-family: SF  Pro;
-      margin-left: 55px;
+      // margin-left: 55px;
       // white-space:nowrap;
       overflow: hidden;
     }
