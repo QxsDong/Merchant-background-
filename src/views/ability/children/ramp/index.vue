@@ -22,18 +22,18 @@
             :lazy="true"
           >
             <el-table-column
-              label="Name"
+              label="Crypto"
               align="left"
             >
               <template slot-scope="scope">
                 <div style="height100%;display:flex; align-items: center;">
-                  <img slot="reference" :src="scope.row.logoUrl" style="width: 30px;height: 30px;margin-left:10%">
-                  <!-- </el-popover> -->
-                  <span style="line-height:10px;margin-left:10px">{{ scope.row.fullName }}</span>
+                  <img slot="reference" :src="scope.row.logoUrl" style="width: 30px;height: 30px;margin-left:32%">
+
+                  <span style="line-height:10px;margin-left:10px">{{ scope.row.name }}</span>
                 </div>
                 <!-- <el-popover placement="top-start" title="" trigger="hover" style="margin-right:20px"> -->
                 <!-- <img :src="scope.row.logoUrl" alt="" style="width: 150px;height: 150px"> -->
-
+                <!-- </el-popover> -->
               </template>
             </el-table-column>
             <el-table-column
@@ -55,7 +55,7 @@
               align="center"
             /> -->
             <el-table-column
-              label="action"
+              label="Action"
               align="center"
             >
               <template slot-scope="scope">
@@ -83,14 +83,22 @@
           >
             <el-table-column
               prop="payWayName"
-              label="收款方式"
+              label="Payment Method"
               align="center"
             />
             <el-table-column
               prop="currency"
-              label="收款币种"
+              label="Fiat"
               align="center"
             />
+            <el-table-column
+              label="Amount"
+              align="center"
+            >
+              <template slot-scope="scope">
+                {{ scope.row.payMin }} - {{ scope.row.payMax }}
+              </template>
+            </el-table-column>
             <el-table-column
               prop="currency"
               label="结算币种"
@@ -138,14 +146,14 @@
           >
             <el-table-column
 
-              label="Name"
+              label="Crypto"
               align="center"
             >
               <template slot-scope="scope">
-                <div style="height100%;display:flex; align-items: center;margin-left:20%">
-                  <img slot="reference" :src="scope.row.logoUrl" style="width: 30px;height: 30px;">
+                <div style="height100%;display:flex; align-items: center;">
+                  <img slot="reference" :src="scope.row.logoUrl" style="width: 30px;height: 30px;margin-left:32%">
                   <!-- </el-popover> -->
-                  <span style="line-height:10px;margin-left:10px">{{ scope.row.fullName }}</span>
+                  <span style="line-height:10px;margin-left:10px">{{ scope.row.name }}</span>
                 </div>
               </template>
             </el-table-column>
@@ -200,12 +208,12 @@
           >
             <el-table-column
               prop="alpha3"
-              label="国家"
+              label="Country"
               align="center"
             />
             <el-table-column
               prop="currency"
-              label="法币币种"
+              label="Fiat"
               align="center"
             />
             <!-- <el-table-column
@@ -217,7 +225,7 @@
               </template>
             </el-table-column> -->
             <el-table-column
-              label="action"
+              label="Action"
               align="center"
             >
               <template slot-scope="scope">

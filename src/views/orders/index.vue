@@ -46,11 +46,25 @@
               width="160"
             />
             <el-table-column
-              prop="address"
               label="Address"
               align="center"
-              width="260"
-            />
+              width="180"
+            >
+              <template slot-scope="scope">
+                <el-popover
+                  popper-class="Order_popper"
+                  placement="top"
+                  trigger="hover"
+                  :close-delay=".5"
+                >
+                  <div style="font-size:12px">
+                    {{ scope.row.address }}
+                  </div>
+                  <el-button slot="reference" style="border:none;padding:5px 0 5px;font-size:12px">{{ scope.row.address.slice(0,8) + '****' + scope.row.address.slice(scope.row.address.length-8,scope.row.address.length) }}</el-button>
+                </el-popover>
+              </template>
+            </el-table-column>
+
             <el-table-column
               prop="fiatAmountAndCurrency"
               label="Fiat"
@@ -111,8 +125,8 @@
             />
           </div>
           <div>
-            <el-input v-model="email" style="flex:1;margin-right:0" prefix-icon="el-icon-search" placeholder="Please enter email " />
-            <el-button slot="append" class="searchButton" type="primary" :disabled="disabledButton" @click="searchDataEmail">search</el-button></div>
+            <el-input v-model="paramsData.email" style="flex:1;margin-right:0" prefix-icon="el-icon-search" :placeholder="$t('nav.Orders_Email')" />
+            <el-button slot="append" class="searchButton" type="primary" :disabled="disabledButton" @click="searchDataEmail">{{ $t('nav.Orders_search') }}</el-button></div>
         </div>
         <div class="offRamp-con">
           <el-table
@@ -234,7 +248,6 @@ export default {
     return {
       // active: 1,
       timeList: '',
-      email: '',
       tableHeight: 46,
       timeOut: null,
       disabledButton: false,
@@ -248,6 +261,7 @@ export default {
         flag: 1
       },
       sellOrder: [],
+      sellOrder1: [],
       total: '0'
 
     }
@@ -324,6 +338,7 @@ export default {
       }
     }
   }
+
 }
 </script>
 <style lang="scss" scoped>
@@ -504,4 +519,5 @@ export default {
       font-size: 12px;
     }
   }
+
 </style>

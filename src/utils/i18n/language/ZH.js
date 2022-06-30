@@ -7,8 +7,8 @@ module.exports = {
     Sell_coins: '卖币',
     Buy_coins: '买币',
     // 卖卖币tab菜单
-    ramp_Sell: '买币币种',
-    ramp_Buy: '卖币币种',
+    ramp_Sell: '卖币币种',
+    ramp_Buy: '买币币种',
     ramp_Collection: '收款方式',
     ramp_payment: '出款方式',
 
@@ -50,6 +50,7 @@ module.exports = {
     Ability_now: '立即试用',
     Ability_cryptoContent: '通过加密收购产品，您的客户可以使用数字货币在您的网站上购买服务或产品;我们可以向您结算USDT或法定货币。',
     Ability_flatContent: '提供信用卡收款渠道、印尼本地支付、墨西哥本地支付等支付渠道。',
-    Ability_rampContent: '借助此功能，您可以帮助用户使用法定货币购买各种数字货币，或者您的用户还可以在此平台上出售各种数字货币以获取法定货币。'
+    Ability_rampContent: '借助此功能，您可以帮助用户使用法定货币购买各种数字货币，或者您的用户还可以在此平台上出售各种数字货币以获取法定货币。',
+    Ability_progress: '您可以联系电子邮件：xxx查看审批进度'
   }
 }

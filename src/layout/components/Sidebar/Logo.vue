@@ -54,9 +54,9 @@ export default {
   },
   methods: {
     async logout() {
-      this.$confirm('Are you sure you want to quit?', 'prompt', {
-        confirmButtonText: 'determine',
-        cancelButtonText: 'cancel',
+      this.$confirm('Are you sure you want to quit?', {
+        confirmButtonText: 'Confirm',
+        cancelButtonText: 'Cancel',
         type: 'warning'
       }).then(async() => {
         await this.$store.dispatch('user/logout')
@@ -65,11 +65,6 @@ export default {
         this.$message({
           type: 'success',
           message: 'Exit the success!'
-        })
-      }).catch(() => {
-        this.$message({
-          type: 'info',
-          message: 'To cancel exit'
         })
       })
     }

@@ -17,4 +17,17 @@ export default {
   }
 }
 </script>
+<style>
+.Order_popper {
+  background-color: #262627 !important;
+  border-color: none !important;
+  border-radius: 5px !important;
+  color: #fff;
+  opacity: .95;
+  }
+ .Order_popper .popper__arrow::after{
+    border-top-color: #262627 !important;
+ }
+
+</style>
 

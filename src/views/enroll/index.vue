@@ -23,7 +23,7 @@
           </div>
           <div :class="[2,3].includes(state)?'enroll_steps_State active':'enroll_steps_State'">
             <p>2</p>
-            <p>Choose A Produc</p>
+            <p>Product Information</p>
           </div>
           <div :class="state==3?'enroll_steps_con active':'enroll_steps_con'">
             <div />
@@ -35,7 +35,7 @@
           </div>
           <div :class="state==3?'enroll_steps_State active':'enroll_steps_State'">
             <p>3</p>
-            <p>Submit Application</p>
+            <p>Submit</p>
           </div>
         </div>
         <Basic v-if="state==1" :biz-type="bizType" />

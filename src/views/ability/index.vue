@@ -1,11 +1,11 @@
 <template>
   <div class="ability-container">
-    <div class="ability-content">
+    <!-- <div class="ability-content">
       <div class="ability-title">
         <p>{{ $t('nav.Ability_crypto') }}</p>
         <span v-if="state==1" class="Activated">{{ $t('nav.Ability_Activated') }}</span>
         <div v-else-if="state==2" class="Applying">{{ $t('nav.Ability_Applying') }}...</div>
-        <!-- <div v-else class="Unopened">Unopened</div> -->
+         <div v-else class="Unopened">Unopened</div>
         <div v-else class="Activated">{{ $t('nav.Ability_developed') }}...</div>
       </div>
       <div class="ability-con">
@@ -17,23 +17,23 @@
       </div>
       <div v-if="state==2" class="ability-tottom1">
         <!-- <el-button type="primary" class="allocation">查看配置</el-button> -->
-        <!-- <el-button v-else-if="state==3" type="primary" class="allocation">申请</el-button> -->
-        <el-button class="TryButton">{{ $t('nav.Ability_now') }}</el-button>
-        <p v-if="state==2">You can contact email: xxx to check the approval progress</p>
+    <!-- <el-button v-else-if="state==3" type="primary" class="allocation">申请</el-button> -->
+    <!-- <el-button class="TryButton">{{ $t('nav.Ability_now') }}</el-button>
+        <p v-if="state==2">{{ $t('nav.Ability_progress') }}</p>
       </div>
       <div v-if="state==3" class="ability-tottom">
         <el-button type="primary" class="allocation" disabled>{{ $t('nav.Ability_Closed') }}</el-button>
         <el-button class="TryButton" disabled>{{ $t('nav.Ability_now') }}</el-button>
       </div>
-    </div>
-    <div class="ability-content">
+    </div> -->
+    <!-- <div class="ability-content">
       <div class="ability-title">
         <p>{{ $t('nav.Ability_Fiat') }}</p>
         <span v-if="state1==1" class="Activated">{{ $t('nav.Ability_Activated') }}</span>
         <div v-else-if="state1==2" class="Applying">{{ $t('nav.Ability_Applying') }}...</div>
         <!-- <div v-else class="Unopened">Unopened</div> -->
-        <div v-else class="Activated">{{ $t('nav.Ability_developed') }}...</div>
-      </div>
+    <!-- <div v-else class="Activated">{{ $t('nav.Ability_developed') }}...</div> -->
+    <!--</div>
       <div class="ability-con">
         {{ $t('nav.Ability_flatContent') }}
       </div>
@@ -43,15 +43,15 @@
       </div>
       <div v-if="state1==2" class="ability-tottom1">
         <!-- <el-button type="primary" class="allocation">查看配置</el-button> -->
-        <!-- <el-button v-else-if="state==3" type="primary" class="allocation">申请</el-button> -->
-        <el-button class="TryButton">{{ $t('nav.Ability_now') }}w</el-button>
-        <p v-if="state1==2">You can contact email: xxx to check the approval progress</p>
+    <!-- <el-button v-else-if="state==3" type="primary" class="allocation">申请</el-button> -->
+    <!--<el-button class="TryButton">{{ $t('nav.Ability_now') }}w</el-button>
+        <p v-if="state1==2">{{ $t('nav.Ability_progress') }}</p>
       </div>
       <div v-if="state1==3" class="ability-tottom">
         <el-button type="primary" class="allocation" disabled>{{ $t('nav.Ability_Closed') }}</el-button>
         <el-button class="TryButton" disabled>{{ $t('nav.Ability_now') }}</el-button>
       </div>
-    </div>
+    </div> -->
     <div class="ability-content">
       <div class="ability-title">
         <p>{{ $t('nav.Ability_ramp') }}</p>
@@ -70,7 +70,7 @@
         <!-- <el-button type="primary" class="allocation">查看配置</el-button> -->
         <!-- <el-button v-else-if="state==3" type="primary" class="allocation">申请</el-button> -->
         <el-button class="TryButton">{{ $t('nav.Ability_now') }}</el-button>
-        <p v-if="state2==2 ||state2==0">You can contact email: xxx to check the approval progress</p>
+        <p v-if="state2==2 ||state2==0">{{ $t('nav.Ability_progress') }}</p>
       </div>
       <div v-if="state2==3" class="ability-tottom">
         <el-button type="primary" class="allocation" @click="$router.replace('/enroll')">申请</el-button>
@@ -86,7 +86,7 @@
   </div>
 </template>
 <script>
-
+import { merchantList } from '@/api/user'
 export default {
   name: 'Ability',
   data() {
@@ -99,8 +99,15 @@ export default {
     }
   },
   mounted() {
-    // console.log(this.$store.state.user.productCode.status = 3)
-    this.state2 = this.$store.state.user.productCode.status
+    merchantList().then(res => {
+      if (res.returnCode === '0000' && res.data) {
+        res.data.forEach(item => {
+          if (item.productCode === '80001') {
+            this.state2 = item.status
+          }
+        })
+      }
+    })
   },
   methods: {
     goContent() {

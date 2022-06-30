@@ -4,8 +4,6 @@
 
     <breadcrumb class="breadcrumb-container" />
     <div class="navbar-right">
-      <p class="right-menuTime" />
-      <img src="../../assets/logos/news.png" alt="">
       <el-select v-model="value" placeholder="请选择" @change="selectLanguage">
         <el-option
           v-for="item in languageList"
@@ -14,6 +12,9 @@
           :value="item.value"
         />
       </el-select>
+      <p class="right-menuTime" style="width:150px" />
+      <img src="../../assets/logos/news.png" alt="">
+
     </div>
 
   </div>
@@ -127,7 +128,7 @@ export default {
 }
 .el-select{
   width: 130px;
-  margin-left: 20px;
+  margin-right: 20px;
   ::v-deep input{
     border: none;
     font-family: 'SF Pro';

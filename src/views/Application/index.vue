@@ -35,24 +35,24 @@
         />
         <el-table-column
           prop="callbackUrl"
-          label="Callback Address"
+          label="Callback Url"
           align="center"
-          width="150"
+          min-width="180"
         />
-        <el-table-column
+        <!-- <el-table-column
           prop="ipConfig"
-          label="IP Address"
+          label="IP"
           align="center"
           width="100"
-        />
+        /> -->
         <el-table-column
           label="Creation Time"
           align="center"
           prop="createdTime"
-          width="100"
+          width="160"
         />
         <el-table-column
-          label="State"
+          label="Status"
           align="center"
           width="70"
         >
@@ -61,7 +61,7 @@
           </template>
         </el-table-column>
         <el-table-column
-          label="Operate"
+          label="Action"
           align="center"
           width="100"
           fixed="right"
@@ -148,11 +148,6 @@ export default {
         if (res.returnCode === '0000' && res.data) {
           this.paymentData = res.data
           // console.log(res.data)
-          res.data.forEach(item => {
-            if (item.productCode === '80001') {
-              this.$store.state.user.productCode = item
-            }
-          })
         }
       })
     }

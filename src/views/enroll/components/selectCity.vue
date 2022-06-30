@@ -1,12 +1,11 @@
 <template>
   <div class="selectCity-container">
     <div class="selectCity-title">
-      Please select the product you want to activate
-      <span>(multiple choices are allowed)</span>
+      Select the product
     </div>
     <div v-for="item in productType" :key="item.id" class="selectCity-con">
       <div class="title">
-        <el-checkbox v-model="menusIds1" :label="item.dictValue" @change="menusIdsIncludes">
+        <el-checkbox v-model="menusIds1" :disabled="item.dictValue!== '80001'" :label="item.dictValue" @change="menusIdsIncludes">
           <p>{{ item.dictLabel }}</p>
         </el-checkbox>
         <span>Try is now</span>
@@ -26,7 +25,7 @@
         </div>
       </div>
     </div>
-    <div :class="selectButton?'Submit active':'Submit'" @click="SubmitNext">Submit</div>
+    <el-button :class="selectButton?'Submit active':'Submit'" :disabled="isDisable" @click="SubmitNext">Submit</el-button>
   </div>
 </template>
 <script>
@@ -42,7 +41,8 @@ export default {
 
       menusIds: [],
       menusIds1: [],
-      fiatPayInData: ''
+      fiatPayInData: '',
+      isDisable: false
 
     }
   },
@@ -81,6 +81,7 @@ export default {
   },
   methods: {
     SubmitNext() {
+      this.isDisable = true
       if (this.selectButton) {
         const params = this.$store.state.user.ruleForm
         params.applyProductCode = this.menusIds1.join(',')
@@ -93,9 +94,12 @@ export default {
               type: 'success',
               message: 'Submission successful'
             })
+            this.isDisable = false
             this.$parent.state = 3
             sessionStorage.setItem('State', 3)
+            return
           }
+          this.isDisable = false
         })
       }
     },
@@ -209,7 +213,7 @@ export default {
     font-family: RobotoBold;
     font-weight: bold;
     color: #FFFFFF;
-    line-height: 40px;
+    // line-height: 40px;
     text-align: center;
     border-radius: 6px;
     position: absolute;

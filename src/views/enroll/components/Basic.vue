@@ -2,8 +2,8 @@
   <div class="basic-container">
     <div class="basic-totle">Business Info</div>
     <el-form ref="ruleForm" :model="ruleForm" :rules="rules" label-width="120px" class="demo-ruleForm">
-      <el-form-item label="type" prop="type">
-        <el-select v-model="ruleForm.type" placeholder="Please select Register">
+      <el-form-item label="Type" prop="type">
+        <el-select v-model="ruleForm.type" placeholder="Please select">
           <el-option label="Individual" value="2" />
           <el-option label="Company" value="1" />
         </el-select>
@@ -14,13 +14,13 @@
       <el-form-item v-show="ruleForm.type==1" label="Company Name" :prop="ruleForm.type==1?'fullName':''" style="width:100%">
         <el-input v-model="ruleForm.fullName" />
       </el-form-item>
-      <el-form-item label="URL">
+      <el-form-item label="Website">
         <el-input v-model="ruleForm.site" />
       </el-form-item>
-      <el-form-item label="license Number" prop="licenseNo">
+      <el-form-item label="Id Number" prop="licenseNo">
         <el-input v-model="ruleForm.licenseNo" />
       </el-form-item>
-      <el-form-item label="ID Photo" prop="licenseUrl">
+      <el-form-item label="Id Prove" prop="licenseUrl">
         <el-upload
           action=""
           :http-request="uploadImg"
@@ -48,10 +48,10 @@
       <el-form-item label="Full Name" prop="contactName">
         <el-input v-model="ruleForm.contactName" />
       </el-form-item>
-      <el-form-item label="Telephone" prop="contactPhone">
+      <el-form-item label="Phone" prop="contactPhone">
         <el-input v-model="ruleForm.contactPhone" />
       </el-form-item>
-      <el-form-item label="Emai Address" prop="contactEmail" style="width:100%">
+      <el-form-item label="Email" prop="contactEmail" style="width:100%">
         <el-input v-model="ruleForm.contactEmail" />
       </el-form-item>
       <el-form-item>

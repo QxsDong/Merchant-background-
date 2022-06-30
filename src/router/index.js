@@ -75,12 +75,23 @@ export const constantRoutes = [
   //     }
   //   ]
   // },
-
   {
     path: '/',
     component: Layout,
-    redirect: '/Application',
-    active: true,
+    redirect: '/orders',
+    children: [
+      {
+        path: '/orders',
+        name: 'orders',
+        component: () => import('@/views/orders/index'),
+        meta: { title: 'nav.Orders_title', icon: 'payment', icon1: 'iconRight', Images: require('@/assets/menu-images/Union.png'), ImgActive: require('@/assets/menu-images/UnionSelect.png'), active: false }
+      }
+    ]
+  },
+
+  {
+    path: '/Application',
+    component: Layout,
     children: [{
       path: '/Application',
       name: 'Application',
@@ -132,19 +143,6 @@ export const constantRoutes = [
   //     meta: { title: 'Order', Images: require('@/assets/menu-images/Union.png'), ImgActive: require('@/assets/menu-images/UnionSelect.png'), active: false }
   //   }]
   // },
-  {
-    path: '/payment',
-    component: Layout,
-    active: false,
-    children: [
-      {
-        path: 'index',
-        name: 'orders',
-        component: () => import('@/views/orders/index'),
-        meta: { title: 'nav.Orders_title', icon: 'payment', icon1: 'iconRight', Images: require('@/assets/menu-images/Union.png'), ImgActive: require('@/assets/menu-images/UnionSelect.png'), active: false }
-      }
-    ]
-  },
 
   // {
   //   path: '/nested',
