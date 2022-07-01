@@ -168,6 +168,7 @@ export default {
   .offRamp-container{
     width: 100%;
     height: 95%;
+    min-height: 500px;
     position: absolute;
     left: 0;
     top: 0;

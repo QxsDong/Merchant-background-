@@ -70,7 +70,7 @@ service.interceptors.response.use(
         })
         // })
       }
-      return Promise.reject(new Error(res.msg || 'Error'))
+      return Promise.reject(new Error(res.returnMsg || 'Error'))
     } else {
       return res
     }
@@ -78,7 +78,7 @@ service.interceptors.response.use(
   error => {
     console.log('err' + error) // for debug
     Message({
-      message: error.msg,
+      message: error.returnMsg,
       type: 'error',
       duration: 5 * 1000
     })

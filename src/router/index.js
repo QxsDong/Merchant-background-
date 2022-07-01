@@ -78,12 +78,12 @@ export const constantRoutes = [
   {
     path: '/',
     component: Layout,
-    redirect: '/orders',
+    redirect: '/transcation',
     children: [
       {
-        path: '/orders',
-        name: 'orders',
-        component: () => import('@/views/orders/index'),
+        path: '/transcation',
+        name: 'Transcation',
+        component: () => import('@/views/transcation/index'),
         meta: { title: 'nav.Orders_title', icon: 'payment', icon1: 'iconRight', Images: require('@/assets/menu-images/Union.png'), ImgActive: require('@/assets/menu-images/UnionSelect.png'), active: false }
       }
     ]

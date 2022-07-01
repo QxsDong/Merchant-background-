@@ -59,24 +59,27 @@ export default {
     // position: relative;
     height: 90%;
     width: 93%;
-    min-width: 1280px;
+    // min-width: 1280px;
     min-height: 600px;
+    min-width: 1200px;
     max-width: 1600px;
     max-height: 900px;
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%,-50%);
+    // position: absolute;
+    // left: 50%;
+    // top: 50%;
+    // transform: translate(-50%,-50%);
     overflow: hidden;
     border-radius: 30px;
+    display: flex;
     &.mobile.openSidebar{
       position: fixed;
       top: 0;
     }
     .main-container{
       max-width: 1400px;
-      // width: 100%;
+      width: 100%;
       height: 100%;
+      // flex: 1;
     }
   }
   .drawer-bg {

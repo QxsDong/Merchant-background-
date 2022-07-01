@@ -20,6 +20,7 @@
             :data="paymentData"
             border
             :lazy="true"
+            :header-cell-style="{fontFamily:'SF Pro'}"
           >
             <el-table-column
               label="Crypto"
@@ -27,7 +28,7 @@
             >
               <template slot-scope="scope">
                 <div style="height100%;display:flex; align-items: center;">
-                  <img slot="reference" :src="scope.row.logoUrl" style="width: 30px;height: 30px;margin-left:32%">
+                  <img slot="reference" :src="scope.row.logoUrl" style="width: 30px;height: 30px;margin-left:32%;top:0">
 
                   <span style="line-height:10px;margin-left:10px">{{ scope.row.name }}</span>
                 </div>
@@ -80,6 +81,7 @@
             :data="buyTable"
             border
             :lazy="true"
+            :header-cell-style="{fontFamily:'SF Pro'}"
           >
             <el-table-column
               prop="payWayName"
@@ -99,11 +101,11 @@
                 {{ scope.row.payMin }} - {{ scope.row.payMax }}
               </template>
             </el-table-column>
-            <el-table-column
+            <!-- <el-table-column
               prop="currency"
               label="结算币种"
               align="center"
-            />
+            /> -->
             <!-- <el-table-column
               label="Fee"
               align="center"
@@ -143,6 +145,7 @@
             :data="paymentData1"
             border
             :lazy="true"
+            :header-cell-style="{fontFamily:'SF Pro'}"
           >
             <el-table-column
 
@@ -203,6 +206,7 @@
             key="4"
             :height="tableHeight"
             :data="sellTbale"
+            :header-cell-style="{fontFamily:'SF Pro'}"
             border
             :lazy="true"
           >
@@ -310,8 +314,13 @@ export default {
   },
   mounted() {
     setTimeout(() => {
-      this.tableHeight = window.innerHeight - 400
+      this.tableHeight = window.innerHeight - (window.innerHeight / 2) + 50
     }, 100)
+    window.addEventListener('resize', () => {
+      setTimeout(() => {
+        this.tableHeight = window.innerHeight - (window.innerHeight / 2) + 50
+      }, 100)
+    })
     this.MerchantList()
   },
   methods: {
@@ -448,6 +457,7 @@ export default {
   .offRamp-container{
     width: 100%;
     height: 98%;
+    min-height: 500px;
     position: absolute;
     left: 0;
     top: 0;
@@ -542,6 +552,7 @@ export default {
               }
               & ::v-deep th, td{
                 text-align: center;
+                font-family: SF Pro;
                 color: #123077;
                 border-bottom: 1px solid #E8EAEE;
                 border-right: 1px solid #E8EAEE;
@@ -553,7 +564,7 @@ export default {
 
               }
               & ::v-deep tr td{
-                padding:  10px 0 0 0 ;
+                // padding:  10px 0 0 0 ;
                 border-bottom: 1px solid #E8EAEE;
               }
             }
@@ -564,7 +575,7 @@ export default {
     display: flex;
     justify-content: center;
     position: relative;
-    top: 20px;
+    top: 10px;
     z-index: 999;
     ::v-deep .number{
       background: #FFFFFF;

@@ -111,15 +111,11 @@ export default {
   height: 90%;
   // width: 1480px;
   // height: 900px;
-  min-width: 1280px;
-  min-height: 700px;
+  min-width: 1250px;
+  min-height: 740px;
   max-width: 1300px;
   background: #F4F7FEFF;
   border-radius: 20px;
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%,-50%);
   display: flex;
   overflow: hidden;
   .enroll_left{
@@ -160,12 +156,12 @@ export default {
       max-width: 1180px;
       max-height: 760px;
       width: 90%;
-      height: 85%;
+      height: 87%;
       background: #FFFFFF;
       box-shadow: 0px 0px 20px 0px rgba(177, 202, 239, 0.5);
       border-radius: 10px;
-      margin: 30px auto 0;
-      padding: 40px 50px 0;
+      margin: 20px auto 0;
+      padding: 30px 50px 0;
       .enroll_steps{
         width: 500px;
         height: 65px;

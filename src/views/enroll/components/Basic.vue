@@ -43,7 +43,7 @@
         </el-checkbox-group>
       </el-form-item>
       <el-form-item style="width:100%;margin-bottom:0">
-        <div class="basic-totle" style="margin-left:-120px !important">Business Info</div>
+        <div class="basic-totle">Business Info</div>
       </el-form-item>
       <el-form-item label="Full Name" prop="contactName">
         <el-input v-model="ruleForm.contactName" />
@@ -221,10 +221,22 @@ export default {
     width: 100%;
     display: flex;
     flex-wrap: wrap;
+    // align-items: center;
     .el-form-item {
-      height: 30px;
-      margin:0 50px 15px 0;
-
+      display: inline-block;
+      height: 20px;
+      margin:0 50px 30px 0;
+      display: flex;
+      align-items: center;
+      .el-input{
+        height: 30px !important;
+      }
+      ::v-deep .el-input__inner{
+          height: 30px !important;
+        }
+      ::v-deep .el-form-item__content{
+        margin: 0 !important;
+      }
       ::v-deep .el-checkbox{
         height: 30px;
         margin: 0 10px 0 0;
@@ -252,9 +264,12 @@ export default {
           z-index: 999;
 
         }
+
      ::v-deep input{
         width: 220px;
-        height: 30px;
+        // height: 30px;
+        // height: 20px;
+        line-height: 30px;
         background: #F8FAFD;
         border-radius: 2px;
         border: none;
@@ -272,7 +287,7 @@ export default {
 
       ::v-deep input{
         width: 610px;
-        height: 30px;
+        // height: 30px;
         background: #F8FAFD;
         border-radius: 2px;
         border: none;
@@ -298,9 +313,12 @@ export default {
     }
     .el-form-item:last-child{
       // width: 200px;
-      width: 200px !important;
-      height: 40px;
+      width: 100% !important;
+      // height: 40px;
      margin: 5px  0 0 ;
+     display: flex;
+     justify-content: center;
+     align-items: center;
       ::v-deep button{
         width: 200px;
         height: 40px;
@@ -313,7 +331,7 @@ export default {
     .el-form-item:nth-of-type(4){
       ::v-deep input{
         width: 610px;
-        height: 30px;
+        // height: 30px;
         background: #F8FAFD;
         border-radius: 2px;
         border: none;
@@ -332,7 +350,7 @@ export default {
     .el-form-item:nth-of-type(11){
       ::v-deep input{
         width: 610px;
-        height: 30px;
+        // height: 30px;
         background: #F8FAFD;
         border-radius: 2px;
         border: none;

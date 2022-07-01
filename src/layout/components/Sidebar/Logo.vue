@@ -151,11 +151,14 @@ export default {
       height: 80px;
       margin-right: 10px;
       p{
+        max-width: 200px;
         text-align: left;
-        height: 20px;
+        height: 40px;
         font-size: 15px;
         margin-bottom: 10px;
         font-family: RobotoLight;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
     }
   }

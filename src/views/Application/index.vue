@@ -8,6 +8,7 @@
         border
         :lazy="true"
         :cell-style="{padding: '4px 0 4px 0'}"
+        :header-cell-style="{fontFamily:'SF Pro'}"
       >
         <el-table-column
           prop="appName"
@@ -163,8 +164,12 @@ export default {
   box-shadow: 0px 0px 20px rgb(177 202 239 / 50%);
    border-radius: 10px;
   padding: 30px  40px 30px;
-  margin: 20px auto 0;
-  position: relative;
+ position: absolute;
+ left: 50%;
+ top: 50%;
+ transform: translate(-50%,-50%);
+  // margin: 20px auto 0;
+  // position: relative;
    .order-content{
     width: 100%;
     margin: 20px 0 0 0px;
@@ -190,6 +195,7 @@ export default {
   }
   & ::v-deep th, td{
     color: #123077;
+    font-family: SF Pro;
     border-bottom: 1px solid #E8EAEE;
     border-right: 1px solid #E8EAEE;
   }

@@ -69,7 +69,7 @@
       <div v-if="state2==2 ||state2==0 " class="ability-tottom1">
         <!-- <el-button type="primary" class="allocation">查看配置</el-button> -->
         <!-- <el-button v-else-if="state==3" type="primary" class="allocation">申请</el-button> -->
-        <el-button class="TryButton">{{ $t('nav.Ability_now') }}</el-button>
+        <el-button class="TryButton" disabled>{{ $t('nav.Ability_now') }}</el-button>
         <p v-if="state2==2 ||state2==0">{{ $t('nav.Ability_progress') }}</p>
       </div>
       <div v-if="state2==3" class="ability-tottom">
@@ -103,6 +103,7 @@ export default {
       if (res.returnCode === '0000' && res.data) {
         res.data.forEach(item => {
           if (item.productCode === '80001') {
+            this.abilty = item
             this.state2 = item.status
           }
         })
@@ -113,7 +114,7 @@ export default {
     goContent() {
       this.isShow = true
       this.$router.push({ path: '/ability/index/ramp', query: {
-        merchantAppId: this.$store.state.user.productCode.merchantAppId
+        merchantAppId: this.abilty.merchantAppId
       }})
     }
 

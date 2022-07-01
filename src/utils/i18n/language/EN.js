@@ -3,8 +3,8 @@ module.exports = {
   nav: {
     // 菜单多语言
     Application_title: 'Application',
-    Abilty_title: 'Ability',
-    Orders_title: 'Orders',
+    Abilty_title: 'Capacity',
+    Orders_title: 'Transcation',
 
     // tab菜单
     Sell_coins: 'Sell',
@@ -38,18 +38,18 @@ module.exports = {
     Collection_product: 'Product',
     Collection_AppId: 'APP ID',
     Collection_Secret: 'Secret',
-    Collection_Noticeurl: 'Callback Url',
+    Collection_Noticeurl: 'Callback URL',
     Collection_Publickey: 'Public key',
     Collection_Private: 'Private key',
-    Collection_ReturnUrl: 'Return Url',
+    Collection_ReturnUrl: 'Return URL',
     Collection_toast: 'When Notecieurl is passed in to an order, the Noteiceurl on the order shall prevail.',
-    Collection_IPSettings: 'IP Settings',
-    Collection_acceptAPI: 'Can accept API calls from any IP',
-    Collection_specificIP: 'Can only accept API calls from  specific IP',
+    Collection_IPSettings: 'IP Whitelist',
+    Collection_acceptAPI: 'Accept API calls from any IP',
+    Collection_specificIP: 'Accept API calls from specific IP',
 
     // orders
     Orders_Email: 'Please enter email',
-    Orders_search: 'search',
+    Orders_search: 'Search',
 
     // orders 表格表头数据
     OrdersTable_ID: 'Order ID',
@@ -79,7 +79,7 @@ module.exports = {
     Ability_configuration: 'View',
     Ability_cryptoContent: 'With Crypto Acquiring Products, your customers can use digital currency to buy on your website Services or products ; we can settle USDT or fiat to you.',
     Ability_flatContent: 'Provide credit card collection channels, local payment in Indonesia, local payment in Mexico and other payment channels.',
-    Ability_rampContent: 'With this capability, you can help your users purchase various digital currencies with fiat, or your Users can also sell various digital currencies on this platform to obtain legal currency.',
+    Ability_rampContent: 'Let your users buy & sell crypto with one simple integrtion',
     Ability_progress: 'You can contact email: xxx to check the approval progress',
 
     // 能力表格表头 买币币

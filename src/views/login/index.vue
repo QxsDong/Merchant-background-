@@ -13,41 +13,23 @@
           <div class="title-container">
             <h3 class="title">Sign In</h3>
           </div>
-
           <el-form-item prop="username">
             <span class="svg-container">
               <svg-icon icon-class="user" />
             </span>
-            <el-input
-              ref="username"
-              v-model="loginForm.username"
-              placeholder="Username"
-              name="username"
-              type="text"
-              tabindex="1"
-              auto-complete="on"
-            />
+            <input v-model="loginForm.username" type="text">
           </el-form-item>
           <el-form-item prop="password">
             <span class="svg-container">
               <svg-icon icon-class="password" />
             </span>
-            <el-input
-              :key="passwordType"
-              ref="password"
-              v-model="loginForm.password"
-              :type="passwordType"
-              placeholder="Password"
-              name="password"
-              tabindex="2"
-              auto-complete="on"
-              @keyup.enter.native="handleLogin"
-            />
+            <input v-model="loginForm.password" :type="passwordType">
             <span class="show-pwd" @click="showPwd">
               <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
             </span>
           </el-form-item>
-          <p class="enroll">No account?<span @click="nextApply"> GO to Apply</span></p>
+
+          <p class="enroll">No account?<span @click="nextApply"> Sign up</span></p>
           <el-button :loading="loading" type="primary" class="loginButton" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">Sign In</el-button>
 
           <!-- <div class="tips">
@@ -246,6 +228,23 @@ $cursor: #999;
         color: #1164FF;
       }
     }
+    input {
+      background: transparent;
+      border: 0;
+      -webkit-appearance: none !important;
+      border-radius: 0;
+      padding: 12px 5px 12px 15px;
+      color: $light_gray;
+      height: 35px;
+      caret-color:#999;
+      border: none !important;
+      font-family: RobotoLight;
+      outline: none;
+      &:-webkit-autofill {
+        box-shadow: 0 0 0 1000px #fff inset !important;
+        -webkit-text-fill-color: $light_gray !important;
+      }
+    }
    .el-input {
     display: inline-block;
     width: 85%;
@@ -257,7 +256,7 @@ $cursor: #999;
       padding: 12px 5px 12px 15px;
       color: $light_gray;
       height: 35px;
-      caret-color: $cursor;
+      caret-color:#999;
       border: none !important;
       font-family: RobotoLight;
       &:-webkit-autofill {

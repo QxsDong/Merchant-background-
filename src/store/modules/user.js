@@ -16,9 +16,9 @@ const getDefaultState = () => {
 const state = getDefaultState()
 
 const mutations = {
-  // RESET_STATE: (state) => {
-  //   Object.assign(state, getDefaultState())
-  // },
+  RESET_STATE: (state) => {
+    Object.assign(state, getDefaultState())
+  },
   SET_TOKEN: (state, data) => {
     state.token = data.token
   },
