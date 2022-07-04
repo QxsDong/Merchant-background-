@@ -229,6 +229,7 @@ $cursor: #999;
       }
     }
     input {
+      width: 78%;
       background: transparent;
       border: 0;
       -webkit-appearance: none !important;

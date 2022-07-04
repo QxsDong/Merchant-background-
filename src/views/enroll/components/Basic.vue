@@ -20,7 +20,7 @@
       <el-form-item label="Id Number" prop="licenseNo">
         <el-input v-model="ruleForm.licenseNo" />
       </el-form-item>
-      <el-form-item label="Id Prove" prop="licenseUrl">
+      <el-form-item label="ID Prove" prop="licenseUrl">
         <el-upload
           action=""
           :http-request="uploadImg"
@@ -227,7 +227,7 @@ export default {
       height: 20px;
       margin:0 50px 30px 0;
       display: flex;
-      align-items: center;
+      // align-items: center;
       .el-input{
         height: 30px !important;
       }
@@ -236,6 +236,9 @@ export default {
         }
       ::v-deep .el-form-item__content{
         margin: 0 !important;
+      }
+      ::v-deep .el-form-item__label{
+        margin-top: 3px;
       }
       ::v-deep .el-checkbox{
         height: 30px;
@@ -278,8 +281,9 @@ export default {
         color: #A7A7A7;
       }
       ::v-deep .el-form-item__error{
-        top: 90%;
+        // bottom: -50px;
         font-size: 10px;
+        line-height: 40px !important;
         font-family: RobotoLight;
       }
     }
@@ -298,7 +302,8 @@ export default {
       height: 125px;
       margin-bottom: 0px;
       ::v-deep .el-form-item__error{
-        top: 100%;
+        // top: 100%;
+        line-height: 0 !important;
       }
     }
     .el-form-item:nth-of-type(7){
@@ -310,6 +315,13 @@ export default {
         flex-wrap: wrap;
       }
 
+    }
+    .el-form-item:nth-of-type(7){
+      ::v-deep .el-form-item__error{
+        // top: 100%;
+        // top: -100% !important;
+        line-height: 0px !important;
+      }
     }
     .el-form-item:last-child{
       // width: 200px;

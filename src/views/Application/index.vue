@@ -8,7 +8,7 @@
         border
         :lazy="true"
         :cell-style="{padding: '4px 0 4px 0'}"
-        :header-cell-style="{fontFamily:'SF Pro'}"
+        :header-cell-style="{fontFamily:'SF Pro !important'}"
       >
         <el-table-column
           prop="appName"

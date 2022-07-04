@@ -56,7 +56,6 @@
                   popper-class="Order_popper"
                   placement="top"
                   trigger="hover"
-                  :close-delay=".5"
                   :open-delay="700"
                 >
                   <div style="font-size:12px">
@@ -166,6 +165,7 @@
             <el-table-column
               label="Fiat Amount"
               align="center"
+              width="120"
             >
               <template slot-scope="scope">
                 {{ scope.row.payMin }} - {{ scope.row.payMax }}
@@ -175,6 +175,7 @@
               prop="Crypto"
               label="Crypto Amount"
               align="center"
+              width="120"
             />
             <el-table-column
               prop="CryptoPrice"
@@ -223,6 +224,7 @@
               label="Complete Time"
               align="center"
               width="190"
+              fixed="right"
             />
           </el-table>
 
