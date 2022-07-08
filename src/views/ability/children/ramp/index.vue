@@ -334,6 +334,7 @@ export default {
       getCryptoList(params).then(res => {
         this.total = 0
         if (res.returnCode === '0000' && res.data) {
+          this.$parent.loading = false
           if (this.buySell === 1) {
             this.paymentData = res.data.result
             this.total = res.data.total
@@ -462,7 +463,7 @@ export default {
     left: 0;
     top: 0;
     background: #F4F7FE;
-    padding: 20px 30px 0;
+    padding: 10px 30px 0;
 
     .offRamp-title{
       height: 50px;

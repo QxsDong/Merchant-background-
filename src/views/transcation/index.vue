@@ -1,6 +1,6 @@
 
 <template>
-  <div class="offRamp-container">
+  <div v-loading="loading" class="offRamp-container">
     <div class="offRamp-title">
       <p :class="paramsData.flag==1?'active':''" @click="changeSellAndBuy(1)">{{ $t('nav.Buy_coins') }}</p>
       <p :class="paramsData.flag==0?'active':''" @click="changeSellAndBuy(0)">{{ $t('nav.Sell_coins') }}</p>
@@ -47,6 +47,12 @@
               width="160"
             />
             <el-table-column
+              prop="completeTime"
+              label="Order Paid"
+              align="center"
+              width="150"
+            />
+            <el-table-column
               label="Address"
               align="center"
               width="180"
@@ -74,7 +80,7 @@
             />
             <el-table-column
               prop="serviceFee"
-              label="Fee"
+              label="Ramp Fee"
               align="center"
               width="110"
             />
@@ -97,12 +103,6 @@
               width="190"
             />
 
-            <el-table-column
-              prop="completeTime"
-              label="Order Paid"
-              align="center"
-              width="150"
-            />
             <el-table-column
               prop="orderState"
               label="status"
@@ -155,7 +155,7 @@
               align="center"
             />
             <el-table-column
-              label="Fee"
+              label="Ramp Fee"
               align="center"
             >
               <template slot-scope="scope">
@@ -266,7 +266,8 @@ export default {
       },
       sellOrder: [],
       sellOrder1: [],
-      total: '0'
+      total: '0',
+      loading: true
 
     }
   },
@@ -321,6 +322,7 @@ export default {
       this.paramsData.merchantNo = this.$store.state.user.name.merchantNo
       getOrderList(this.paramsData).then(res => {
         if (res.returnCode === '0000' && res.data) {
+          this.loading = false
           if (this.paramsData.flag === 1) {
             this.sellOrder = res.data.orderList
             this.total = res.data.total

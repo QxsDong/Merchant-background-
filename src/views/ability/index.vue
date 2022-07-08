@@ -1,5 +1,5 @@
 <template>
-  <div class="ability-container">
+  <div v-loading="loading" class="ability-container">
     <!-- <div class="ability-content">
       <div class="ability-title">
         <p>{{ $t('nav.Ability_crypto') }}</p>
@@ -52,7 +52,7 @@
         <el-button class="TryButton" disabled>{{ $t('nav.Ability_now') }}</el-button>
       </div>
     </div> -->
-    <div class="ability-content">
+    <!-- <div class="ability-content">
       <div class="ability-title">
         <p>{{ $t('nav.Ability_ramp') }}</p>
         <span v-if="state2==1" class="Activated">{{ $t('nav.Ability_Activated') }}</span>
@@ -67,8 +67,8 @@
         <el-button class="TryButton" disabled>{{ $t('nav.Ability_now') }}</el-button>
       </div>
       <div v-if="state2==2 ||state2==0 " class="ability-tottom1">
-        <!-- <el-button type="primary" class="allocation">查看配置</el-button> -->
-        <!-- <el-button v-else-if="state==3" type="primary" class="allocation">申请</el-button> -->
+       <el-button type="primary" class="allocation">查看配置</el-button>
+         <el-button v-else-if="state==3" type="primary" class="allocation">申请</el-button>
         <el-button class="TryButton" disabled>{{ $t('nav.Ability_now') }}</el-button>
         <p v-if="state2==2 ||state2==0">{{ $t('nav.Ability_progress') }}</p>
       </div>
@@ -76,13 +76,13 @@
         <el-button type="primary" class="allocation" @click="$router.replace('/enroll')">申请</el-button>
         <el-button class="TryButton">{{ $t('nav.Ability_now') }}</el-button>
       </div>
-    </div>
+    </div> -->
     <!-- <div class="ability_toast">
       点击
     </div> -->
-    <!-- <div v-show="isShow" class="content"> -->
-    <router-view />
-    <!-- </div> -->
+    <div v-show="isShow" class="content">
+      <router-view />
+    </div>
   </div>
 </template>
 <script>
@@ -95,7 +95,8 @@ export default {
       state1: 3,
       state2: 1,
       isShow: false,
-      abilty: ''
+      abilty: '',
+      loading: true
     }
   },
   mounted() {
@@ -105,6 +106,7 @@ export default {
           if (item.productCode === '80001') {
             this.abilty = item
             this.state2 = item.status
+            this.goContent()
           }
         })
       }
@@ -270,7 +272,7 @@ export default {
       position: absolute;
       left: 0;
       top: 0;
-      background: #FFFFFF;
+      // background: #FFFFFF;
     }
   }
 </style>

@@ -3,12 +3,12 @@ module.exports = {
   nav: {
     // 菜单多语言
     Application_title: 'Application',
-    Abilty_title: 'Capacity',
-    Orders_title: 'Transcation',
+    Abilty_title: 'Setting',
+    Orders_title: 'Transaction',
 
     // tab菜单
-    Sell_coins: 'Sell',
-    Buy_coins: 'Buy',
+    Sell_coins: ' Off Ramp',
+    Buy_coins: 'On Ramp',
     // 卖卖币tab菜单
     ramp_Sell: 'Crypto',
     ramp_Buy: 'Crypto',

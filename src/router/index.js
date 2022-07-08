@@ -78,35 +78,35 @@ export const constantRoutes = [
   {
     path: '/',
     component: Layout,
-    redirect: '/transcation',
+    redirect: '/transaction',
     children: [
       {
-        path: '/transcation',
-        name: 'Transcation',
+        path: '/transaction',
+        name: 'Transaction',
         component: () => import('@/views/transcation/index'),
         meta: { title: 'nav.Orders_title', icon: 'payment', icon1: 'iconRight', Images: require('@/assets/menu-images/Union.png'), ImgActive: require('@/assets/menu-images/UnionSelect.png'), active: false }
       }
     ]
   },
 
-  {
-    path: '/Application',
-    component: Layout,
-    children: [{
-      path: '/Application',
-      name: 'Application',
-      component: () => import('@/views/Application/index'),
-      meta: { title: 'nav.Application_title', icon: 'over', icon1: 'iconRight', Images: require('@/assets/menu-images/applic.png'), ImgActive: require('@/assets/menu-images/applicSelect.png'), active: true },
-      children: [
-        {
-          path: '/Application/collction',
-          name: 'Application',
-          component: () => import('@/views/Application/children/collection/index'),
-          meta: { title: '' }
-        }
-      ]
-    }]
-  },
+  // {
+  //   path: '/Application',
+  //   component: Layout,
+  //   children: [{
+  //     path: '/Application',
+  //     name: 'Application',
+  //     component: () => import('@/views/Application/index'),
+  //     meta: { title: 'nav.Application_title', icon: 'over', icon1: 'iconRight', Images: require('@/assets/menu-images/applic.png'), ImgActive: require('@/assets/menu-images/applicSelect.png'), active: true },
+  //     children: [
+  //       {
+  //         path: '/Application/collction',
+  //         name: 'Application',
+  //         component: () => import('@/views/Application/children/collection/index'),
+  //         meta: { title: '' }
+  //       }
+  //     ]
+  //   }]
+  // },
   {
     path: '/ability',
     component: Layout,
@@ -121,7 +121,7 @@ export const constantRoutes = [
             path: '/ability/index/ramp',
             name: 'Ability',
             component: () => import('@/views/ability/children/ramp/index'),
-            meta: { title: 'On/Off ramp', isActive: 'Ability' }
+            meta: { title: '', isActive: 'Ability' }
           },
           {
             path: '/ability/index/crypto',

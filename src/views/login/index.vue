@@ -29,7 +29,7 @@
             </span>
           </el-form-item>
 
-          <p class="enroll">No account?<span @click="nextApply"> Sign up</span></p>
+          <!-- <p class="enroll">No account?<span @click="nextApply"> Sign up</span></p> -->
           <el-button :loading="loading" type="primary" class="loginButton" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">Sign In</el-button>
 
           <!-- <div class="tips">
