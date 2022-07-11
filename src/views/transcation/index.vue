@@ -31,7 +31,7 @@
             :data="sellOrder"
             border
             :lazy="true"
-            :cell-style="{padding: '4px 0 4px 0',}"
+
             :header-cell-style="{fontFamily:'SF Pro'}"
           >
             <el-table-column
@@ -41,17 +41,36 @@
               width="180"
             />
             <el-table-column
-              prop="payTime"
+              prop="createTime"
               label="Order Created"
               align="center"
               width="160"
             />
             <el-table-column
-              prop="completeTime"
+              prop="payTime"
               label="Order Paid"
               align="center"
               width="150"
             />
+            <el-table-column
+              prop="fiatAmountAndCurrency"
+              label="Fiat Amount"
+              align="center"
+              width="110"
+            />
+            <el-table-column
+              prop="serviceFee"
+              label="Ramp Fee"
+              align="center"
+              width="110"
+            />
+            <el-table-column
+              prop="completeTime"
+              label="Crypto Completed"
+              align="center"
+              width="150"
+            />
+
             <el-table-column
               label="Address"
               align="center"
@@ -67,23 +86,11 @@
                   <div style="font-size:12px">
                     {{ scope.row.address }}
                   </div>
-                  <el-button slot="reference" style="border:none;padding:5px 0 5px;font-size:12px">{{ scope.row.address.slice(0,8) + '****' + scope.row.address.slice(scope.row.address.length-8,scope.row.address.length) }}</el-button>
+                  <el-button slot="reference" style="border:none;padding:5px 0 5px;font-size:12px">{{ scope.row.address.length>16?scope.row.address.slice(0,8) + '****' + scope.row.address.slice(scope.row.address.length-8,scope.row.address.length):scope.row.address }}</el-button>
                 </el-popover>
               </template>
             </el-table-column>
 
-            <el-table-column
-              prop="fiatAmountAndCurrency"
-              label="Fiat Amount"
-              align="center"
-              width="110"
-            />
-            <el-table-column
-              prop="serviceFee"
-              label="Ramp Fee"
-              align="center"
-              width="110"
-            />
             <el-table-column
               prop="cryptoVolumeAndCurrency"
               label="Crypto Amount"
@@ -97,6 +104,21 @@
               width="90"
             />
             <el-table-column
+              label="Network Fee"
+              align="center"
+              prop="fiatNetworkFee"
+              width="110"
+            />
+            <el-table-column
+              label="Hash ID"
+              align="center"
+              width="200"
+            >
+              <template slot-scope="scope">
+                <el-button style="border:none;padding:0" :disabled="disabledButton" @click="goToNetwork(scope.row)">{{ scope.row.transactionHash.length>16?scope.row.transactionHash.slice(0,8) + '****' + scope.row.transactionHash.slice(scope.row.transactionHash.length-8,scope.row.transactionHash.length):scope.row.transactionHash }} <i :class="scope.row.transactionHash.length>0?'el-icon-right el-icon--right':''" /></el-button>
+              </template>
+            </el-table-column>
+            <el-table-column
               prop="email"
               label="Email"
               align="center"
@@ -105,7 +127,7 @@
 
             <el-table-column
               prop="orderState"
-              label="status"
+              label="Status"
               align="center"
               width="100"
               fixed="right"
@@ -203,7 +225,7 @@
             />
             <el-table-column
               prop="Account"
-              label="Bank Account"
+              label="Hash ID"
               align="center"
               width="190"
             />
@@ -332,6 +354,7 @@ export default {
           }
         }
       })
+      this.loading = false
     },
     // 更改页数
     handleCurrentChange(val) {
@@ -346,6 +369,31 @@ export default {
         return
       } else {
         this.total = 0
+      }
+    },
+    // 根据网络进行跳转
+    goToNetwork(val) {
+      if (val.network === 'TRX' && val.transactionHash) {
+        window.open('https://tronscan.org/#/transaction/' + val.transactionHash)
+        return
+      } else if (val.network === 'BSC' && val.transactionHash) {
+        window.open('https://bscscan.com/tx/' + val.transactionHash)
+        return
+      } else if (val.network === 'BTC' && val.transactionHash) {
+        window.open('https://btc.tokenview.com/cn/tx/' + val.transactionHash)
+        return
+      } else if (val.network === 'ETH' && val.transactionHash) {
+        window.open('https://etherscan.io/tx/' + val.transactionHash)
+        return
+      } else {
+        this.$message({
+          type: 'error',
+          message: 'The network cannot be turned on at this time'
+        })
+        this.disabledButton = true
+        setTimeout(() => {
+          this.disabledButton = false
+        }, 3000)
       }
     }
   }
@@ -365,6 +413,7 @@ export default {
     .offRamp-title{
       height: 50px;
       display: flex;
+
       p{
         width: 230px;
         height: 70px;

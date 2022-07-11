@@ -28,7 +28,7 @@
             >
               <template slot-scope="scope">
                 <div style="height100%;display:flex; align-items: center;">
-                  <img slot="reference" :src="scope.row.logoUrl" style="width: 30px;height: 30px;margin-left:32%;top:0">
+                  <img slot="reference" :key="scope.row.logoUrl" :src="scope.row.logoUrl" style="width: 30px;height: 30px;margin-left:32%;top:0">
 
                   <span style="line-height:10px;margin-left:10px">{{ scope.row.name }}</span>
                 </div>
@@ -154,7 +154,7 @@
             >
               <template slot-scope="scope">
                 <div style="height100%;display:flex; align-items: center;">
-                  <img slot="reference" :src="scope.row.logoUrl" style="width: 30px;height: 30px;margin-left:32%">
+                  <img slot="reference" :key="scope.row.logoUrl" :src="scope.row.logoUrl" style="width: 30px;height: 30px;margin-left:32%">
                   <!-- </el-popover> -->
                   <span style="line-height:10px;margin-left:10px">{{ scope.row.name }}</span>
                 </div>
@@ -344,6 +344,7 @@ export default {
             this.total = res.data.total
           }
         }
+        this.$parent.loading = false
       })
       // getMerchantAddList(params).then(res => {
       //   console.log(res)
